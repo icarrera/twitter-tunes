@@ -14,3 +14,5 @@ Joe McClenahan https://github.com/jmcclena94
 Ben Garnaat https://github.com/bgarnaat
 
 
+### How To Contribute
+See CONTRIBUTING.md
