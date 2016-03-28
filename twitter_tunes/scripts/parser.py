@@ -8,6 +8,7 @@ def parse_trend(trend):
     final_words = []
     for word in spaced_words:
         final_words.append(parse_camel_trend(word))
+    # TODO-STRETCH GOAL: function that parses out a lowercase no spaced trend.
     return u' '.join(final_words)
 
 
@@ -29,4 +30,7 @@ def parse_camel_trend(trend):
         ''', re.VERBOSE)
     words = re.findall(camel_re, trend)
     # Combine the words into a single string seperated by spaces.
-    return u' '.join(words)
+    if words:
+        return u' '.join(words)
+    # if it's lowercase no spaced just return it back.
+    return trend
