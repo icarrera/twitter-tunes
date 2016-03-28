@@ -30,9 +30,12 @@ def youtube_search(keyword, max_results=10):
 
 def youtube_parse(search_result):
     """Parse the YouTube search result to output video ID tag"""
-    search_items = search_result.get('items', [])
-    video_ids = []
-    for result in search_items:
-        if result['id']['kind'] == 'youtube#video':
-            video_ids.append(result['id']['videoId'])
-    return video_ids
+    try:
+        search_items = search_result.get('items', [])
+        video_ids = []
+        for result in search_items:
+            if result['id']['kind'] == 'youtube#video':
+                video_ids.append(result['id']['videoId'])
+        return video_ids
+    except AttributeError:
+        print('No YouTube search result detected.')

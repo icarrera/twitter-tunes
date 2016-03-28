@@ -7,3 +7,9 @@ def test_youtube_search():
     keyword = 'test search'
     result = youtube_search(keyword)
     assert len(result) > 0
+
+
+def test_youtube_parse():
+    from youtube_api import youtube_parse
+    with pytest.raises(AttributeError):
+        return youtube_parse([])
