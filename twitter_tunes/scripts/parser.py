@@ -15,6 +15,11 @@ def parse_camel_trend(trend):
     'NBAFinals' would return 'NBA Finals'
     'MTV' would return 'MTV'
     """
-    camel_re = re.compile(r'([0-9]+|[A-Z]+(?=[A-Z]+[a-z]+)|[A-Z]+[a-z]*)')
+    camel_re = re.compile(r'''
+        (\W+|
+        \d+|
+        [A-Z]+(?=[A-Z]+[a-z]+)|
+        [A-Z]+[a-z]*)
+        ''', re.VERBOSE)
     words = re.findall(camel_re, trend)
     return u' '.join(words)

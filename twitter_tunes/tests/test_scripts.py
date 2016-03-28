@@ -43,3 +43,9 @@ def test_camel_trend_acronym_num():
     """Test proper splitting with acronym and number."""
     from twitter_tunes.scripts import parser
     assert parser.parse_camel_trend(u'UFC200') == u'UFC 200'
+
+
+def test_camel_trend_special_characters():
+    """Test proper splitting with special characters and camel case."""
+    from twitter_tunes.scripts import parser
+    assert parser.parse_camel_trend(u'I>You') == u'I > You'
