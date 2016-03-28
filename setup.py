@@ -13,7 +13,11 @@ requires = [
     'pyramid_chameleon',
     'pyramid_debugtoolbar',
     'waitress',
+    'pyramid_jinja2'
     ]
+
+tests_requires = ['pytest', 'pytest-watch', 'tox', 'webtest']
+dev_requires = ['ipython', 'pyramid-ipython']
 
 setup(name='Twitter_Tunes',
       version='0.0',
@@ -33,7 +37,10 @@ setup(name='Twitter_Tunes',
       include_package_data=True,
       zip_safe=False,
       install_requires=requires,
-      tests_require=requires,
+      extras_require={
+        'test': tests_requires,
+        'dev': dev_requires
+      },
       test_suite="twitter_tunes",
       entry_points="""\
       [paste.app_factory]
