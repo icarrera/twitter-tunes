@@ -10,7 +10,7 @@ YOUTUBE_API_VERSION = 'v3'
 
 
 def youtube_search(keyword, max_results=10):
-    """Query YouTube API for search results based off keyword search"""
+    """Query YouTube API for search results based off keyword search."""
     try:
         youtube = build(
             YOUTUBE_API_SERVICE_NAME,
@@ -29,7 +29,7 @@ def youtube_search(keyword, max_results=10):
 
 
 def youtube_parse(search_result):
-    """Parse the YouTube search result to output video ID tag"""
+    """Parse the YouTube search result to output video ID tag."""
     try:
         search_items = search_result.get('items', [])
         video_ids = []
@@ -39,3 +39,12 @@ def youtube_parse(search_result):
         return video_ids
     except AttributeError:
         print('No YouTube search result detected.')
+
+
+def generate_youtube_link(parsed_list):
+    """Generate a youtube video link from parsed list of YouTube video IDs."""
+    top_result = parsed_list[0]
+    yt_loc = 'https://www.youtube.com/'
+    yt_uri = 'watch?v=' + top_result
+    yt_url = yt_loc + yt_uri
+    return yt_url
