@@ -5,11 +5,8 @@ def parse_trend(trend):
     """Return a youtube search query based off a twitter trend."""
     trend_no_tag = trend.strip('#')
     spaced_words = trend_no_tag.split(' ')
-    final_words = []
-    for word in spaced_words:
-        final_words.append(parse_camel_trend(word))
+    return u' '.join([parse_camel_trend(x) for x in spaced_words])
     # TODO-STRETCH GOAL: function that parses out a lowercase no spaced trend.
-    return u' '.join(final_words)
 
 
 def parse_camel_trend(trend):
