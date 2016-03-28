@@ -13,7 +13,7 @@ requires = [
     'pyramid_chameleon',
     'pyramid_debugtoolbar',
     'waitress',
-    'pyramid_jinja2'
+    'pyramid_jinja2',
     ]
 
 tests_requires = ['pytest', 'pytest-watch', 'tox', 'webtest']
