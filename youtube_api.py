@@ -10,6 +10,7 @@ YOUTUBE_API_VERSION = 'v3'
 
 
 def youtube_search(keyword, max_results=10):
+    """Query YouTube API for search results based off keyword search"""
     try:
         youtube = build(
             YOUTUBE_API_SERVICE_NAME,
@@ -25,3 +26,13 @@ def youtube_search(keyword, max_results=10):
         return search_response
     except HttpError:
         print('An HTTP error has occurred.')
+
+
+def youtube_parse(search_result):
+    """Parse the YouTube search result to output video ID tag"""
+    search_items = search_result.get('items', [])
+    video_ids = []
+    for result in search_items:
+        if result['id']['kind'] == 'youtube#video':
+            video_ids.append(result['id']['videoId'])
+    return video_ids
