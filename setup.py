@@ -14,6 +14,7 @@ requires = [
     'pyramid_debugtoolbar',
     'waitress',
     'pyramid_jinja2',
+    'tweepy',
     ]
 
 tests_requires = ['pytest', 'pytest-watch', 'tox', 'webtest']
