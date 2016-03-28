@@ -4,6 +4,7 @@ TEST_TRENDS = [
     ('#EasterEggRoll', 'EasterEggRoll'),
     ('#ArianaGrade', 'ArianaGrade'),
     ('#mondaymotivation', 'mondaymotivation'),
+    ('Nick Swisher', 'Nick Swisher')
 ]
 
 
