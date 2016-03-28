@@ -12,7 +12,8 @@ TEST_TRENDS = [
     (u'200UFC200', u'200 UFC 200'),
     (u'3/15/2015Party', u'3 / 15 / 2015 Party'),
     (u'300lbBurlyBoy', '300 lb Burly Boy'),
-    (u'200people', u'200 people')
+    (u'200people', u'200 people'),
+    (u'bigpartyUFC200', u'bigparty UFC 200')
 ]
 
 
