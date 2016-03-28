@@ -1,7 +1,11 @@
 # -*- coding: utf-8 -*-
-"""Twitter API Call"""
+"""Twitter API Call."""
 import tweepy
 import os
+
+REQUEST_TOKEN_URL = 'https://api.twitter.com/oauth/request_token'
+AUTHORIZATION_URL = 'https://api.twitter.com/oauth/authorize'
+ACCESS_TOKEN_URL = 'https://api.twitter.com/oauth/access_token'
 
 consumerKey = os.environ.get('TWITTER_CONSUMERKEY')
 consumerSecret = os.environ.get('TWITTER_CONSUMERSECRET')
