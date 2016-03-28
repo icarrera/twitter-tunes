@@ -23,7 +23,8 @@ def parse_camel_trend(trend):
         \d+|  # One or more digit characters
         # 1+ uppercase followed by 1+ uppercase and 1+ lowercases
         [A-Z]+(?=[A-Z]+[a-z]+)|
-        (?<=[^a-z])[a-z]+|  # lowercase word preceded by non-lowercase chars.
+        [a-z]+(?=[^a-z])|  # lowercase letters followed by non-lowercase chars
+        (?<=[^a-z])[a-z]+|  # lowercase word preceded by non-lowercase chars
         [A-Z]+[a-z]*) # 1+ uppercase followed by any number of lowercases
         ''', re.VERBOSE)
     words = re.findall(camel_re, trend)
