@@ -1,18 +1,33 @@
 # coding=utf-8
-import pytest
-import youtube_api
+# import pytest
+# from mock import patch
+
+from twitter_tunes.scripts import youtube_api
+# from mock_youtube_api_response import GOOD_YOUTUBE_RESPONSE
+
+# from youtube_api import youtube_search
+
+BAD_YOUTUBE_RESPONSE = {
+    'etag': '"q5k97EMVGxODeKcDgp8gnMu79wM/ZBV2w65lgyrdAoPQHuFS1_5SrKo"',
+    'items': [],
+    'kind': 'youtube#searchListResponse',
+    'pageInfo': {'resultsPerPage': 10, 'totalResults': 0},
+    'regionCode': 'US'
+    }
 
 
 # SOME OF THESE SEARCHES SHOULD BE ADDED TO CONFTEST TO REDUCE API CALLS #
 
 
+# @patch('youtube_api.youtube_search', GOOD_YOUTUBE_RESPONSE)
 # def test_youtube_search_get_data():
 #     """Test to see if we are getting result from search."""
 #     keyword = 'test search'
-#     result = youtube_search(keyword)
+#     result = youtube_api.youtube_search(keyword)
 #     assert len(result) > 0
-#
-#
+
+
+# @patch('youtube_search', BAD_YOUTUBE_RESPONSE)
 # def test_youtube_search_no_results():
 #     """Test if you get empty item list from search with no results."""
 #     keyword = 'asdf safvdafvdsvafs'
@@ -23,6 +38,12 @@ import youtube_api
 def test_youtube_parse_no_data():
     """Test that youtube search parser returns empty list with no data input"""
     parsed = youtube_api.youtube_parse([])
+    assert parsed == []
+
+
+def test_youtube_parse_no_search_result():
+    """Test that youtube search parser returns empty list with no data input"""
+    parsed = youtube_api.youtube_parse(BAD_YOUTUBE_RESPONSE)
     assert parsed == []
 
 
