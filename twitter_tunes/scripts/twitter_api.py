@@ -1,6 +1,5 @@
 # -*- coding: utf-8 -*-
-
-"""Twitter API Call."""
+"""Twitter API Call"""
 import tweepy
 import os
 
