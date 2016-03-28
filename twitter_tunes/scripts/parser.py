@@ -9,10 +9,12 @@ def parse_trend(trend):
 
 
 def parse_camel_trend(trend):
-    """Return string with spaces based off camelcase.
+    """Return string with spaces based off camelcase/acronyms.
 
     'MyHotTrend' would return 'My Hot Trend'
+    'NBAFinals' would return 'NBA Finals'
+    'MTV' would return 'MTV'
     """
-    camel_re = re.compile(r'([A-Z]+(?=[A-Z]+[^A-Z]+)|[A-Z]+[^A-Z]*)')
+    camel_re = re.compile(r'([0-9]+|[A-Z]+(?=[A-Z]+[a-z]+)|[A-Z]+[a-z]*)')
     words = re.findall(camel_re, trend)
     return u' '.join(words)
