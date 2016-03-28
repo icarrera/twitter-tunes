@@ -5,17 +5,34 @@ import os
 
 
 WOEID_US = 23424977
-consumerKey = os.environ.get('TWITTER_CONSUMERKEY')
-consumerSecret = os.environ.get('TWITTER_CONSUMERSECRET')
-accessToken = os.environ.get('TWITTER_ACCESSTOKEN')
-accessTokenSecret = os.environ.get('TWITTER_ACCESSTOKENSECRET')
+consumerKey = os.environ.get('TWITTER_CONSUMERKEY', None)
+consumerSecret = os.environ.get('TWITTER_CONSUMERSECRET', None)
+accessToken = os.environ.get('TWITTER_ACCESSTOKEN', None)
+accessTokenSecret = os.environ.get('TWITTER_ACCESSTOKENSECRET', None)
+# accessTokenSecret = None
 
-auth = tweepy.OAuthHandler(consumerKey, consumerSecret)
-auth.set_access_token(accessToken, accessTokenSecret)
-api = tweepy.API(auth)
 
-resp = api.trends_place(WOEID_US)
-# print(u'response:', resp)
+# def get_twitter_response():
 
-trend_list = [trend['name'] for trend in resp[0]['trends']]
-print(u'\ntrend_list:\n', trend_list)
+
+def call_twitter_api():
+    """Twitter API call to get trending topics."""
+    if consumerKey and consumerSecret and accessToken and accessTokenSecret:
+        auth = tweepy.OAuthHandler(consumerKey, consumerSecret)
+        auth.set_access_token(accessToken, accessTokenSecret)
+        api = tweepy.API(auth)
+
+        resp = api.trends_place(WOEID_US)
+
+        trend_list = [trend['name'] for trend in resp[0]['trends']]
+        print(trend_list)
+        print(trend_list[:10])
+        return trend_list[:10]
+    else:
+        print('Missing OAuth key or token')
+        raise ValueError('Missing OAuth key or token.')
+
+
+if __name__ == '__main__':
+    """Run call_twitter_api on module run."""
+    call_twitter_api()
