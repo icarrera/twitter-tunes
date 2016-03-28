@@ -32,19 +32,33 @@ def youtube_parse(search_result):
     """Parse the YouTube search result to output video ID tag."""
     try:
         search_items = search_result.get('items', [])
-        video_ids = []
+        video_id_uris = []
         for result in search_items:
             if result['id']['kind'] == 'youtube#video':
-                video_ids.append(result['id']['videoId'])
-        return video_ids
+                video_id = result['id']['videoId']
+                video_channel = result['snippet']['channelTitle']
+                video_id_uris.append((video_id, video_channel))
+        return video_id_uris
     except AttributeError:
         print('No YouTube search result detected.')
 
 
 def generate_youtube_link(parsed_list):
     """Generate a youtube video link from parsed list of YouTube video IDs."""
-    top_result = parsed_list[0]
-    yt_loc = 'https://www.youtube.com/'
-    yt_uri = 'watch?v=' + top_result
-    yt_url = yt_loc + yt_uri
-    return yt_url
+    yt_path = 'https://www.youtube.com/'
+    try:
+        for video in parsed_list:
+            if 'VEVO' in video[1]:
+                top_result = video[0]
+                yt_uri = 'watch?v=' + top_result
+                yt_url = yt_path + yt_uri
+                return yt_url
+        top_result = parsed_list[0][0]
+        yt_uri = 'watch?v=' + top_result
+        yt_url = yt_path + yt_uri
+        return yt_url
+    except IndexError:
+        top_result = 'b_ILDFp5DGA'
+        yt_uri = 'watch?v=' + top_result
+        yt_url = yt_path + yt_uri
+        return yt_url
