@@ -9,10 +9,22 @@ def test_youtube_search():
     assert len(result) > 0
 
 
-def test_youtube_parse():
+def test_youtube_search_no_results():
+    from youtube_api import youtube_search
+    keyword = 'asdf safvdafvdsvafs'
+    result = youtube_search(keyword)
+    assert result.get('items') == []
+
+
+def test_youtube_search():
+    from youtube_api import youtube_search
+
+
+
+def test_youtube_parse_no_data():
     from youtube_api import youtube_parse
-    with pytest.raises(AttributeError):
-        return youtube_parse([])
+    parsed = youtube_parse([])
+    assert parsed == []
 
 
 def test_generate_youtube_link_VEVO_priority():
