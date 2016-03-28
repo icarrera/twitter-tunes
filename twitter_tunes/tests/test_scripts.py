@@ -24,3 +24,9 @@ def test_camel_trend_acronym():
     """Test Acronyms are still grouped and split correctly."""
     from twitter_tunes.scripts import parser
     assert parser.parse_camel_trend(u'MTVEMA') == u'MTVEMA'
+
+
+def test_camel_trend_mixed():
+    """Test both acronyms and regular camel case words."""
+    from twitter_tunes.scripts import parser
+    assert parser.parse_camel_trend(u'NBAFinals') == u'NBA Finals'
