@@ -13,7 +13,6 @@ def parse_camel_trend(trend):
 
     'MyHotTrend' would return 'My Hot Trend'
     """
-    camel_re = re.compile(r'(?=[A-Z][^A-Z])')
-    words = camel_re.split(trend)
-    import pdb; pdb.set_trace()
-    return u' '.join(words) 
+    camel_re = re.compile(r'([A-Z]+[^A-Z]+)')
+    words = re.findall(camel_re, trend)
+    return u' '.join(words)
