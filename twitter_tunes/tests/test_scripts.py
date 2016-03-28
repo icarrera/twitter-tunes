@@ -1,11 +1,13 @@
 import pytest
 
 TEST_TRENDS = [
-    (u'#EasterEggRoll', u'EasterEggRoll'),
-    (u'#ArianaGrade', u'ArianaGrade'),
+    (u'#EasterEggRoll', u'Easter Egg Roll'),
+    (u'#ArianaGrade', u'Ariana Grade'),
     (u'#mondaymotivation', u'mondaymotivation'),
     (u'Nick Swisher', u'Nick Swisher'),
     (u'', u''),
+    (u'UFC200 Las Vegas', u'UFC 200 Las Vegas'),
+    (u'#Obama', u'Obama')
 ]
 
 

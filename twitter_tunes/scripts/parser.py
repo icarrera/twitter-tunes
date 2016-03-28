@@ -4,8 +4,11 @@ import re
 def parse_trend(trend):
     """Return a youtube search query based off a twitter trend."""
     trend_no_tag = trend.strip('#')
-    # TODO: new function dealing with camel case
-    return trend_no_tag
+    spaced_words = trend_no_tag.split(' ')
+    final_words = []
+    for word in spaced_words:
+        final_words.append(parse_camel_trend(word))
+    return u' '.join(final_words)
 
 
 def parse_camel_trend(trend):
