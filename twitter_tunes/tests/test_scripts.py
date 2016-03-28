@@ -15,5 +15,12 @@ def test_parse_trend(trend, query):
 
 
 def test_camel_trend():
+    """Test Camel Case is correctly split."""
     from twitter_tunes.scripts import parser
     assert parser.parse_camel_trend(u'MyHotTrend') == u'My Hot Trend'
+
+
+def test_camel_trend_acronym():
+    """Test Acronyms are still grouped and split correctly."""
+    from twitter_tunes.scripts import parser
+    assert parser.parse_camel_trend(u'MTVEMA') == u'MTVEMA'
