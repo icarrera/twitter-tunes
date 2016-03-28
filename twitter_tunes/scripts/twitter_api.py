@@ -9,10 +9,18 @@ consumerKey = os.environ.get('TWITTER_CONSUMERKEY', None)
 consumerSecret = os.environ.get('TWITTER_CONSUMERSECRET', None)
 accessToken = os.environ.get('TWITTER_ACCESSTOKEN', None)
 accessTokenSecret = os.environ.get('TWITTER_ACCESSTOKENSECRET', None)
-# accessTokenSecret = None
 
 
-# def get_twitter_response():
+def get_twitter_response(api):
+    """Make API call to Twitter and return response."""
+    resp = api.trends_place(WOEID_US)
+    return resp
+
+
+def extract_twitter_trends(resp):
+    """Extract trending topics from Twitter response."""
+    trend_list = [trend['name'] for trend in resp[0]['trends']]
+    return trend_list
 
 
 def call_twitter_api():
@@ -22,10 +30,9 @@ def call_twitter_api():
         auth.set_access_token(accessToken, accessTokenSecret)
         api = tweepy.API(auth)
 
-        resp = api.trends_place(WOEID_US)
+        resp = get_twitter_response(api)
+        trend_list = extract_twitter_trends(resp)
 
-        trend_list = [trend['name'] for trend in resp[0]['trends']]
-        print(trend_list)
         print(trend_list[:10])
         return trend_list[:10]
     else:
