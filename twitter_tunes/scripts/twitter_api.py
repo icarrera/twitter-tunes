@@ -14,4 +14,8 @@ auth = tweepy.OAuthHandler(consumerKey, consumerSecret)
 auth.set_access_token(accessToken, accessTokenSecret)
 api = tweepy.API(auth)
 
-print(api.trends_place(WOEID_US))
+resp = api.trends_place(WOEID_US)
+# print(u'response:', resp)
+
+trend_list = [trend['name'] for trend in resp[0]['trends']]
+print(u'\ntrend_list:\n', trend_list)
