@@ -7,9 +7,9 @@ import os
 YOUTUBE_DEVELOPER_KEY = os.environ.get('YT_AUTH')
 YOUTUBE_API_SERVICE_NAME = 'youtube'
 YOUTUBE_API_VERSION = 'v3'
+TERMS = ['remix', 'music', 'song', 'parody', 'jam', 'dance']
 
-
-def youtube_search(keyword, max_results=10):
+def youtube_search(keyword, max_results=20):
     """Query YouTube API for search results based off keyword search."""
     try:
         youtube = build(
@@ -19,7 +19,8 @@ def youtube_search(keyword, max_results=10):
             )
         search_response = youtube.search(
         ).list(
-                q=keyword,
+                q=keyword + ' music',
+                type='video',
                 part='id,snippet',
                 maxResults=max_results).execute()
         return search_response
@@ -34,34 +35,41 @@ def youtube_parse(search_result):
     try:
         search_items = search_result.get('items', [])
         for result in search_items:
-            if result['id']['kind'] == 'youtube#video':
-                video_id = result['id']['videoId']
-                video_channel = result['snippet']['channelTitle']
-                video_id_uris.append((video_id, video_channel))
+            video_id = result['id']['videoId']
+            video_channel = result['snippet']['channelTitle']
+            video_title = result['snippet']['title']
+            video_id_uris.append((video_id, video_channel, video_title))
         return video_id_uris
     except AttributeError:
         return video_id_uris
 
 
+def term_checker(title):
+    for term in TERMS:
+        if term in title.lower():
+            return True
+    return False
+
+
+def url_gen(video_id):
+    yt_path = 'https://www.youtube.com/'
+    yt_uri = 'watch?v=' + video_id
+    yt_url = yt_path + yt_uri
+    return yt_url
+
+
 def generate_youtube_link(parsed_list):
     """Generate a youtube video link from parsed list of YouTube video IDs."""
-    yt_path = 'https://www.youtube.com/'
     try:
         for video in parsed_list:
             if 'VEVO' in video[1]:
-                top_result = video[0]
-                yt_uri = 'watch?v=' + top_result
-                yt_url = yt_path + yt_uri
-                return yt_url
-        top_result = parsed_list[0][0]
-        yt_uri = 'watch?v=' + top_result
-        yt_url = yt_path + yt_uri
-        return yt_url
+                return url_gen(video[0])
+        for video in parsed_list:
+            if term_checker(video[2]):
+                return url_gen(video[0])
+        return url_gen(parsed_list[0][0])
     except IndexError:
-        top_result = 'b_ILDFp5DGA'
-        yt_uri = 'watch?v=' + top_result
-        yt_url = yt_path + yt_uri
-        return yt_url
+        return url_gen('b_ILDFp5DGA')
 
 
 def get_link(trend):

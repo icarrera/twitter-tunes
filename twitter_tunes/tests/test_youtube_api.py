@@ -1,10 +1,22 @@
 # coding=utf-8
 from mock import patch
 from apiclient.errors import HttpError
-
 from twitter_tunes.scripts import youtube_api
+import pytest
 
-
+TITLES_TERM = [
+    ('Donald Trump Remix', True),
+    ('Donald Trump', False),
+    ('300lb Obama', False),
+    ('300lb Obama Song', True),
+    ('500lb Obama parody', True),
+    ('195 fresh piggies', False),
+    ('Meow Mix Jam', True),
+    ('Meow Mix Dance', True),
+    ('Meow Mix Feast', False),
+    ('Fresh Piggies Music', True),
+    ('', False)
+]
 BAD_YOUTUBE_RESPONSE = {
     'etag': '"T50iqLU0cleWH2-8bQxaAS2DFh8/ZBV2w65lgyrdAoPQHuFS1_5SrKo"',
     'items': [],
@@ -40,8 +52,7 @@ GOOD_YOUTUBE_RESPONSE = {
                             'url': 'https://i.ytimg.com/vi/'
                                    'oyEuk8j8imI/mqdefault.jpg',
                             'width': 320}},
-                    'title': 'Justin Bieber - Love Yourself  '
-                             '(PURPOSE : The Movement)'}}],
+                    'title': 'dummy title'}}],
     'kind': 'youtube#searchListResponse',
     'nextPageToken': 'CAoQAA',
     'pageInfo': {
@@ -105,49 +116,49 @@ def test_youtube_parse_no_search_result():
 def test_youtube_parse_good_result():
     """Test that search parser returns list of touples with good api search."""
     parsed = youtube_api.youtube_parse(GOOD_YOUTUBE_RESPONSE)
-    assert parsed == [('oyEuk8j8imI', 'JustinBieberVEVO')]
+    assert parsed == [('oyEuk8j8imI', 'JustinBieberVEVO', 'dummy title')]
 
 
 def test_generate_youtube_link_VEVO_priority():
     """Test link generator prioritizes VEVO links."""
-    parsed_list = [(u'kTHNpusq654', u'CapitolMusic'),
-                   (u'tWbLkXhGEmo', u'CapitolMusic'),
-                   (u'wdGZBRAwW74', u'CapitolMusic'),
-                   (u'1-pUaogoX5o', u'emimusic'),
-                   (u'47dtFZ8CFo8', u'CapitalCitiesVEVO'),
-                   (u'xopC0UndnYY', u'Vape Capitol'),
-                   (u'JqNGGsYoXt0', u'West Virginia Public Broadcasting')]
+    parsed_list = [(u'kTHNpusq654', u'CapitolMusic', 'dummy title'),
+                   (u'tWbLkXhGEmo', u'CapitolMusic', 'dummy title'),
+                   (u'wdGZBRAwW74', u'CapitolMusic', 'dummy title'),
+                   (u'1-pUaogoX5o', u'emimusic', 'dummy title'),
+                   (u'47dtFZ8CFo8', u'CapitalCitiesVEVO', 'dummy title'),
+                   (u'xopC0UndnYY', u'Vape Capitol', 'dummy title'),
+                   (u'JqNGGsYoXt0', u'West Virginia Public Broadcasting', 'dummy title')]
     url = youtube_api.generate_youtube_link(parsed_list)
     assert url == 'https://www.youtube.com/watch?v=47dtFZ8CFo8'
 
 
 def test_generate_youtube_link_VEVO_good_input():
     """Test URL generator prioritizes first returned link."""
-    parsed_list = [(u'oyEuk8j8imI', u'JustinBieberVEVO'),
-                   (u'fRh_vgS2dFE', u'JustinBieberVEVO'),
-                   (u'DK_0jXPuIr0', u'JustinBieberVEVO'),
-                   (u'PfGaX8G0f2E', u'JustinBieberVEVO'),
-                   (u'ztWFp63QPj4', u'The Late Late Show with James Corden'),
-                   (u'djzDWMy1z7k', u'JustinBieberVEVO'),
-                   (u'2pvGCUoGXSc', u'Clevver News'),
-                   (u'Kn0YDZ3wifU', u'The Late Late Show with James Corden'),
-                   (u'Ca1i6DZC3iY', u'JustinBieberVEVO')]
+    parsed_list = [(u'oyEuk8j8imI', u'JustinBieberVEVO', 'dummy title'),
+                   (u'fRh_vgS2dFE', u'JustinBieberVEVO', 'dummy title'),
+                   (u'DK_0jXPuIr0', u'JustinBieberVEVO', 'dummy title'),
+                   (u'PfGaX8G0f2E', u'JustinBieberVEVO', 'dummy title'),
+                   (u'ztWFp63QPj4', u'The Late Late Show with James Corden', 'dummy title'),
+                   (u'djzDWMy1z7k', u'JustinBieberVEVO', 'dummy title'),
+                   (u'2pvGCUoGXSc', u'Clevver News', 'dummy title'),
+                   (u'Kn0YDZ3wifU', u'The Late Late Show with James Corden', 'dummy title'),
+                   (u'Ca1i6DZC3iY', u'JustinBieberVEVO', 'dummy title')]
     url = youtube_api.generate_youtube_link(parsed_list)
     assert url == 'https://www.youtube.com/watch?v=oyEuk8j8imI'
 
 
 def test_generate_youtube_link_no_VEVO_good_result():
     """Test link generator to return top result as link."""
-    parsed_list = [('Cdr8_IQqT-E', 'Warner Bros. TV'),
-                   ('LDtAIOgBljE', 'Warner Bros. TV'),
-                   ('ObBVYoJY-dA', 'DC Entertainment'),
-                   ('8PrDxP5eybo', 'televisionpromosdb'),
-                   ('hIyWCxTxPHU', 'televisionpromosdb'),
-                   ('_FVwpigX_18', 'Warner Bros. TV'),
-                   ('mnC0g9KaPpU', 'The Flash Brasil'),
-                   ('qovt8bD1-mw', 'The TSG WB Nexus'),
-                   ('WV5sOc0Gj0w', 'Clevver News'),
-                   ('iv02UYr3LCY', 'Supergirl')]
+    parsed_list = [('Cdr8_IQqT-E', 'Warner Bros. TV', 'dummy title'),
+                   ('LDtAIOgBljE', 'Warner Bros. TV', 'dummy title'),
+                   ('ObBVYoJY-dA', 'DC Entertainment', 'dummy title'),
+                   ('8PrDxP5eybo', 'televisionpromosdb', 'dummy title'),
+                   ('hIyWCxTxPHU', 'televisionpromosdb', 'dummy title'),
+                   ('_FVwpigX_18', 'Warner Bros. TV', 'dummy title'),
+                   ('mnC0g9KaPpU', 'The Flash Brasil', 'dummy title'),
+                   ('qovt8bD1-mw', 'The TSG WB Nexus', 'dummy title'),
+                   ('WV5sOc0Gj0w', 'Clevver News', 'dummy title'),
+                   ('iv02UYr3LCY', 'Supergirl', 'dummy title')]
     url = youtube_api.generate_youtube_link(parsed_list)
     assert url == 'https://www.youtube.com/watch?v=Cdr8_IQqT-E'
 
@@ -174,3 +185,28 @@ def test_get_link_bad_data(yt_search):
     keyword = 'asdf lawe;lfj'
     url = youtube_api.get_link(keyword)
     assert url == 'https://www.youtube.com/watch?v=b_ILDFp5DGA'
+
+
+@pytest.mark.parametrize('title, result', TITLES_TERM)
+def test_term_checker_0(title, result):
+    assert youtube_api.term_checker(title) == result
+
+
+def test_url_gen():
+    assert youtube_api.url_gen('12345') == 'https://www.youtube.com/watch?v=12345'
+
+
+def test_generate_youtube_link_keyword():
+    """Test link generator to return top result as link."""
+    parsed_list = [('Cdr8_IQqT-E', 'Warner Bros. TV', 'dummy title'),
+                   ('LDtAIOgBljE', 'Warner Bros. TV', 'dummy title music'),
+                   ('ObBVYoJY-dA', 'DC Entertainment', 'dummy title'),
+                   ('8PrDxP5eybo', 'televisionpromosdb', 'dummy title'),
+                   ('hIyWCxTxPHU', 'televisionpromosdb', 'dummy title'),
+                   ('_FVwpigX_18', 'Warner Bros. TV', 'dummy title'),
+                   ('mnC0g9KaPpU', 'The Flash Brasil', 'dummy title'),
+                   ('qovt8bD1-mw', 'The TSG WB Nexus', 'dummy title'),
+                   ('WV5sOc0Gj0w', 'Clevver News', 'dummy title'),
+                   ('iv02UYr3LCY', 'Supergirl', 'dummy title')]
+    url = youtube_api.generate_youtube_link(parsed_list)
+    assert url == 'https://www.youtube.com/watch?v=LDtAIOgBljE'
