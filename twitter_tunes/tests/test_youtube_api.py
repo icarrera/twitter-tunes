@@ -1,10 +1,22 @@
 # coding=utf-8
 from mock import patch
 from apiclient.errors import HttpError
-
 from twitter_tunes.scripts import youtube_api
+import pytest
 
-
+TITLES_TERM = [
+    ('Donald Trump Remix', True),
+    ('Donald Trump', False),
+    ('300lb Obama', False),
+    ('300lb Obama Song', True),
+    ('500lb Obama parody', True),
+    ('195 fresh piggies', False),
+    ('Meow Mix Jam', True),
+    ('Meow Mix Dance', True),
+    ('Meow Mix Feast', False),
+    ('Fresh Piggies Music', True),
+    ('', False)
+]
 BAD_YOUTUBE_RESPONSE = {
     'etag': '"T50iqLU0cleWH2-8bQxaAS2DFh8/ZBV2w65lgyrdAoPQHuFS1_5SrKo"',
     'items': [],
@@ -173,3 +185,8 @@ def test_get_link_bad_data(yt_search):
     keyword = 'asdf lawe;lfj'
     url = youtube_api.get_link(keyword)
     assert url == 'https://www.youtube.com/watch?v=b_ILDFp5DGA'
+
+
+@pytest.mark.parametrize('title, result', TITLES_TERM)
+def test_term_checker_0(title, result):
+    assert youtube_api.term_checker(title) == result
