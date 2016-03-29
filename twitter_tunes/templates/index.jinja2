@@ -36,15 +36,15 @@
     </aside>
     <section id="trends">
       <ul>
-        {{% for trend in trends %}}
-        <li id="{{trend}}">
+        {% for trend in trends %}
+        <li id="{{ trend }}">
           <article class="">
-            <h2>{{trend}}</h2>
+            <h2>{{ trend }}</h2>
             <iframe src="" width="" height=""></iframe>
             <img src="../static/loading.gif" alt="" />
           </article>
         </li>
-        {{% endfor %}}
+        {% endfor %}
       </ul>
     </section>
 
