@@ -63,25 +63,25 @@ GOOD_YOUTUBE_RESPONSE = {
 
 
 def test_youtube_parse_no_data():
-    """Test that youtube search parser returns empty list with no data input"""
+    """Test that youtube search parser returns empty list with no data input."""
     parsed = youtube_api.youtube_parse([])
     assert parsed == []
 
 
 def test_youtube_parse_no_search_result():
-    """Test that youtube search parser returns empty list with no data input"""
+    """Test that youtube search parser returns empty list with no data input."""
     parsed = youtube_api.youtube_parse(BAD_YOUTUBE_RESPONSE)
     assert parsed == []
 
 
 def test_youtube_parse_good_result():
-    """Test that search parser returns list of touples with good api search"""
+    """Test that search parser returns list of touples with good api search."""
     parsed = youtube_api.youtube_parse(GOOD_YOUTUBE_RESPONSE)
     assert parsed == [('oyEuk8j8imI', 'JustinBieberVEVO')]
 
 
 def test_generate_youtube_link_VEVO_priority():
-    """Test link generator prioritizes VEVO links"""
+    """Test link generator prioritizes VEVO links."""
     parsed_list = [(u'kTHNpusq654', u'CapitolMusic'),
                    (u'tWbLkXhGEmo', u'CapitolMusic'),
                    (u'wdGZBRAwW74', u'CapitolMusic'),
@@ -94,7 +94,7 @@ def test_generate_youtube_link_VEVO_priority():
 
 
 def test_generate_youtube_link_VEVO_good_input():
-    """Test URL generator prioritizes first returned link"""
+    """Test URL generator prioritizes first returned link."""
     parsed_list = [(u'oyEuk8j8imI', u'JustinBieberVEVO'),
                    (u'fRh_vgS2dFE', u'JustinBieberVEVO'),
                    (u'DK_0jXPuIr0', u'JustinBieberVEVO'),
@@ -109,7 +109,7 @@ def test_generate_youtube_link_VEVO_good_input():
 
 
 def test_generate_youtube_link_no_VEVO_good_result():
-    """Test link generator prioritizes VEVO links"""
+    """Test link generator to return top result as link."""
     parsed_list = [('Cdr8_IQqT-E', 'Warner Bros. TV'),
                    ('LDtAIOgBljE', 'Warner Bros. TV'),
                    ('ObBVYoJY-dA', 'DC Entertainment'),
@@ -125,6 +125,6 @@ def test_generate_youtube_link_no_VEVO_good_result():
 
 
 def test_generate_youtube_link_empty_list():
-    """Test Lionel Richie returned if no results from search"""
+    """Test Lionel Richie returned if no results from search."""
     url = youtube_api.generate_youtube_link([])
     assert url == 'https://www.youtube.com/watch?v=b_ILDFp5DGA'
