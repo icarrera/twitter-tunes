@@ -8,12 +8,31 @@ except:
 from twitter_tunes.scripts import twitter_bot
 
 
-
 @mock.patch('tweepy.API')
-def test_make_tweet(api):
+def test_make_tweet_static_message(api):
     mock_method = api().update_status
     twitter_bot.make_tweet(u"more tests")
     mock_method.assert_called_with(u"more tests")
+
+
+@mock.patch('tweepy.API')
+def test_make_tweet_functions(api):
+    from twitter_tunes.scripts import parser, youtube_api
+    mock_method = api().update_status
+    import bot_test_vars
+    top_trend = u"#StoryFromNorthAmerica"
+    parse_trend = parser.parse_trend(top_trend)
+    # Results that would come from searching this trend.
+    # Saved locally to prevent api calls each test.
+    search_results = bot_test_vars.N_A_SEARCH_RESULTS
+    url = youtube_api.generate_youtube_link(
+        youtube_api.youtube_parse(
+                search_results
+            )
+        )
+    message = twitter_bot.create_message(parse_trend, url)
+    twitter_bot.make_tweet(message)
+    mock_method.assert_called_with(message)
 
 
 def test_bot_create_message_known_params():
