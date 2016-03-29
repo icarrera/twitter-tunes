@@ -37,5 +37,15 @@ def make_tweet(message):
         print('Missing OAuth key or token')
         raise ValueError('Missing OAuth key or token.')
 
+
+def main():
+    """Post a tweet about number one trend and a youtube video related to it.
+
+    """
+    trend = choose_trend(twitter_api.call_twitter_api())
+    parsed_trend = parser.parse_trend(trend)
+    youtube_url = youtube_api.get_link(parsed_trend)
+    make_tweet(create_message(parsed_trend, youtube_url))
+
 if __name__ == '__main__':
-    pass
+    main()
