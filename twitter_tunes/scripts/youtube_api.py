@@ -9,7 +9,7 @@ YOUTUBE_API_SERVICE_NAME = 'youtube'
 YOUTUBE_API_VERSION = 'v3'
 
 
-def youtube_search(keyword, max_results=10):
+def youtube_search(keyword, max_results=20):
     """Query YouTube API for search results based off keyword search."""
     try:
         youtube = build(
@@ -37,7 +37,8 @@ def youtube_parse(search_result):
         for result in search_items:
             video_id = result['id']['videoId']
             video_channel = result['snippet']['channelTitle']
-            video_id_uris.append((video_id, video_channel))
+            video_title = result['snippet']['title']
+            video_id_uris.append((video_id, video_channel, video_title))
         return video_id_uris
     except AttributeError:
         return video_id_uris
