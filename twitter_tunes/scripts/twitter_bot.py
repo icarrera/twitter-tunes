@@ -45,7 +45,9 @@ def main():
     trend = choose_trend(twitter_api.call_twitter_api())
     parsed_trend = parser.parse_trend(trend)
     youtube_url = youtube_api.get_link(parsed_trend)
-    make_tweet(create_message(parsed_trend, youtube_url))
+    message = create_message(trend, youtube_url)
+    make_tweet(message)
+    print('@trending__tunes Made a Tweet:\n{}'.format(message))
 
 if __name__ == '__main__':
     main()
