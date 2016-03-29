@@ -190,3 +190,23 @@ def test_get_link_bad_data(yt_search):
 @pytest.mark.parametrize('title, result', TITLES_TERM)
 def test_term_checker_0(title, result):
     assert youtube_api.term_checker(title) == result
+
+
+def test_url_gen():
+    assert youtube_api.url_gen('12345') == 'https://www.youtube.com/watch?v=12345'
+
+
+def test_generate_youtube_link_keyword():
+    """Test link generator to return top result as link."""
+    parsed_list = [('Cdr8_IQqT-E', 'Warner Bros. TV', 'dummy title'),
+                   ('LDtAIOgBljE', 'Warner Bros. TV', 'dummy title music'),
+                   ('ObBVYoJY-dA', 'DC Entertainment', 'dummy title'),
+                   ('8PrDxP5eybo', 'televisionpromosdb', 'dummy title'),
+                   ('hIyWCxTxPHU', 'televisionpromosdb', 'dummy title'),
+                   ('_FVwpigX_18', 'Warner Bros. TV', 'dummy title'),
+                   ('mnC0g9KaPpU', 'The Flash Brasil', 'dummy title'),
+                   ('qovt8bD1-mw', 'The TSG WB Nexus', 'dummy title'),
+                   ('WV5sOc0Gj0w', 'Clevver News', 'dummy title'),
+                   ('iv02UYr3LCY', 'Supergirl', 'dummy title')]
+    url = youtube_api.generate_youtube_link(parsed_list)
+    assert url == 'https://www.youtube.com/watch?v=LDtAIOgBljE'
