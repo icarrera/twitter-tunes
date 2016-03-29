@@ -3,7 +3,8 @@ try:
     import unittest.mock
 except:
     import mock
-
+from six import string_types
+import unittest
 import pytest
 # create_autospec
 from ..scripts.twitter_api import call_twitter_api, extract_twitter_trends
@@ -27,9 +28,18 @@ FINAL_OUTPUT = ['trend1', 'trend2', 'trend3', 'trend4', 'trend5', 'trend6',
                 'trend7', 'trend8', 'trend9', 'trend10'
                 ]
 
-
-def test_twitter_okay():
-    pass
+# @pytest.fixture()
+# def bad_auth():
+#     consumerKey = 'NOPE'
+#     consumerSecret = 'NOT'
+#     accessToken = 'NEVER'
+#     accessTokenSecret = 'NO'
+#     return consumerKey, consumerSecret, accessToken, accessTokenSecret
+#
+#
+# def test_bad_response():
+#
+#     assert call_twitter_api(bad_auth) == blah
 
 
 # def test_final_output():
@@ -39,7 +49,7 @@ def test_twitter_okay():
 def test_return_type():
     """Test if returned trend list from Twitter API is a list of strings."""
     for trend in call_twitter_api():
-        assert isinstance(trend, str)
+        assert isinstance(trend, string_types)
 
 
 def test_extract_trends():
