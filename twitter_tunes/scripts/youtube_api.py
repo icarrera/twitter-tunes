@@ -17,15 +17,15 @@ def youtube_search(keyword, max_results=10):
             YOUTUBE_API_VERSION,
             developerKey=YOUTUBE_DEVELOPER_KEY
             )
-
         search_response = youtube.search(
         ).list(
                 q=keyword,
                 part='id,snippet',
                 maxResults=max_results).execute()
         return search_response
-    except HttpError:
+    except HttpError as err:
         print('An HTTP error has occurred.')
+        return err
 
 
 def youtube_parse(search_result):
@@ -62,3 +62,8 @@ def generate_youtube_link(parsed_list):
         yt_uri = 'watch?v=' + top_result
         yt_url = yt_path + yt_uri
         return yt_url
+
+
+def get_link(trend):
+    """Get the single link from the entered trend."""
+    return generate_youtube_link(youtube_parse(youtube_search(trend)))
