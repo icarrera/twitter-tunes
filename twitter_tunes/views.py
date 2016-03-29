@@ -16,10 +16,7 @@ def get_topics(request):
     pass
 
 
+@view_config(route_name='video', renderer='json')
 def get_youtube_url(request):
     """Return YT url of a specific trend."""
-    # Get trend out of ajax.
-    # parse the trend.
-    # get youtube url from the query.
-    # return that.
-    pass
+    return {'data': 'stuff goes here'}
