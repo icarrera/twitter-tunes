@@ -4,11 +4,11 @@
     <meta charset="utf-8">
     <title>Trending Twitter Tunes</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/4.0.0/normalize.min.css" type="text/css">
-    <link rel="stylesheet" href="style.css" type="text/css">
+    <link rel="stylesheet" href="../static/style.css" type="text/css">
   </head>
   <body>
     <header>
-      <img src="drawing.png" alt="Twitter Tunes Logo" />
+      <img src="../static/drawing.png" alt="Twitter Tunes Logo" />
       <h1>Trending Twitter Tunes</h1>
       <nav>
         <ul id="nav_ul">
@@ -36,66 +36,15 @@
     </aside>
     <section id="trends">
       <ul>
-        <li>
-          <article class="" id="trend_1">
-            <h2>Trend #1</h2>
+        {{% for trend in trends %}}
+        <li id="{{trend}}">
+          <article class="">
+            <h2>{{trend}}</h2>
             <iframe src="" width="" height=""></iframe>
+            <img src="../static/loading.gif" alt="" />
           </article>
         </li>
-        <li>
-          <article class="" id="trend_2">
-            <h2>Trend #2</h2>
-            <iframe src="" width="" height=""></iframe>
-          </article>
-        </li>
-        <li>
-          <article class="" id="trend_3">
-            <h2>Trend #3</h2>
-            <iframe src="" width="" height=""></iframe>
-          </article>
-        </li>
-        <li>
-          <article class="" id="trend_4">
-            <h2>Trend #4</h2>
-            <iframe src="" width="" height=""></iframe>
-          </article>
-        </li>
-        <li>
-          <article class="" id="trend_5">
-            <h2>Trend #5</h2>
-            <iframe src="" width="" height=""></iframe>
-          </article>
-        </li>
-        <li>
-          <article class="" id="trend_6">
-            <h2>Trend #6</h2>
-            <iframe src="" width="" height=""></iframe>
-          </article>
-        </li>
-        <li>
-          <article class="" id="trend_7">
-            <h2>Trend #7</h2>
-            <iframe src="" width="" height=""></iframe>
-          </article>
-        </li>
-        <li>
-          <article class="" id="trend_8">
-            <h2>Trend #8</h2>
-            <iframe src="" width="" height=""></iframe>
-          </article>
-        </li>
-        <li>
-          <article class="" id="trend_9">
-            <h2>Trend #9</h2>
-            <iframe src="" width="" height=""></iframe>
-          </article>
-        </li>
-        <li>
-          <article class="" id="trend_10">
-            <h2>Trend #10</h2>
-            <iframe src="" width="" height=""></iframe>
-          </article>
-        </li>
+        {{% endfor %}}
       </ul>
     </section>
 
