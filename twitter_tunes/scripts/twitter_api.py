@@ -33,7 +33,6 @@ def call_twitter_api():
         resp = get_twitter_response(api)
         trend_list = extract_twitter_trends(resp)
 
-        print(trend_list[:10])
         return trend_list[:10]
     else:
         print('Missing OAuth key or token')
