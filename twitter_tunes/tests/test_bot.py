@@ -19,11 +19,13 @@ def test_bot_function_params():
     Message should be based on the returns of other functions.
     """
     from twitter_tunes.scripts import parser, youtube_api
+    import bot_test_vars
     trend = u"#StoryFromNorthAmerica"
     parse_trend = parser.parse_trend(trend)
+    search_results = bot_test_vars.N_A_SEARCH_RESULTS
     url = youtube_api.generate_youtube_link(
         youtube_api.youtube_parse(
-            youtube_api.youtube_search(parse_trend)
+                search_results
             )
         )
     message = twitter_bot.create_message(parse_trend, url)
