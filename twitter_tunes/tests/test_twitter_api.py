@@ -62,6 +62,9 @@ def test_return_type(api):
         assert isinstance(trend, string_types)
 
 
-def test_extract_trends():
+@mock.patch('tweepy.API')
+def test_extract_trends(api):
     """Test ability to extract only trend names from Twitter API response."""
+    mocked_method = api().trends_place
+    mocked_method.return_value = RESP_DATA
     assert extract_twitter_trends(RESP_DATA) == FINAL_OUTPUT
