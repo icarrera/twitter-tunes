@@ -19,7 +19,8 @@ def youtube_search(keyword, max_results=10):
             )
         search_response = youtube.search(
         ).list(
-                q=keyword,
+                q=keyword + ' music',
+                type='video',
                 part='id,snippet',
                 maxResults=max_results).execute()
         return search_response
@@ -34,10 +35,9 @@ def youtube_parse(search_result):
     try:
         search_items = search_result.get('items', [])
         for result in search_items:
-            if result['id']['kind'] == 'youtube#video':
-                video_id = result['id']['videoId']
-                video_channel = result['snippet']['channelTitle']
-                video_id_uris.append((video_id, video_channel))
+            video_id = result['id']['videoId']
+            video_channel = result['snippet']['channelTitle']
+            video_id_uris.append((video_id, video_channel))
         return video_id_uris
     except AttributeError:
         return video_id_uris
