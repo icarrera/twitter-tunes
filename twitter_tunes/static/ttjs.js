@@ -5,7 +5,6 @@ $(document).ready(function() {
 
 function update(trend){
     $.get('/youtube/' + trend, function(data){
-        console.log(data)
-        $('#'+trend).attr('src', data)
+        $('#iframe_' + trend).attr('src', data.data)
     })
 }
