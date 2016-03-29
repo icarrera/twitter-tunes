@@ -33,3 +33,16 @@ def test_bot_function_params():
     message = twitter_bot.create_message(parse_trend, url)
     assert (u'Story From North America' in message and
             u'https://www.youtube.com/watch?v=ms2klX-puUU' in message)
+
+
+def test_bot_choose_trend():
+    """Test choose trend function.
+
+    Should return the first trend from the trends searched by twitter_api.
+    """
+    import bot_test_vars
+    trends = bot_test_vars.TRENDS
+    assert twitter_bot.choose_trend(trends) == trends[0]
+
+
+
