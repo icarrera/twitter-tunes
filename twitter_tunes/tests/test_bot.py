@@ -22,6 +22,8 @@ def test_bot_function_params():
     import bot_test_vars
     trend = u"#StoryFromNorthAmerica"
     parse_trend = parser.parse_trend(trend)
+    # Results that would come from searching this trend.
+    # Saved locally to prevent api calls each test.
     search_results = bot_test_vars.N_A_SEARCH_RESULTS
     url = youtube_api.generate_youtube_link(
         youtube_api.youtube_parse(
