@@ -22,7 +22,7 @@ def test_make_tweet_main(api):
     """
     from twitter_tunes.scripts import parser, youtube_api
     mock_method = api().update_status
-    import bot_test_vars
+    import twitter_tunes.tests.bot_test_vars as bot_test_vars
     top_trend = twitter_bot.choose_trend(bot_test_vars.TRENDS)
     parse_trend = parser.parse_trend(top_trend)
     # Results that would come from searching this trend.
@@ -54,7 +54,7 @@ def test_bot_message_function_params():
     Message should be based on the returns of other functions.
     """
     from twitter_tunes.scripts import parser, youtube_api
-    import bot_test_vars
+    import twitter_tunes.tests.bot_test_vars as bot_test_vars
     trend = u"#StoryFromNorthAmerica"
     parse_trend = parser.parse_trend(trend)
     # Results that would come from searching this trend.
@@ -75,6 +75,6 @@ def test_bot_choose_trend():
 
     Should return the first trend from the trends searched by twitter_api.
     """
-    import bot_test_vars
+    import twitter_tunes.tests.bot_test_vars as bot_test_vars
     trends = bot_test_vars.TRENDS
     assert twitter_bot.choose_trend(trends) == trends[0]

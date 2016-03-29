@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
-import twitter_api
+from twitter_tunes.scripts import twitter_api
 import tweepy
-import youtube_api
-import parser
+from twitter_tunes.scripts import youtube_api
+from twitter_tunes.scripts import parser
 import os
 
 BASE_MESSAGE = u"""{trend} is trending right now. Here's its tune! {url}"""
