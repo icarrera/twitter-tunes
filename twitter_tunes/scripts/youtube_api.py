@@ -1,7 +1,6 @@
 # coding=utf-8
 from apiclient.discovery import build
 from apiclient.errors import HttpError
-# import apiclient
 import os
 
 
@@ -25,7 +24,6 @@ def youtube_search(keyword, max_results=10):
                 maxResults=max_results).execute()
         return search_response
     except HttpError as err:
-        # import pdb; pdb.set_trace()
         print('An HTTP error has occurred.')
         return err
 

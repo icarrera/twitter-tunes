@@ -21,7 +21,7 @@ GOOD_YOUTUBE_RESPONSE = {
         'kind': 'youtube#searchResult',
         'snippet': {'channelId': 'UCHkj014U2CQ2Nv0UZeYpE_A',
                     'channelTitle': 'JustinBieberVEVO',
-                    'description': "'Purpose' Available Everywhere Now! iTunes: http://smarturl.it/PurposeDlx?IQid=VEVO1113 Stream & Add To Your Spotify Playlist: http://smarturl.it/sPurpose?",
+                    'description': "'Purpose' Available Everywhere Now!",
                     'liveBroadcastContent': 'none',
                     'publishedAt': '2015-11-14T15:00:01.000Z',
                     'thumbnails': {
