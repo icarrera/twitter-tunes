@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Trending Twitter Tunes</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/4.0.0/normalize.min.css" type="text/css">
+    <link rel="stylesheet" href="../static/style.css" type="text/css">
+  </head>
+  <body>
+    <header>
+      <img src="../static/drawing.png" alt="Twitter Tunes Logo" />
+      <h1>Trending Twitter Tunes</h1>
+      <nav>
+        <ul id="nav_ul">
+          <li class="nav_li"><a href="/">Home</a></li>
+          <li class="nav_li"><a href="/about">About</a></li>
+          <li  class="nav_li"><a href="www.twitter.com">Twitter</a></li>
+        </ul>
+      </nav>
+      <hgroup>
+      </hgroup>
+    </header>
+    <section id="blurbabout">
+      <h2>Blurbabout</h2>
+      <p>
+        blurbabout blurbabout blurbabout.
+        blurbabout blurbabout blurbabout.
+        blurbabout blurbabout blurbabout.
+        blurbabout blurbabout blurbabout.
+      </p>
+    </section>
+    <aside id="bot_feed">
+      <div id="twitter_feed">
+        Bot Twitter Feed
+      </div>
+    </aside>
+    <section id="trends">
+      <ul>
+        {% for trend in trends %}
+        <li id="{{ trend|replace('#', '')}}">
+          <article class="">
+            <h2>{{ trend }}</h2>
+            <iframe src="../static/loading.gif" width="" height=""></iframe>
+          </article>
+        </li>
+        {% endfor %}
+      </ul>
+    </section>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.0.0-beta1/jquery.min.js"></script>
+    <script src="../static/ttjs.js"></script>
+  </body>
+  <footer>
+    logo images:
+    Twitter graphic by <a href="http://www.icomoon.io">Icomoon</a> and Note graphic by <a href="http://www.freepik.com/">Freepik</a> from <a href="http://www.flaticon.com/">Flaticon</a> are licensed under <a href="http://creativecommons.org/licenses/by/3.0/" title="Creative Commons BY 3.0">CC BY 3.0</a>. Made with <a href="http://logomakr.com" title="Logo Maker">Logo Maker</a>
+  </footer>
+</html>
