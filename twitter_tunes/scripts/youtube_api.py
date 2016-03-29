@@ -12,7 +12,6 @@ YOUTUBE_API_VERSION = 'v3'
 
 def youtube_search(keyword, max_results=10):
     """Query YouTube API for search results based off keyword search."""
-    import pdb; pdb.set_trace()
     try:
         youtube = apiclient.discovery.build(
             YOUTUBE_API_SERVICE_NAME,

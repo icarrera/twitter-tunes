@@ -1,5 +1,4 @@
 # coding=utf-8
-from mock import MagicMock
 from mock import patch
 
 from twitter_tunes.scripts import youtube_api
@@ -49,12 +48,11 @@ GOOD_YOUTUBE_RESPONSE = {
     'regionCode': 'US'}
 
 
-# @patch('twitter_tunes.scripts.youtube.search')
+# @patch('apiclient.discovery.build')
 # def test_youtube_search_get_data(yt_search):
 #     """Test to see if we are getting result from search."""
-#     mock_method = yt_search
-#     import pdb; pdb.set_trace()
-#     mock_method().list()
+#     mock_method = yt_search().search().list()
+#     mock_method.return_value = GOOD_YOUTUBE_RESPONSE
 #     keyword = 'test search'
 #     result = youtube_api.youtube_search(keyword)
 #     assert 'items' in result
