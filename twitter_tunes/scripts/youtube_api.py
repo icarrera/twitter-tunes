@@ -18,15 +18,16 @@ def youtube_search(keyword, max_results=10):
             YOUTUBE_API_VERSION,
             developerKey=YOUTUBE_DEVELOPER_KEY
             )
-
         search_response = youtube.search(
         ).list(
                 q=keyword,
                 part='id,snippet',
                 maxResults=max_results).execute()
         return search_response
-    except HttpError:
+    except HttpError as err:
+        # import pdb; pdb.set_trace()
         print('An HTTP error has occurred.')
+        return err
 
 
 def youtube_parse(search_result):
