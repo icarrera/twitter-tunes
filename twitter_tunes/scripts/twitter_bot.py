@@ -1,10 +1,15 @@
 # -*- coding: utf-8 -*-
 import twitter_api
+import tweepy
 import youtube_api
 import parser
-import sys
+import os
 
 BASE_MESSAGE = u"""{trend} is trending right now. Here's its tune! {url}"""
+consumerKey = os.environ.get('TWITTER_CONSUMERKEY', None)
+consumerSecret = os.environ.get('TWITTER_CONSUMERSECRET', None)
+accessToken = os.environ.get('TWITTER_ACCESSTOKEN', None)
+accessTokenSecret = os.environ.get('TWITTER_ACCESSTOKENSECRET', None)
 
 
 def create_message(parsed_trend, youtube_url):
@@ -23,13 +28,14 @@ def choose_trend(trends):
 
 def make_tweet(message):
     """Update Twitter status with message."""
-    pass
+    if consumerKey and consumerSecret and accessToken and accessTokenSecret:
+        auth = tweepy.OAuthHandler(consumerKey, consumerSecret)
+        auth.set_access_token(accessToken, accessTokenSecret)
+        api = tweepy.API(auth)
+        return api.update_status(message)
+    else:
+        print('Missing OAuth key or token')
+        raise ValueError('Missing OAuth key or token.')
 
 if __name__ == '__main__':
-    trend = '#ThingsIWantSiriToSay'
-    url = youtube_api.generate_youtube_link(
-            youtube_api.youtube_parse(
-                youtube_api.youtube_search(parser.parse_trend(trend))
-            )
-        )
-    print(create_message(parser.parse_trend(trend), url))
+    pass

@@ -8,12 +8,12 @@ except:
 from twitter_tunes.scripts import twitter_bot
 
 
-class MockingBotTweet(unittest.TestCase):
 
-    @mock.patch('twitter_tunes.scripts.twitter_bot')
-    def test_make_tweet(self, mock_bot):
-        twitter_bot.make_tweet(u"test message")
-        mock_bot.make_tweet.assert_called_with(u"test message")
+@mock.patch('tweepy.API')
+def test_make_tweet(api):
+    mock_method = api().update_status
+    twitter_bot.make_tweet(u"more tests")
+    mock_method.assert_called_with(u"more tests")
 
 
 def test_bot_create_message_known_params():
