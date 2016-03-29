@@ -8,13 +8,18 @@ from twitter_tunes.scripts import twitter_bot
 
 @mock.patch('tweepy.API')
 def test_make_tweet_static_message(api):
+    """Test if bot makes tweet with a set message."""
     mock_method = api().update_status
     twitter_bot.make_tweet(u"more tests")
     mock_method.assert_called_with(u"more tests")
 
 
 @mock.patch('tweepy.API')
-def test_make_tweet_functions(api):
+def test_make_tweet_main(api):
+    """Test if bot makes tweet with api data.
+
+    This is what the main function would do.
+    """
     from twitter_tunes.scripts import parser, youtube_api
     mock_method = api().update_status
     import bot_test_vars
