@@ -20,6 +20,11 @@ def choose_trend(trends):
     """
     return trends[0]
 
+
+def make_tweet(message):
+    """Update Twitter status with message."""
+    pass
+
 if __name__ == '__main__':
     trend = '#ThingsIWantSiriToSay'
     url = youtube_api.generate_youtube_link(

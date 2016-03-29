@@ -1,6 +1,19 @@
 # -*- coding: utf-8 -*-
 import pytest
+import unittest
+try:
+    import unittest.mock as mock
+except:
+    import mock
 from twitter_tunes.scripts import twitter_bot
+
+
+class MockingBotTweet(unittest.TestCase):
+
+    @mock.patch('twitter_tunes.scripts.twitter_bot')
+    def test_make_tweet(self, mock_bot):
+        twitter_bot.make_tweet(u"test message")
+        mock_bot.make_tweet.assert_called_with(u"test message")
 
 
 def test_bot_create_message_known_params():
@@ -45,4 +58,8 @@ def test_bot_choose_trend():
     assert twitter_bot.choose_trend(trends) == trends[0]
 
 
-
+@mock.patch('tweepy.API')
+def test_bot_make_tweet(api):
+    """Test if bot makes a tweet."""
+    message = "Hey here's a test message."
+    mock_post = twitter_bot.make_tweet(message)
