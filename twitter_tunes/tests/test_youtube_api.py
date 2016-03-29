@@ -1,5 +1,6 @@
 # coding=utf-8
 from mock import MagicMock
+from mock import patch
 
 from twitter_tunes.scripts import youtube_api
 
@@ -48,26 +49,15 @@ GOOD_YOUTUBE_RESPONSE = {
     'regionCode': 'US'}
 
 
-youtube_search = MagicMock(name='youtube_search',
-                           return_value=GOOD_YOUTUBE_RESPONSE)
-
-
-def test_youtube_search_get_data():
-    """Test to see if we are getting result from search."""
-    keyword = 'test search'
-    result = youtube_search(keyword)
-    assert len(result) > 0
-
-
-youtube_search = MagicMock(name='youtube_search',
-                           return_value=BAD_YOUTUBE_RESPONSE)
-
-
-def test_youtube_search_no_results():
-    """Test if you get empty item list from search with no results."""
-    keyword = 'asdf safvdafvdsvafs'
-    result = youtube_search(keyword)
-    assert result.get('items') == []
+# @patch('twitter_tunes.scripts.youtube.search')
+# def test_youtube_search_get_data(yt_search):
+#     """Test to see if we are getting result from search."""
+#     mock_method = yt_search
+#     import pdb; pdb.set_trace()
+#     mock_method().list()
+#     keyword = 'test search'
+#     result = youtube_api.youtube_search(keyword)
+#     assert 'items' in result
 
 
 def test_youtube_parse_no_data():
