@@ -6,9 +6,9 @@ except:
 from six import string_types
 import unittest
 import pytest
-# create_autospec
 from ..scripts.twitter_api import call_twitter_api, extract_twitter_trends
 from ..scripts.twitter_api import WOEID_US
+import os.path
 
 RESP_DATA = [{'words': 'words_value',
               'trends': [
@@ -30,16 +30,13 @@ FINAL_OUTPUT = ['trend1', 'trend2', 'trend3', 'trend4', 'trend5', 'trend6',
                 ]
 
 
-# @pytest.fixture(scope='function')
-# def bad_auth():
-#     consumerKey = 'NOPE'
-#     consumerSecret = 'NOT'
-#     accessToken = 'NEVER'
-#     return consumerKey, consumerSecret, accessToken
-#
-#
-# def test_bad_response(bad_auth):
-#     assert call_twitter_api() == 'Missing OAuth key or token'
+def test_bad_request():
+    import twitter_tunes.scripts.twitter_api as tapi
+    old_key = tapi.consumerKey
+    tapi.consumerKey = None
+    with pytest.raises(ValueError):
+        call_twitter_api()
+    tapi.consumerKey = old_key
 
 
 @mock.patch('tweepy.API')
@@ -68,3 +65,13 @@ def test_extract_trends(api):
     mocked_method = api().trends_place
     mocked_method.return_value = RESP_DATA
     assert extract_twitter_trends(RESP_DATA) == FINAL_OUTPUT
+
+# additional testing:
+# how application responds
+# what if twitter api is not there?
+# what does tweepy api do when netowrk is not present?
+# make api call with stuff doesn't fit?
+# bad string etc
+# if user designates own location etc
+# extract_twitter_trends
+# if call_twitter_api fails in a particular way
