@@ -37,10 +37,14 @@
     <section id="trends">
       <ul>
         {% for trend in trends %}
+        {% if trend[0] == '#' %}
+        <li id="{{ trend[1:] }}">
+        {% else %}
         <li id="{{ trend }}">
+        {% endif %}
           <article class="">
             <h2>{{ trend }}</h2>
-            <iframe id='iframe_{{trend}}' src="../static/loading.gif" width="" height=""></iframe>
+            <iframe src="../static/loading.gif" width="" height=""></iframe>
             <!-- <img src="../static/loading.gif" alt="" /> -->
           </article>
         </li>

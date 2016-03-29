@@ -1,10 +1,13 @@
 $(document).ready(function() {
-    // console.log($('#trends > ul > li:first').attr('id'));
-    update($('#trends > ul > li:first').attr('id'));
+    update($('#trends > ul > li:first'));
+    $('#trends').on('click', 'li', function(){
+        update($(this))
+    })
 });
 
 function update(trend){
-    $.get('/youtube/' + trend, function(data){
-        $('#iframe_' + trend).attr('src', data.url)
+    console.log(trend.attr('id'))
+    $.get('/youtube/' + trend.attr('id'), function(data){
+        trend.children('article').children('iframe').attr('src', data.url)
     })
 }
