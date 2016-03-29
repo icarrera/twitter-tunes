@@ -1,12 +1,14 @@
 # -*- coding:utf-8 -*-
 try:
-    import unittest.mock
+    import unittest.mock as mock
 except:
     import mock
-
+from six import string_types
+import unittest
 import pytest
-# create_autospec
 from ..scripts.twitter_api import call_twitter_api, extract_twitter_trends
+from ..scripts.twitter_api import WOEID_US
+import os.path
 
 RESP_DATA = [{'words': 'words_value',
               'trends': [
@@ -28,20 +30,48 @@ FINAL_OUTPUT = ['trend1', 'trend2', 'trend3', 'trend4', 'trend5', 'trend6',
                 ]
 
 
-def test_twitter_okay():
-    pass
+def test_bad_request():
+    import twitter_tunes.scripts.twitter_api as tapi
+    old_key = tapi.consumerKey
+    tapi.consumerKey = None
+    with pytest.raises(ValueError):
+        call_twitter_api()
+    tapi.consumerKey = old_key
 
 
-# def test_final_output():
-#     assert len(call_twitter_api()) == len(FINAL_OUTPUT)
+@mock.patch('tweepy.API')
+def test_final_output(api):
+    """Test if length of our call_twitter_api list is as expected."""
+    mocked_method = api().trends_place
+    mocked_method.return_value = RESP_DATA
+    assert len(call_twitter_api()) == len(FINAL_OUTPUT)
 
-# may remove this test when implementing mock
-def test_return_type():
+
+@mock.patch('tweepy.API')
+def test_return_type(api):
     """Test if returned trend list from Twitter API is a list of strings."""
-    for trend in call_twitter_api():
-        assert isinstance(trend, str)
+    mocked_method = api().trends_place
+    mocked_method.return_value = RESP_DATA
+    for trends in call_twitter_api():
+        mocked_method.assert_called_once_with(WOEID_US)
+        for trend in trends:
+            assert isinstance(trend, string_types)
+        assert isinstance(trend, string_types)
 
 
-def test_extract_trends():
+@mock.patch('tweepy.API')
+def test_extract_trends(api):
     """Test ability to extract only trend names from Twitter API response."""
+    mocked_method = api().trends_place
+    mocked_method.return_value = RESP_DATA
     assert extract_twitter_trends(RESP_DATA) == FINAL_OUTPUT
+
+# additional testing:
+# how application responds
+# what if twitter api is not there?
+# what does tweepy api do when netowrk is not present?
+# make api call with stuff doesn't fit?
+# bad string etc
+# if user designates own location etc
+# extract_twitter_trends
+# if call_twitter_api fails in a particular way
