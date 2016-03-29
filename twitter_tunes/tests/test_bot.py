@@ -1,6 +1,4 @@
 # -*- coding: utf-8 -*-
-import pytest
-import unittest
 try:
     import unittest.mock as mock
 except:
@@ -20,7 +18,7 @@ def test_make_tweet_functions(api):
     from twitter_tunes.scripts import parser, youtube_api
     mock_method = api().update_status
     import bot_test_vars
-    top_trend = u"#StoryFromNorthAmerica"
+    top_trend = twitter_bot.choose_trend(bot_test_vars.TRENDS)
     parse_trend = parser.parse_trend(top_trend)
     # Results that would come from searching this trend.
     # Saved locally to prevent api calls each test.
@@ -45,7 +43,7 @@ def test_bot_create_message_known_params():
     assert u'A Trend' in message and url in message
 
 
-def test_bot_function_params():
+def test_bot_message_function_params():
     """Test to see bot can return a message.
 
     Message should be based on the returns of other functions.
@@ -75,10 +73,3 @@ def test_bot_choose_trend():
     import bot_test_vars
     trends = bot_test_vars.TRENDS
     assert twitter_bot.choose_trend(trends) == trends[0]
-
-
-@mock.patch('tweepy.API')
-def test_bot_make_tweet(api):
-    """Test if bot makes a tweet."""
-    message = "Hey here's a test message."
-    mock_post = twitter_bot.make_tweet(message)
