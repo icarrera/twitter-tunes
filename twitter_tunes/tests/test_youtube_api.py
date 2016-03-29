@@ -1,5 +1,6 @@
 # coding=utf-8
 from mock import patch
+from apiclient.errors import HttpError
 
 from twitter_tunes.scripts import youtube_api
 
@@ -20,7 +21,7 @@ GOOD_YOUTUBE_RESPONSE = {
         'kind': 'youtube#searchResult',
         'snippet': {'channelId': 'UCHkj014U2CQ2Nv0UZeYpE_A',
                     'channelTitle': 'JustinBieberVEVO',
-                    'description': "'Purpose' Available Everywhere Now! iTunes: http://smarturl.it/PurposeDlx?IQid=VEVO1113 Stream & Add To Your Spotify Playlist: http://smarturl.it/sPurpose?",
+                    'description': "'Purpose' Available Everywhere Now!",
                     'liveBroadcastContent': 'none',
                     'publishedAt': '2015-11-14T15:00:01.000Z',
                     'thumbnails': {
@@ -48,14 +49,45 @@ GOOD_YOUTUBE_RESPONSE = {
     'regionCode': 'US'}
 
 
-# @patch('apiclient.discovery.build')
-# def test_youtube_search_get_data(yt_search):
-#     """Test to see if we are getting result from search."""
-#     mock_method = yt_search().search().list()
-#     mock_method.return_value = GOOD_YOUTUBE_RESPONSE
-#     keyword = 'test search'
-#     result = youtube_api.youtube_search(keyword)
-#     assert 'items' in result
+HTTPERROR_RESP = {
+    'content-type': 'application/json; charset=UTF-8',
+    'x-frame-options': 'SAMEORIGIN',
+    'status': '400',
+    'x-xss-protection': '1; mode=block',
+    'x-content-type-options': 'nosniff',
+    'cache-control': 'private, max-age=0',
+    'alt-svc': 'quic=":443"; ma=2592000; v="31,30,29,28,27,26,25"',
+    'transfer-encoding': 'chunked',
+    'expires': 'Tue, 29 Mar 2016 20:03:06 GMT',
+    'server': 'GSE', 'vary': 'Origin, X-Origin',
+    '-content-encoding': 'gzip', 'alternate-protocol': '443:quic,p=1',
+    'date': 'Tue, 29 Mar 2016 20:03:06 GMT',
+    'content-length': '176'}
+
+HTTPERROR_CONT = b'{\n "error": {\n  "errors": [\n   {\n    "domain":'
+' "usageLimits",\n    "reason": "keyInvalid",\n    "message": "Bad'
+' Request"\n   }\n  ],\n  "code": 400,\n  "message": "Bad Request"\n }\n}\n'
+
+
+@patch('twitter_tunes.scripts.youtube_api.build')
+def test_youtube_search_get_data(yt_search):
+    """Test to see if we are getting result from search."""
+    mock_method = yt_search().search().list().execute
+    mock_method.return_value = GOOD_YOUTUBE_RESPONSE
+    keyword = 'test search'
+    result = youtube_api.youtube_search(keyword)
+    assert 'items' in result
+
+
+@patch('twitter_tunes.scripts.youtube_api.build')
+def test_youtube_search_bad_token(yt_search):
+    """Test that we get an HttpError is raised with bad youtube search."""
+    mock_method = yt_search().search().list().execute
+    mock_method.side_effect = HttpError(HTTPERROR_RESP, HTTPERROR_CONT)
+    keyword = 'test search'
+    err = youtube_api.youtube_search(keyword)
+    assert err.resp == HTTPERROR_RESP
+    assert err.content == HTTPERROR_CONT
 
 
 def test_youtube_parse_no_data():
@@ -123,4 +155,22 @@ def test_generate_youtube_link_no_VEVO_good_result():
 def test_generate_youtube_link_empty_list():
     """Test Lionel Richie returned if no results from search."""
     url = youtube_api.generate_youtube_link([])
+    assert url == 'https://www.youtube.com/watch?v=b_ILDFp5DGA'
+
+
+@patch('twitter_tunes.scripts.youtube_api.build')
+def test_get_link_good_data(yt_search):
+    mock_method = yt_search().search().list().execute
+    mock_method.return_value = GOOD_YOUTUBE_RESPONSE
+    keyword = 'Justin Bieber'
+    url = youtube_api.get_link(keyword)
+    assert url == 'https://www.youtube.com/watch?v=oyEuk8j8imI'
+
+
+@patch('twitter_tunes.scripts.youtube_api.build')
+def test_get_link_bad_data(yt_search):
+    mock_method = yt_search().search().list().execute
+    mock_method.return_value = BAD_YOUTUBE_RESPONSE
+    keyword = 'asdf lawe;lfj'
+    url = youtube_api.get_link(keyword)
     assert url == 'https://www.youtube.com/watch?v=b_ILDFp5DGA'
