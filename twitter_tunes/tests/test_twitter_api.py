@@ -1,6 +1,6 @@
 # -*- coding:utf-8 -*-
 try:
-    import unittest.mock
+    import unittest.mock as mock
 except:
     import mock
 from six import string_types
@@ -8,6 +8,7 @@ import unittest
 import pytest
 # create_autospec
 from ..scripts.twitter_api import call_twitter_api, extract_twitter_trends
+from ..scripts.twitter_api import WOEID_US
 
 RESP_DATA = [{'words': 'words_value',
               'trends': [
@@ -28,27 +29,36 @@ FINAL_OUTPUT = ['trend1', 'trend2', 'trend3', 'trend4', 'trend5', 'trend6',
                 'trend7', 'trend8', 'trend9', 'trend10'
                 ]
 
-# @pytest.fixture()
+
+# @pytest.fixture(scope='function')
 # def bad_auth():
 #     consumerKey = 'NOPE'
 #     consumerSecret = 'NOT'
 #     accessToken = 'NEVER'
-#     accessTokenSecret = 'NO'
-#     return consumerKey, consumerSecret, accessToken, accessTokenSecret
+#     return consumerKey, consumerSecret, accessToken
 #
 #
-# def test_bad_response():
-#
-#     assert call_twitter_api(bad_auth) == blah
+# def test_bad_response(bad_auth):
+#     assert call_twitter_api() == 'Missing OAuth key or token'
 
 
-# def test_final_output():
-#     assert len(call_twitter_api()) == len(FINAL_OUTPUT)
+@mock.patch('tweepy.API')
+def test_final_output(api):
+    """Test if length of our call_twitter_api list is as expected."""
+    mocked_method = api().trends_place
+    mocked_method.return_value = RESP_DATA
+    assert len(call_twitter_api()) == len(FINAL_OUTPUT)
 
-# may remove this test when implementing mock
-def test_return_type():
+
+@mock.patch('tweepy.API')
+def test_return_type(api):
     """Test if returned trend list from Twitter API is a list of strings."""
-    for trend in call_twitter_api():
+    mocked_method = api().trends_place
+    mocked_method.return_value = RESP_DATA
+    for trends in call_twitter_api():
+        mocked_method.assert_called_once_with(WOEID_US)
+        for trend in trends:
+            assert isinstance(trend, string_types)
         assert isinstance(trend, string_types)
 
 
