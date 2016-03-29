@@ -156,3 +156,21 @@ def test_generate_youtube_link_empty_list():
     """Test Lionel Richie returned if no results from search."""
     url = youtube_api.generate_youtube_link([])
     assert url == 'https://www.youtube.com/watch?v=b_ILDFp5DGA'
+
+
+@patch('twitter_tunes.scripts.youtube_api.build')
+def test_get_link_good_data(yt_search):
+    mock_method = yt_search().search().list().execute
+    mock_method.return_value = GOOD_YOUTUBE_RESPONSE
+    keyword = 'Justin Bieber'
+    url = youtube_api.get_link(keyword)
+    assert url == 'https://www.youtube.com/watch?v=oyEuk8j8imI'
+
+
+@patch('twitter_tunes.scripts.youtube_api.build')
+def test_get_link_bad_data(yt_search):
+    mock_method = yt_search().search().list().execute
+    mock_method.return_value = BAD_YOUTUBE_RESPONSE
+    keyword = 'asdf lawe;lfj'
+    url = youtube_api.get_link(keyword)
+    assert url == 'https://www.youtube.com/watch?v=b_ILDFp5DGA'
