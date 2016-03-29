@@ -5,7 +5,7 @@ from twitter_tunes.scripts import parser, twitter_api
 @view_config(route_name='home', renderer='templates/index.jinja2')
 def my_view(request):
     # trends = twitter_api.call_twitter_api()
-    trends = ['one', 'two']
+    trends = ['one', '#two', 'kyrie', '#DogsInTheRoom', 'Patty Duke', '#Trends', '#TwitterTunes', '#Hashtag', '#Lunch Time', '#TGIF']
     return {'trends': trends}
 
 
