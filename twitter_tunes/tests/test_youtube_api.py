@@ -1,11 +1,8 @@
 # coding=utf-8
-# import pytest
-# from mock import patch
+from mock import MagicMock
 
 from twitter_tunes.scripts import youtube_api
-# from mock_youtube_api_response import GOOD_YOUTUBE_RESPONSE
 
-# from youtube_api import youtube_search
 
 BAD_YOUTUBE_RESPONSE = {
     'etag': '"q5k97EMVGxODeKcDgp8gnMu79wM/ZBV2w65lgyrdAoPQHuFS1_5SrKo"',
@@ -46,20 +43,26 @@ GOOD_YOUTUBE_RESPONSE = {
 # SOME OF THESE SEARCHES SHOULD BE ADDED TO CONFTEST TO REDUCE API CALLS #
 
 
-# @patch('youtube_api.youtube_search', GOOD_YOUTUBE_RESPONSE)
-# def test_youtube_search_get_data():
-#     """Test to see if we are getting result from search."""
-#     keyword = 'test search'
-#     result = youtube_api.youtube_search(keyword)
-#     assert len(result) > 0
+youtube_search = MagicMock(name='youtube_search',
+                           return_value=GOOD_YOUTUBE_RESPONSE)
 
 
-# @patch('youtube_search', BAD_YOUTUBE_RESPONSE)
-# def test_youtube_search_no_results():
-#     """Test if you get empty item list from search with no results."""
-#     keyword = 'asdf safvdafvdsvafs'
-#     result = youtube_search(keyword)
-#     assert result.get('items') == []
+def test_youtube_search_get_data():
+    """Test to see if we are getting result from search."""
+    keyword = 'test search'
+    result = youtube_search(keyword)
+    assert len(result) > 0
+
+
+youtube_search = MagicMock(name='youtube_search',
+                           return_value=BAD_YOUTUBE_RESPONSE)
+
+
+def test_youtube_search_no_results():
+    """Test if you get empty item list from search with no results."""
+    keyword = 'asdf safvdafvdsvafs'
+    result = youtube_search(keyword)
+    assert result.get('items') == []
 
 
 def test_youtube_parse_no_data():
