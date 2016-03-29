@@ -48,14 +48,14 @@ GOOD_YOUTUBE_RESPONSE = {
     'regionCode': 'US'}
 
 
-# @patch('apiclient.discovery.build')
-# def test_youtube_search_get_data(yt_search):
-#     """Test to see if we are getting result from search."""
-#     mock_method = yt_search().search().list()
-#     mock_method.return_value = GOOD_YOUTUBE_RESPONSE
-#     keyword = 'test search'
-#     result = youtube_api.youtube_search(keyword)
-#     assert 'items' in result
+@patch('twitter_tunes.scripts.youtube_api.build')
+def test_youtube_search_get_data(yt_search):
+    """Test to see if we are getting result from search."""
+    mock_method = yt_search().search().list().execute
+    mock_method.return_value = GOOD_YOUTUBE_RESPONSE
+    keyword = 'test search'
+    result = youtube_api.youtube_search(keyword)
+    assert 'items' in result
 
 
 def test_youtube_parse_no_data():
