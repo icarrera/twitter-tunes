@@ -20,5 +20,8 @@ def get_youtube_url(request):
     """Return YT url of a specific trend."""
     trend = request.matchdict['trend']
     search_term = parser.parse_trend(trend)
-    url = youtube_api.youtube_search()
+    url = youtube_api.get_link(search_term)
+    print(url)
+    url = url.replace('watch?v=', 'embed/')
+    print(url)
     return {'url': url}
