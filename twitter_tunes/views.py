@@ -1,11 +1,10 @@
 from pyramid.view import view_config
-from twitter_tunes.scripts import parser, twitter_api
-
+from twitter_tunes.scripts import parser, twitter_api, youtube_api
 
 @view_config(route_name='home', renderer='templates/index.jinja2')
-def my_view(request):
-    # trends = twitter_api.call_twitter_api()
-    trends = ['one', '#two', 'kyrie', '#DogsInTheRoom', 'Patty Duke', '#Trends', '#TwitterTunes', '#Hashtag', '#Lunch Time', '#TGIF']
+def home(request):
+    trends = twitter_api.call_twitter_api()
+    # trends = ['one two step', '#two', 'kyrie', '#DogsInTheRoom', 'Patty Duke', '#Trends', '#TwitterTunes', '#Hashtag', '#Lunch Time', '#TGIF']
     return {'trends': trends}
 
 
@@ -16,10 +15,13 @@ def get_topics(request):
     pass
 
 
+@view_config(route_name='video', renderer='json')
 def get_youtube_url(request):
     """Return YT url of a specific trend."""
-    # Get trend out of ajax.
-    # parse the trend.
-    # get youtube url from the query.
-    # return that.
-    pass
+    trend = request.matchdict['trend']
+    search_term = parser.parse_trend(trend)
+    url = youtube_api.get_link(search_term)
+    print(url)
+    url = url.replace('watch?v=', 'embed/')
+    print(url)
+    return {'url': url}

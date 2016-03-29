@@ -37,11 +37,15 @@
     <section id="trends">
       <ul>
         {% for trend in trends %}
+        {% if trend[0] == '#' %}
+        <li id="{{ trend[1:] }}">
+        {% else %}
         <li id="{{ trend }}">
+        {% endif %}
           <article class="">
             <h2>{{ trend }}</h2>
-            <iframe src="" width="" height=""></iframe>
-            <img src="../static/loading.gif" alt="" />
+            <iframe src="../static/loading.gif" width="" height=""></iframe>
+            <!-- <img src="../static/loading.gif" alt="" /> -->
           </article>
         </li>
         {% endfor %}
@@ -49,6 +53,7 @@
     </section>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.0.0-beta1/jquery.min.js"></script>
+    <script src="../static/ttjs.js"></script>
   </body>
   <footer>
     logo images:
