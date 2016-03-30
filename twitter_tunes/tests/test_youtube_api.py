@@ -209,4 +209,4 @@ def test_generate_youtube_link_keyword():
                    ('WV5sOc0Gj0w', 'Clevver News', 'dummy title'),
                    ('iv02UYr3LCY', 'Supergirl', 'dummy title')]
     url = youtube_api.generate_youtube_link(parsed_list)
-    assert url[0] == 'https://www.youtube.com/watch?v=LDtAIOgBljE'
+    assert url == ('https://www.youtube.com/watch?v=LDtAIOgBljE', True)
