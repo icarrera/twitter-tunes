@@ -15,7 +15,7 @@ def timed_job():
 
 @sched.scheduled_job('interval', minutes=9)
 def timed_job_redis():
-    redis.main()
+    redis.set_redis_trend_list()
 
 
 sched.start()

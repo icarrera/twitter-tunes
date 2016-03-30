@@ -17,7 +17,27 @@ REDIS_PARSE = [
 
 
 GOOD_REDIS_RETURN = b"{'trend3': 'url3', 'trend2': 'url2', 'trend1': 'url1'}"
-# BAD_REDIS_RETURN = b"hello"
+
+
+TWITTER_TRENDS = ["D'Angelo Russell",
+                  '#ThenItAllWentHorriblyWrong',
+                  '#SELFIEFORSEB',
+                  '#ILikeWhatYouHave',
+                  '#DolanTwinsNewVideo',
+                  '#ManateePickUpLines',
+                  'Wendy Bell',
+                  'Brannen Greene',
+                  'Jon Lester',
+                  'Alison Rapp']
+
+
+PARSE_LIST = [
+    (["D'Angelo Russell"], ['D Angelo Russell']),
+    (["B'O'B"], ['B O B']),
+    (["D''Angelo Russell"], ['D  Angelo Russell']),
+    (["''"], ['  ']),
+    (["D'Angelo Russ'ell"], ['D Angelo Russ ell']),
+]
 
 
 @pytest.mark.parametrize('data, parsed', REDIS_PARSE)
@@ -67,6 +87,29 @@ def test_set_redis_data_empty(from_url):
 
 
 def test_set_redis_no_val():
-    """Test if set data fails with no arguments"""
+    """Test if set data fails with no arguments."""
     with pytest.raises(TypeError):
         redis.set_redis_data('key')
+
+
+@pytest.mark.parametrize('data, result', PARSE_LIST)
+def test_parse_redis_twiter_trends(data, result):
+    """Test trend parser to remove apostrophes from trends."""
+    assert redis.redis_parse_twitter_trends(data) == result
+
+
+# @patch('')
+# def test_redis_main():
+#     """Test the redis main function."""
+#
+#
+#
+#
+#
+#
+#     def main():
+#         """Pull trends and set them."""
+#         trend_list = twitter_api.call_twitter_api()
+#         clean_trends = trend_parse_redis(trend_list)
+#         trend_dict = {'trends': clean_trends}
+#         set_redis_data('trends', trend_dict)

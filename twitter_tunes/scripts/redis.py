@@ -3,8 +3,6 @@ import os
 import redis
 import json
 from twitter_tunes.scripts import twitter_api
-from twitter_tunes.scripts import youtube_api
-from twitter_tunes.scripts import parser
 
 
 REDIS_URL = os.environ.get('REDIS_URL')
@@ -37,7 +35,7 @@ def set_redis_data(key, val):
     redis_conn.set(key, val)
 
 
-def trend_parse_redis(trend_list):
+def redis_parse_twitter_trends(trend_list):
     """Parse a list of twitter trends for redis set."""
     clean_trends = []
     for trend in trend_list:
@@ -46,22 +44,9 @@ def trend_parse_redis(trend_list):
     return clean_trends
 
 
-def youtube_links_redis(trend_list):
-    """Return youtube link for twitter trend."""
-    youtube_list = []
-    for trend in trend_list:
-        parsed_trend = parser.parse_trend(trend)
-        youtube_url = youtube_api.get_link(parsed_trend)
-        youtube_list.append(youtube_url)
-    return youtube_list
-
-
-def main():
+def set_redis_trend_list():
     """Pull trends and set them."""
     trend_list = twitter_api.call_twitter_api()
-    clean_trends = trend_parse_redis(trend_list)
+    clean_trends = redis_parse_twitter_trends(trend_list)
     trend_dict = {'trends': clean_trends}
-
-    yt_links = youtube_links_redis(clean_trends)
-
     set_redis_data('trends', trend_dict)
