@@ -17,7 +17,9 @@ requires = [
     'tweepy',
     'google-api-python-client',
     'apscheduler',
-    'logging'
+    'logging',
+    'redis',
+    'json',
     ]
 
 tests_requires = ['pytest', 'pytest-watch', 'tox', 'webtest']
