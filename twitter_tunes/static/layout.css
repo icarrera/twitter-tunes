@@ -157,6 +157,8 @@ aside {
     width: 30%;
     right: 10px;
     position: fixed;
+    border-bottom: 1px solid #E1E8ED;
+    border-right: 1px solid #E1E8ED;
   }
 
   aside > iframe {
