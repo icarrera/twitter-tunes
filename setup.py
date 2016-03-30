@@ -19,7 +19,6 @@ requires = [
     'apscheduler',
     'logging',
     'redis',
-    'json',
     ]
 
 tests_requires = ['pytest', 'pytest-watch', 'tox', 'webtest']
