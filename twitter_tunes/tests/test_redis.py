@@ -44,3 +44,25 @@ def test_get_redis_data_bad_redis_key(from_url):
     mock_method = from_url().get
     mock_method.return_value = None
     assert redis.get_redis_data('bad') == {}
+
+
+@patch('redis.from_url')
+def test_set_redis_data(from_url):
+    """Test to see if set redis data is called."""
+    mock_method = from_url().set
+    redis.set_redis_data('trends', 'val')
+    assert mock_method.call_count == 1
+
+
+@patch('redis.from_url')
+def test_set_redis_data_empty(from_url):
+    """Test to see if set redis data is called with empty data."""
+    mock_method = from_url().set
+    redis.set_redis_data('trends', {})
+    assert mock_method.call_count == 1
+
+
+def test_set_redis_no_val():
+    """Test if set data fails with no arguments"""
+    with pytest.raises(TypeError):
+        redis.set_redis_data('key')
