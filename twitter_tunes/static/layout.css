@@ -62,9 +62,9 @@ aside {
 }
 
 /*  WHEN ON CLICK ADDED TO JS FILE REMOVE THIS*/
-article:hover iframe {
+/*article:hover iframe {
   display: block;
-}
+}*/
 
 iframe {
   margin: 10px auto;

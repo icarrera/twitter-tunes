@@ -1,7 +1,9 @@
 $(document).ready(function() {
     update_one($('#trends > ul > li:first'));
     $('#trends').on('click', 'li', function(){
-        update($(this));
+      // $('li > article > iframe').toggle();
+      update($(this));
+      $(this).find('> article > iframe').toggle();
     })
 });
 
