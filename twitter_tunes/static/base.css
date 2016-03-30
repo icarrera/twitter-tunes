@@ -1,16 +1,12 @@
 /*
 COLOR PALETTE:
+
   BACKGROUND:  #F5F8FA
   BORDER:  #E1E8ED
   IFRMAE BACKGROUND:  #777
   NICE COLOR (BLUE):  #95C7FE
   PRIMARY (twitter):  #409AFF
   NICE COLOR (PURP):  #7B46FF
-
-
-  POTENTIAL TEXT: 95C7FE (light blue tinge of grey)
-  NICE PURPLE ONE:  7B46FF (nice purple)
-  POTENTIAL RED:  FF0D00
 */
 
 
@@ -23,10 +19,8 @@ body {
 }
 
 header, hgroup, section, #blurbabout, #trends, #aboutus {
-  /*border: 1px solid #E1E8ED;*/
   border-bottom: 1px solid #E1E8ED;
   border-right: 1px solid #E1E8ED;
-  /*border-bottom: 1px solid #777;*/
 }
 
 header {
