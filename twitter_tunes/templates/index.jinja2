@@ -36,13 +36,14 @@
       </script>
     </aside>
     <section id="blurbabout">
-      <h2>About Trending Twitter Tunes</h2>
+      <h1>About Trending Twitter Tunes</h1>
       <p>
         The Trending Twitter Tunes website analyzes the top Twitter trends and displays related music videos!
         Additionally, we have created a Twitter bot to tweet the top trend's associated video once per hour.  The Twitter Tunes bot has great taste so be sure to follow and stay up to date with all of its fantastic suggestions!
       </p>
     </section>
     <section id="trends">
+      <h1>Trending Twitter Tunes</h1>
       <ul>
         {% for trend in trends %}
         <li id="{{ trend|replace('#', '')}}">
