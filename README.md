@@ -1,6 +1,6 @@
 # Trending Twitter Tunes
 
-A Python application that takes a US Twitter trending topic and finds a YouTube music video related to that topic name. 
+A Python application that takes a US Twitter trending topic and finds a YouTube music video related to that topic name.
 For example, the trending topic #USMNT will be returned with this music-related clip: https://www.youtube.com/watch?v=u0kn_t7hwC4
 
 The Trending Twitter Tunes website displays the top 10 Twitter topics and their associated music video.
@@ -21,6 +21,8 @@ A.J. Wolhfert https://github.com/wohlfea
 Joe McClenahan https://github.com/jmcclena94
 
 Ben Garnaat https://github.com/bgarnaat
+
+
 
 
 ### How To Contribute
