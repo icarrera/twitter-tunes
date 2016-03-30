@@ -8,6 +8,7 @@ Additionally we have a Twitterbot that tweets the top Twitter trend and it's ass
 
 ![Image of USMNT TWEET]
 (twitter_tunes/static/trending_tunes_soccer.png)
+https://twitter.com/trending__tunes/status/714966217606303744
 
 
 ### authors:
