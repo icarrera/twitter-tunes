@@ -18,12 +18,20 @@ COLOR PALETTE:
   clear: both;
 }
 
-header, hgroup, #blurbabout, #trends, #aboutus {
-  border-bottom: 1px solid #000;
+body {
+  background: #F5F8FA;
+}
+
+header, hgroup, section, #blurbabout, #trends, #aboutus {
+  /*border: 1px solid #E1E8ED;*/
+  border-bottom: 1px solid #E1E8ED;
+  border-right: 1px solid #E1E8ED;
+  /*border-bottom: 1px solid #777;*/
 }
 
 header {
   position: relative;
+  background: #FFF
 }
 
 hgroup {
@@ -39,6 +47,7 @@ hgroup > h1 {
 section {
   margin: 30px;
   text-align: center;
+  background: #FFF;
 }
 
 ul {
@@ -54,6 +63,16 @@ li {
 h4 {
   margin: 5px;
 }
+
+p {
+  text-align: justify;
+  padding: 30px;
+}
+
+a, a:visited {
+  color: #409AFF;
+}
+
 
 
 /* ==================== MEDIA QUERY: 640px ==================== */

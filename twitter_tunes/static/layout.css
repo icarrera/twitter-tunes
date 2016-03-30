@@ -16,14 +16,6 @@ hgroup > img {
   padding: 5px;
 }
 
-.icon-menu {
-  position: absolute;
-  right: 0px;
-  top: 0px;
-  padding: 10px;
-  font-size: 3em;
-}
-
 nav > ul {
   display: none;
 }
@@ -36,13 +28,13 @@ nav:hover > ul {
   width: 85%;
   text-align: center;
   font-size: 1.3em;
-  background: #32B9EB;
+  /*background: #95C7FE;*/
+  /*background: #E1E8ED;*/
+  background: #F5F8FA;
+  border-bottom: 1px solid #E1E8ED;
+  border-right: 1px solid #E1E8ED;
   padding: 10px;
   margin: 10px auto;
-}
-
-a:visited {
-  color: #00f;
 }
 
 blurbabout > p {
@@ -62,6 +54,7 @@ iframe {
   display: none;
   max-width: 95%;
   width: 95%;
+  background: #777;
 }
 
 #aboutus > ul > li {
@@ -81,6 +74,11 @@ iframe {
 
 #contribute {
   margin: 30px;
+}
+
+#contribute > p {
+  text-align: center;
+  padding: 5px;
 }
 
 
@@ -126,8 +124,8 @@ iframe {
     text-align: center;
     font-size: 1.3em;
     background: none;
+    border: none;
     padding: 10px;
-    /*margin: 10px 5%;*/
     min-width: 100px;
     margin: 0 2%;
   }
@@ -139,14 +137,13 @@ iframe {
   aside {
     display: block;
     width: 30%;
-    height: 500px;
     right: 10px;
     position: fixed;
   }
 
-  #twitter_feed {
+  /*#twitter_feed {
     height: 400px;
-  }
+  }*/
 
   #blurbabout, #trends, #aboutus {
     width: 60%;

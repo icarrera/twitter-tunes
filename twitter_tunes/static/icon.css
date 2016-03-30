@@ -91,3 +91,15 @@
     content: "\e91c";
 }
 
+
+.icon-menu {
+  position: absolute;
+  right: 0px;
+  top: 0px;
+  padding: 10px;
+  font-size: 3em;
+}
+.icon-circle-down {
+  float: right;
+  font-size: 2.5em;
+}

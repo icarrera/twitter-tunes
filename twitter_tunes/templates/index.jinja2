@@ -36,6 +36,7 @@
           if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+"://platform.twitter.com/widgets.js";
           fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");
           </script>
+
       </div>
     </aside>
     <section id="blurbabout">
@@ -50,6 +51,7 @@
         {% for trend in trends %}
         <li id="{{ trend|replace('#', '')}}">
           <article class="">
+            <div class="icon-circle-down"></div>
             <h2>{{ trend }}</h2>
             <iframe src="../static/loading.gif" width="" height=""></iframe>
           </article>
