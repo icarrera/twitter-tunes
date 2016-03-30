@@ -25,8 +25,8 @@ RESP_DATA = [{'words': 'words_value',
                         ]
               }]
 
-FINAL_OUTPUT = ['trend1', 'trend2', 'trend3', 'trend4', 'trend5', 'trend6',
-                'trend7', 'trend8', 'trend9', 'trend10'
+FINAL_OUTPUT = [u'trend1', u'trend2', u'trend3', u'trend4', u'trend5', u'trend6',
+                u'trend7', u'trend8', u'trend9', u'trend10'
                 ]
 
 
