@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Trending Twitter Tunes</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/4.0.0/normalize.min.css" type="text/css">
+    <link rel="stylesheet" href="../static/style.css" type="text/css">
+  </head>
+  <body>
+    <header>
+      <img src="../static/drawing.png" alt="Twitter Tunes Logo" />
+      <h1>Trending Twitter Tunes</h1>
+      <nav>
+        <ul id="nav_ul">
+          <li class="nav_li"><a href="/">Home</a></li>
+          <li class="nav_li"><a href="#aboutus">About</a></li>
+          <li  class="nav_li"><a href="https://twitter.com/trending__tunes">Twitter</a></li>
+        </ul>
+      </nav>
+      <hgroup>
+      </hgroup>
+    </header>
+    <section id="blurbabout">
+      <h2>About Trending Twitter Tunes</h2>
+      <p>
+          The Trending Twitter Tunes website analyzes the top Twitter trends and displays related music videos!
+          Additionally, we have created a Twitter bot to tweet the top trend's associated video once per hour.  The Twitter Tunes bot has great taste so be sure to follow and stay up to date with all of its fantastic suggestions!
+      </p>
+    </section>
+    <aside id="bot_feed">
+      <div id="twitter_feed">
+          <a class="twitter-timeline" href="https://twitter.com/trending__tunes" data-widget-id="714960085567426560">Tweets by @trending__tunes</a>
+          <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';
+          if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+"://platform.twitter.com/widgets.js";
+          fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");
+          </script>
+      </div>
+    </aside>
+    <section id="trends">
+      <ul>
+        {% for trend in trends %}
+        <li id="{{ trend|replace('#', '')}}">
+          <article class="">
+            <h2>{{ trend }}</h2>
+            <iframe src="../static/loading.gif" width="" height=""></iframe>
+          </article>
+        </li>
+        {% endfor %}
+      </ul>
+    </section>
+    <section>
+        <h1><a NAME="aboutus">About The Team</a></h1>
+        <ul>
+            <li>
+                <inner>
+                    <ul>
+                        <li><h4>Iris Carrera</h4></li>
+                        <li><a href="http://www.github.com/icarrera">GitHub</a></li>
+                        <li><a href="https://twitter.com/goldirises">Twitter</a></li>
+                    </ul>
+                </inner>
+            </li>
+            <li>
+                <inner>
+                    <ul>
+                        <li><h4>Joe McClenahan</h4></li>
+                        <li><a href="https://github.com/jmcclena94">GitHub</a></li>
+                        <li><a href="https://twitter.com/joe_mcclenahan">Twitter</a></li>
+                    </ul>
+                </inner>
+            </li>
+            <li>
+                <inner>
+                    <ul>
+                        <li><h4>Kyle Richardson</h4></li>
+                        <li><a href="https://github.com/KyleRichVA">GitHub</a></li>
+                        <li><a href="https://twitter.com/manacrevice">Twitter</a></li>
+                    </ul>
+                </inner>
+            </li>
+            <li>
+                <inner>
+                    <ul>
+                        <li><h4>Ben Garnaat</h4></li>
+                        <li><a href="https://github.com/bgarnaat">GitHub</a></li>
+                        <li><a href="https://twitter.com/BGarnaat">Twitter</a></li>
+                    </ul>
+                </inner>
+            </li>
+            <li>
+                <inner>
+                    <ul>
+                        <li><h4>A.J. Wohlfert</h4></li>
+                        <li><a href="https://github.com/wohlfea">GitHub</a></li>
+                        <li><a href="https://twitter.com/ajwohlfert">Twitter</a></li>
+                    </ul>
+                </inner>
+            </li>
+        </ul>
+        <p> Like this project? Click here to contribute: </p>
+        <a href="https://github.com/icarrera/twitter-tunes">Trending Twitter Tunes Repo</a>
+
+    </section>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.0.0-beta1/jquery.min.js"></script>
+    <script src="../static/ttjs.js"></script>
+  </body>
+  <footer>
+    logo images:
+    Twitter graphic by <a href="http://www.icomoon.io">Icomoon</a> and Note graphic by <a href="http://www.freepik.com/">Freepik</a> from <a href="http://www.flaticon.com/">Flaticon</a> are licensed under <a href="http://creativecommons.org/licenses/by/3.0/" title="Creative Commons BY 3.0">CC BY 3.0</a>. Made with <a href="http://logomakr.com" title="Logo Maker">Logo Maker</a>
+  </footer>
+</html>
