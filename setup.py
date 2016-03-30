@@ -16,7 +16,8 @@ requires = [
     'pyramid_jinja2',
     'tweepy',
     'google-api-python-client',
-    'apscheduler'
+    'apscheduler',
+    'logging'
     ]
 
 tests_requires = ['pytest', 'pytest-watch', 'tox', 'webtest']
