@@ -74,11 +74,25 @@ def test_bot_message_function_params():
             u'https://www.youtube.com/watch?v=ms2klX-puUU' in message)
 
 
-def test_bot_choose_trend():
+@mock.patch('twitter_tunes.scripts.youtube_api')
+def test_bot_choose_trend(twitter_api, youtube_api):
     """Test choose trend function.
 
-    Should return the first trend from the trends searched by twitter_api.
+    Should return the 'best' trend from the trends searched by twitter_api.
+    Best trend should be the first music related trend it can find.
     """
-    import twitter_tunes.tests.bot_test_vars as bot_test_vars
+    from twitter_tunes.tests import bot_test_vars
+    mock_yt_search = youtube_api()
     trends = bot_test_vars.TRENDS
-    assert twitter_bot.choose_trend(trends) == trends[0]
+    good_url = u'https://www.youtube.com/watch?v=ms2klX-puUU'
+    bad_url = u'https://www.youtube.com/watch?v=cU8HrO7XuiE'
+
+    def yt_side_effect(arg):
+        if arg == bot_test_vars.TRENDS[0]:
+            return bad_url, False
+        elif arg == bot_test_vars.TRENDS[1]:
+            return good_url, True
+
+    mock_yt_search.get_link.side_effect = yt_side_effect
+    assert twitter_bot.choose_trend(trends) == (bot_test_vars.TRENDS[1],
+                                                good_url)

@@ -18,12 +18,14 @@ def create_message(parsed_trend, youtube_url):
 
 
 def choose_trend(trends):
-    """Return a single trend from a list of trends.
+    """Return a single trend and its yt url from a list of trends.
 
-    Currently Selects #1 trend.
-    TODO: Select based on music relevence or some other quality.
+    Will select a trend which has music relevence.
     """
-    return trends[0]
+    for trend in trends:
+        url, is_music = youtube_api.get_link(parser.parse_trend(trend))
+        if is_music:
+            return trend, url
 
 
 def make_tweet(message):
