@@ -63,13 +63,13 @@ def generate_youtube_link(parsed_list):
     try:
         for video in parsed_list:
             if 'VEVO' in video[1]:
-                return url_gen(video[0])
+                return (url_gen(video[0]), True)
         for video in parsed_list:
             if term_checker(video[2]):
-                return url_gen(video[0])
-        return url_gen(parsed_list[0][0])
+                return (url_gen(video[0]), True)
+        return (url_gen(parsed_list[0][0]), False)
     except IndexError:
-        return url_gen('b_ILDFp5DGA')
+        return (url_gen('b_ILDFp5DGA'), True)
 
 
 def get_link(trend):
