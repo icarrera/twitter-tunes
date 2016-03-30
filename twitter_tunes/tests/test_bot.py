@@ -67,6 +67,8 @@ def test_bot_message_function_params(get_link):
     assert (u'#StoryFromNorthAmerica' in message and
             u'https://www.youtube.com/watch?v=ms2klX-puUU' in message)
 
+#params for different trends and posteds, and the trend it should choose.
+#mocks for redis.get and push probably the whole module.
 @mock.patch('twitter_tunes.scripts.twitter_bot.youtube_api.get_link')
 def test_bot_choose_trend(get_link):
     """Test choose trend function.
@@ -84,7 +86,9 @@ def test_bot_choose_trend(get_link):
             return (bad_url, False)
 
     get_link.side_effect = yt_side_effect
-    trends = bot_test_vars.TRENDS
+    # mock_redis.trends.result = set trends
+    # mock_redis.last.result = set thing.
+    trends = bot_test_vars.TRENDS  # mock_redis.trends()
     good_url = u'https://www.youtube.com/watch?v=ms2klX-puUU'
     bad_url = u'https://www.youtube.com/watch?v=cU8HrO7XuiE'
-    assert twitter_bot.choose_trend(trends)[0] == bot_test_vars.TRENDS[1]
+    assert twitter_bot.choose_trend(trends)[0] == bot_test_vars.TRENDS[1]  # trend you expect.

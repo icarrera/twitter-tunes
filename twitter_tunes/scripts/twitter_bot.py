@@ -25,6 +25,12 @@ def choose_trend(trends):
     for trend in trends:
         url, is_music = youtube_api.get_link(parser.parse_trend(trend))
         if is_music:
+            # if trend not in redis.recent_tweets
+                # if len(redis.recent_tweets) > 5
+                    # pop redis.recent[0]
+                    # append trend on redis.recent
+                    # You need to remake the redis object for this
+                    # return trend, url
             return trend, url
 
 
