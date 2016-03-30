@@ -1,7 +1,7 @@
 from apscheduler.schedulers.blocking import BlockingScheduler
 from twitter_tunes.scripts import twitter_bot
 from twitter_tunes.redis import redis
-# from twitter_tunes.twitter_api import twitter_api
+from twitter_tunes.scripts import twitter_api
 import logging
 
 logging.basicConfig()
@@ -15,7 +15,8 @@ def timed_job():
 
 @sched.scheduled_job('interval', minutes=9)
 def timed_job_redis():
-    redis.set_redis_trend_list()
+    trend_list = twitter_api.call_twitter_api()
+    redis.set_redis_trend_list(trend_list)
 
 
 sched.start()

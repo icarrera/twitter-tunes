@@ -98,18 +98,9 @@ def test_parse_redis_twiter_trends(data, result):
     assert redis.redis_parse_twitter_trends(data) == result
 
 
-# @patch('')
-# def test_redis_main():
-#     """Test the redis main function."""
-#
-#
-#
-#
-#
-#
-#     def main():
-#         """Pull trends and set them."""
-#         trend_list = twitter_api.call_twitter_api()
-#         clean_trends = trend_parse_redis(trend_list)
-#         trend_dict = {'trends': clean_trends}
-#         set_redis_data('trends', trend_dict)
+@patch('redis.from_url')
+def test_redis_set_trends(from_url):
+    """Test the redis main function."""
+    mock_method = from_url().set
+    redis.set_redis_trend_list(TWITTER_TRENDS)
+    assert mock_method.call_count == 1

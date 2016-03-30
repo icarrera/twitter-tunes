@@ -2,7 +2,6 @@
 import os
 import redis
 import json
-from twitter_tunes.scripts import twitter_api
 
 
 REDIS_URL = os.environ.get('REDIS_URL')
@@ -44,9 +43,8 @@ def redis_parse_twitter_trends(trend_list):
     return clean_trends
 
 
-def set_redis_trend_list():
+def set_redis_trend_list(trend_list):
     """Pull trends and set them."""
-    trend_list = twitter_api.call_twitter_api()
     clean_trends = redis_parse_twitter_trends(trend_list)
     trend_dict = {'trends': clean_trends}
     set_redis_data('trends', trend_dict)
