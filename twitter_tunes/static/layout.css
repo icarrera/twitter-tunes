@@ -37,7 +37,7 @@ nav:hover > ul {
   margin: 10px auto;
 }
 
-blurbabout > p {
+#blurbabout > p {
   text-align: justify;
 }
 
@@ -45,6 +45,23 @@ aside {
   display: none;
 }
 
+#trends > ul {
+  padding: 15px;
+}
+
+#trends > ul > li {
+  margin-top: 15px;
+  background: #F5F8FA;
+  border-bottom: 1px solid #E1E8ED;
+  border-right: 1px solid #E1E8ED;
+  border-radius: 10px;
+}
+
+#trends > ul > li:first-child {
+  margin-top: 0;
+}
+
+/*  WHEN ON CLICK ADDED TO JS FILE REMOVE THIS*/
 article:hover iframe {
   display: block;
 }
@@ -141,9 +158,9 @@ iframe {
     position: fixed;
   }
 
-  /*#twitter_feed {
-    height: 400px;
-  }*/
+  aside > iframe {
+    border-radius: 10px;
+  }
 
   #blurbabout, #trends, #aboutus {
     width: 60%;
