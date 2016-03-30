@@ -1,0 +1,98 @@
+
+header {
+  /*margin: 30px;*/
+  border: 1px solid #000;
+}
+
+header > img {
+  display: inline;
+  width: 20%;
+  max-width: 200px;
+  min-width: 100px;
+  float: left;
+  padding: 5px;
+}
+
+hgroup {
+  display: inline;
+}
+
+header > h1 {
+  text-align: center;
+  display: block;
+}
+ul {
+  text-align: center;
+  padding: 0;
+}
+
+li {
+  list-style: none;
+}
+
+.nav_li{
+  display: inline-block;
+  min-width: 100px;
+  margin: 0 2%;
+  padding: 10px;
+  text-align: center;
+}
+
+#blurbabout {
+  margin: 30px 10%;
+  padding: 0 5%;
+  text-align: justify;
+  border: 1px solid #000;
+}
+
+#blurbabout > h2 {
+  text-align: center;
+}
+
+aside {
+  position: fixed;
+  height: 500px;
+  padding: 0 30px;
+  /*padding: 30px;*/
+  /*padding: 15px;*/
+  width: 25%;
+  right: 0;
+  /*border: 1px solid #000;*/
+  /*background: #3bf;*/
+}
+
+#twitter_feed {
+  width: 100%;
+  height: 480px;
+  padding: 10px 0;
+  background: #fff;
+  border: 1px solid #000;
+  text-align: center;
+  overflow-y: auto;
+}
+
+#trends {
+  margin: 30px calc(15% - 60px) 30px calc(15% - 60px);
+  width: 60%;
+}
+
+article {
+  margin: 10px;
+  border: 1px solid #000;
+  background: #444;
+  text-align: center;
+}
+
+article:hover iframe {
+  display: block;
+}
+
+iframe {
+  /*padding: 1%;*/
+  margin: 5% auto;
+  max-width: 90%;
+  width: 550px;
+  height: 300px;
+  background: #aaa;
+  display: none;
+}
