@@ -1,0 +1,76 @@
+hgroup > img {
+  display: inline;
+  width: 20%;
+  min-width: 50px;
+  max-width: 100px;
+  float: left;
+  margin-left: 10px;
+  padding: 5px;
+}
+
+.icon-menu {
+  position: absolute;
+  right: 0px;
+  top: 0px;
+  padding: 10px;
+  font-size: 3.5em;
+}
+
+nav > ul {
+  display: none;
+}
+
+nav:hover > ul {
+  display: block;
+}
+
+.nav_li {
+  width: 85%;
+  text-align: center;
+  font-size: 1.3em;
+  background: #32B9EB;
+  padding: 10px;
+  margin: 10px auto;
+}
+
+a:visited {
+  color: #00f;
+}
+
+blurbabout > p {
+  text-align: justify;
+}
+
+aside {
+  display: none;
+}
+
+article:hover iframe {
+  display: block;
+}
+
+iframe {
+  margin: 10px auto;
+  display: none;
+  max-width: 95%;
+  width: 95%;
+}
+
+#aboutus > ul > li {
+  min-width: 150px;
+  width: 30%;
+  padding: 1%;
+  display: inline-block;
+}
+
+#aboutus article {
+  padding: 10px;
+}
+
+#aboutus article li {
+  padding: 10px;
+}
+
+#contribute {
+  margin: 30px;
+}

@@ -1,0 +1,40 @@
+header, hgroup, #blurbabout, #trends, #aboutus {
+  border-bottom: 1px solid #000;
+}
+
+header {
+  position: relative;
+}
+
+hgroup {
+  width: 100%;
+}
+
+hgroup > h1 {
+  width: 70%;
+  display: inline-block;
+  text-align: center;
+}
+
+section {
+  margin: 30px;
+  text-align: center;
+}
+
+ul {
+  padding: 0;
+  margin: 0 auto;
+}
+
+li {
+  list-style: none;
+  padding: 10px;
+}
+
+h4 {
+  margin: 5px;
+}
+
+.clearfix {
+  clear: both;
+}
