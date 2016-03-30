@@ -44,9 +44,7 @@ def main():
     """Post a tweet about number one trend and a youtube video related to it.
 
     """
-    trend = choose_trend(twitter_api.call_twitter_api())
-    parsed_trend = parser.parse_trend(trend)
-    youtube_url = youtube_api.get_link(parsed_trend)
+    trend, youtube_url = choose_trend(twitter_api.call_twitter_api())
     message = create_message(trend, youtube_url)
     make_tweet(message)
     print('@trending__tunes Made a Tweet:\n{}'.format(message))

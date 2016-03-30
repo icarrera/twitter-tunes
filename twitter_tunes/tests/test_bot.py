@@ -17,7 +17,7 @@ def test_make_tweet_static_message(api):
 @mock.patch('twitter_tunes.scripts.twitter_api')
 @mock.patch('twitter_tunes.scripts.youtube_api')
 @mock.patch('tweepy.API')
-def test_make_tweet_main_good(api, twitter_api, youtube_api):
+def test_main_good(api, twitter_api, youtube_api):
     """Test if bot makes tweet with api data.
 
     This is what the main function would do.
