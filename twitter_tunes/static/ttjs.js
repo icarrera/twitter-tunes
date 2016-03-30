@@ -3,7 +3,7 @@ $(document).ready(function() {
     $('#trends').on('click', 'li', function(){
       // $('li > article > iframe').toggle();
       update($(this));
-      $(this).find('> article > iframe').toggle();
+      $(this).find('> article > .video-container').toggle();
     })
 });
 
@@ -14,15 +14,8 @@ function check_loaded(iframe){
     return false;
 }
 
-function update_next(cur_trend){
-    next_trend_iframe = cur_trend.next().children('article').children('iframe');
-    if(check_loaded(next_trend_iframe)){
-        update_one(cur_trend.next());
-    }
-}
-
 function update(trend){
-    iframe = trend.children('article').children('iframe')
+    iframe = trend.find('article > .video-container > iframe');
     if(check_loaded(iframe)){
         $.get('/youtube/' + trend.attr('id'), function(data){
             iframe.attr('src', data.url);
@@ -33,8 +26,16 @@ function update(trend){
     }
 }
 
+function update_next(cur_trend){
+  next_trend_iframe = cur_trend.next().find('article > .video-container > iframe');
+  // next_trend_iframe = cur_trend.next().children('article').children('.video-container').children('iframe');
+  if(check_loaded(next_trend_iframe)){
+    update_one(cur_trend.next());
+  }
+}
+
 function update_one(trend){
-    iframe = trend.children('article').children('iframe');
+    iframe = trend.find('article > .video-container > iframe');
     $.get('/youtube/' + trend.attr('id'), function(data){
         iframe.attr('src', data.url);
     })
