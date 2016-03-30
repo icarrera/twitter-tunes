@@ -4,6 +4,7 @@ try:
 except:
     import mock
 from twitter_tunes.scripts import twitter_bot
+import pytest
 
 
 @mock.patch('tweepy.API')
@@ -37,6 +38,16 @@ def test_main_good(api, twitter_api, youtube_api):
     message = twitter_bot.create_message(da_trend, url)
     twitter_bot.make_tweet(message)
     mock_update_status.assert_called_with(message)
+
+
+@mock.patch('twitter_tunes.scripts.twitter_bot.twitter_api.call_twitter_api')
+def test_main_bad_twitter(call_twitter_api):
+    """Test if main does stuff if twitter goes horribly wrong.
+
+    Make sure it can keep going."""
+    call_twitter_api.side_effect = ValueError('Missing OAuth key or token.')
+    with pytest.raises(ValueError):
+        twitter_bot.main()
 
 
 def test_bot_create_message_known_params():

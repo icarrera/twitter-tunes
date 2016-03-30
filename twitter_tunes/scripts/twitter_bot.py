@@ -50,10 +50,13 @@ def main():
     """Post a tweet about number one trend and a youtube video related to it.
 
     """
-    trend, youtube_url = choose_trend(twitter_api.call_twitter_api())
-    message = create_message(trend, youtube_url)
-    make_tweet(message)
-    print('@trending__tunes Made a Tweet:\n{}'.format(message))
+    try:
+        trend, youtube_url = choose_trend(twitter_api.call_twitter_api())
+        message = create_message(trend, youtube_url)
+        make_tweet(message)
+        print(u'@trending__tunes Made a Tweet:\n{}'.format(message))
+    except (youtube_api.HttpError, ValueError, tweepy.TweepError):
+        print(u'Something went horribly wrong.')
 
 if __name__ == '__main__':
     main()
