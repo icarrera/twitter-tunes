@@ -69,7 +69,7 @@ def generate_youtube_link(parsed_list):
                 return (url_gen(video[0]), True)
         return (url_gen(parsed_list[0][0]), False)
     except IndexError:
-        return (url_gen('b_ILDFp5DGA'), True)
+        return (url_gen('b_ILDFp5DGA'), False)
 
 
 def get_link(trend):

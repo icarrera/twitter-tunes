@@ -129,7 +129,7 @@ def test_generate_youtube_link_VEVO_priority():
                    (u'xopC0UndnYY', u'Vape Capitol', 'dummy title'),
                    (u'JqNGGsYoXt0', u'West Virginia Public Broadcasting', 'dummy title')]
     url = youtube_api.generate_youtube_link(parsed_list)
-    assert url == 'https://www.youtube.com/watch?v=47dtFZ8CFo8'
+    assert url[0] == 'https://www.youtube.com/watch?v=47dtFZ8CFo8'
 
 
 def test_generate_youtube_link_VEVO_good_input():
@@ -144,7 +144,7 @@ def test_generate_youtube_link_VEVO_good_input():
                    (u'Kn0YDZ3wifU', u'The Late Late Show with James Corden', 'dummy title'),
                    (u'Ca1i6DZC3iY', u'JustinBieberVEVO', 'dummy title')]
     url = youtube_api.generate_youtube_link(parsed_list)
-    assert url == 'https://www.youtube.com/watch?v=oyEuk8j8imI'
+    assert url[0] == 'https://www.youtube.com/watch?v=oyEuk8j8imI'
 
 
 def test_generate_youtube_link_no_VEVO_good_result():
@@ -160,13 +160,13 @@ def test_generate_youtube_link_no_VEVO_good_result():
                    ('WV5sOc0Gj0w', 'Clevver News', 'dummy title'),
                    ('iv02UYr3LCY', 'Supergirl', 'dummy title')]
     url = youtube_api.generate_youtube_link(parsed_list)
-    assert url == 'https://www.youtube.com/watch?v=Cdr8_IQqT-E'
+    assert url[0] == 'https://www.youtube.com/watch?v=Cdr8_IQqT-E'
 
 
 def test_generate_youtube_link_empty_list():
     """Test Lionel Richie returned if no results from search."""
     url = youtube_api.generate_youtube_link([])
-    assert url == 'https://www.youtube.com/watch?v=b_ILDFp5DGA'
+    assert url[0] == 'https://www.youtube.com/watch?v=b_ILDFp5DGA'
 
 
 @patch('twitter_tunes.scripts.youtube_api.build')
@@ -175,7 +175,7 @@ def test_get_link_good_data(yt_search):
     mock_method.return_value = GOOD_YOUTUBE_RESPONSE
     keyword = 'Justin Bieber'
     url = youtube_api.get_link(keyword)
-    assert url == 'https://www.youtube.com/watch?v=oyEuk8j8imI'
+    assert url[0] == 'https://www.youtube.com/watch?v=oyEuk8j8imI'
 
 
 @patch('twitter_tunes.scripts.youtube_api.build')
@@ -184,7 +184,7 @@ def test_get_link_bad_data(yt_search):
     mock_method.return_value = BAD_YOUTUBE_RESPONSE
     keyword = 'asdf lawe;lfj'
     url = youtube_api.get_link(keyword)
-    assert url == 'https://www.youtube.com/watch?v=b_ILDFp5DGA'
+    assert url[0] == 'https://www.youtube.com/watch?v=b_ILDFp5DGA'
 
 
 @pytest.mark.parametrize('title, result', TITLES_TERM)
@@ -209,4 +209,4 @@ def test_generate_youtube_link_keyword():
                    ('WV5sOc0Gj0w', 'Clevver News', 'dummy title'),
                    ('iv02UYr3LCY', 'Supergirl', 'dummy title')]
     url = youtube_api.generate_youtube_link(parsed_list)
-    assert url == 'https://www.youtube.com/watch?v=LDtAIOgBljE'
+    assert url[0] == 'https://www.youtube.com/watch?v=LDtAIOgBljE'
