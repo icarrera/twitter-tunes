@@ -1,3 +1,19 @@
+/*
+COLOR PALETTE:
+  BACKGROUND:  #F5F8FA
+  BORDER:  #E1E8ED
+  IFRMAE BACKGROUND:  #777
+  NICE COLOR (BLUE):  #95C7FE
+  PRIMARY (twitter):  #409AFF
+  NICE COLOR (PURP):  #7B46FF
+
+
+  POTENTIAL TEXT: 95C7FE (light blue tinge of grey)
+  NICE PURPLE ONE:  7B46FF (nice purple)
+  POTENTIAL RED:  FF0D00
+*/
+
+
 .clearfix {
   clear: both;
 }
@@ -39,6 +55,23 @@ h4 {
   margin: 5px;
 }
 
+
+/* ==================== MEDIA QUERY: 640px ==================== */
+
 @media only screen and (min-width: 640px) {
-  
+
+  header {
+    width: 100%;
+    position: fixed;
+    top: 0;
+    background: #fff
+  }
+
+  hgroup {
+    border-bottom: none;
+  }
+
+  hgroup > h1 {
+    width: 60%;
+  }
 }
