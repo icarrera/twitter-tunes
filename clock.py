@@ -8,6 +8,6 @@ sched = BlockingScheduler()
 
 @sched.scheduled_job('interval', minutes=2)
 def timed_job():
-    twitter_bot()
+    twitter_bot.main()
 
 sched.start()
