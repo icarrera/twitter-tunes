@@ -6,7 +6,7 @@ logging.basicConfig()
 sched = BlockingScheduler()
 
 
-@sched.scheduled_job('interval', minutes=2)
+@sched.scheduled_job('interval', minutes=60)
 def timed_job():
     twitter_bot.main()
 
