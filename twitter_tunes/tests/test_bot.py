@@ -5,6 +5,7 @@ except:
     import mock
 from twitter_tunes.scripts import twitter_bot
 from twitter_tunes.tests import bot_test_vars
+import pytest
 
 
 def redis_side_effect(arg):
@@ -215,5 +216,12 @@ def test_bot_choose_trend_trend_long(get_link, get_redis_data, set_redis_data):
     assert twitter_bot.choose_trend(trends)[0] == bot_test_vars.TRENDS[0]
 
 
-'''@mock.patch('twitter_tunes.scripts.twitter_bot.tweepy.API.update_status')
-def test_make_tweet_bad()'''
+@mock.patch('twitter_tunes.scripts.twitter_bot.tweepy.API.update_status')
+def test_make_tweet_bad(update_status):
+    """Test if make_tweet breaks."""
+    import twitter_tunes.scripts.twitter_bot as bot
+    old_key = bot.consumerKey
+    bot.consumerKey = None
+    with pytest.raises(ValueError):
+        twitter_bot.make_tweet('Please dont post')
+    bot.consumerKey = old_key
