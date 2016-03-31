@@ -37,8 +37,3 @@ def call_twitter_api():
     else:
         print('Missing OAuth key or token')
         raise ValueError('Missing OAuth key or token.')
-
-
-if __name__ == '__main__':
-    """Run call_twitter_api on module run."""
-    call_twitter_api()

@@ -4,12 +4,9 @@ try:
 except:
     import mock
 from six import string_types
-import unittest
 import pytest
 from ..scripts.twitter_api import call_twitter_api, extract_twitter_trends
 from ..scripts.twitter_api import WOEID_US
-import os.path
-import tweepy
 
 RESP_DATA = [{'words': 'words_value',
               'trends': [
@@ -27,13 +24,27 @@ RESP_DATA = [{'words': 'words_value',
               }]
 
 
-FINAL_OUTPUT = [u'trend1', u'trend2', u'trend3', u'trend4', u'trend5', u'trend6',
-                u'trend7', u'trend8', u'trend9', u'trend10'
+FINAL_OUTPUT = [u'trend1', u'trend2', u'trend3', u'trend4', u'trend5',
+                u'trend6', u'trend7', u'trend8', u'trend9', u'trend10'
                 ]
 
+BAD_WOEID = [None, 1111111111111111111111111111111, 0, 12345678, 'blahblah']
 
-def test_bad_request():
-    """Raise ValueError if any tokens are missing."""
+
+@pytest.mark.parametrize("bad_woeid", BAD_WOEID)
+def test_invalid_woeid(bad_woeid):
+    """Raise TweepError if Twitter location ID is invalid."""
+    import twitter_tunes.scripts.twitter_api as tapi
+    from tweepy import TweepError
+    old_WOEID = tapi.WOEID_US
+    tapi.WOEID_US = bad_woeid
+    with pytest.raises(TweepError):
+        call_twitter_api()
+    tapi.WOEID_US = old_WOEID
+
+
+def test_missing_key():
+    """Raise ValueError if any keys or tokens are missing."""
     import twitter_tunes.scripts.twitter_api as tapi
     old_key = tapi.consumerKey
     tapi.consumerKey = None
@@ -42,26 +53,14 @@ def test_bad_request():
     tapi.consumerKey = old_key
 
 
-def test_no_woeid():
-    """Raise TweepError if WOEID number is not present"""
-    import twitter_tunes.scripts.twitter_api as tapi
+def test_no_response(mocker):
+    """Raise TweepError if Twitter is down."""
     from tweepy import TweepError
-    old_WOEID = tapi.WOEID_US
-    tapi.WOEID_US = None
+    mocked_api = mocker.patch('tweepy.API')
+    mocked_method = mocked_api().trends_place
+    mocked_method.side_effect = TweepError("Failed to send request: %s' % e")
     with pytest.raises(TweepError):
         call_twitter_api()
-    tapi.WOEID_US = old_WOEID
-
-
-def test_bad_woeid():
-    """Raise TweepError if WOEID number is invalid"""
-    import twitter_tunes.scripts.twitter_api as tapi
-    from tweepy import TweepError
-    old_WOEID = tapi.WOEID_US
-    tapi.WOEID_US = 1111111111111111111111111111111111111
-    with pytest.raises(TweepError):
-        call_twitter_api()
-    tapi.WOEID_US = old_WOEID
 
 
 def test_final_output(mocker):
@@ -90,13 +89,3 @@ def test_extract_trends(mocker):
     mocked_method = mocked_api().trends_place
     mocked_method.return_value = RESP_DATA
     assert extract_twitter_trends(RESP_DATA) == FINAL_OUTPUT
-
-# additional testing:
-# how application responds
-# what if twitter api is not there?
-# what does tweepy api do when netowrk is not present?
-# make api call with stuff doesn't fit?
-# bad string etc
-# if user designates own location etc
-# extract_twitter_trends
-# if call_twitter_api fails in a particular way

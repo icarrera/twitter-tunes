@@ -10,22 +10,22 @@ with open(os.path.join(here, 'CHANGES.txt')) as f:
 
 requires = [
     'pyramid',
-    'pyramid_chameleon',
     'pyramid_debugtoolbar',
     'waitress',
     'pyramid_jinja2',
     'tweepy',
     'google-api-python-client',
     'apscheduler',
-    'logging',
     'redis',
     ]
 
-tests_requires = ['pytest', 'pytest-watch', 'tox', 'webtest', 'mock']
+
+tests_requires = ['pytest', 'pytest-watch', 'tox',
+                  'webtest', 'mock', 'pytest-mock']
 dev_requires = ['ipython', 'pyramid-ipython']
 
-setup(name='Twitter_Tunes',
-      version='0.0',
+setup(name='twitter-tunes',
+      version='1.0',
       description='Twitter_Tunes',
       long_description=README + '\n\n' + CHANGES,
       classifiers=[
@@ -34,9 +34,11 @@ setup(name='Twitter_Tunes',
         "Topic :: Internet :: WWW/HTTP",
         "Topic :: Internet :: WWW/HTTP :: WSGI :: Application",
         ],
-      author='',
+      author='''Iris Carrera, Joe McClenahan, Ben Garnaat,
+
+                Kyle Richardson, A.J. Wohlfert''',
       author_email='',
-      url='',
+      url='twitter-tunes.herokuapp.com',
       keywords='web pyramid pylons',
       packages=find_packages(),
       include_package_data=True,
