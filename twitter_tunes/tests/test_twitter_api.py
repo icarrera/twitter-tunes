@@ -34,6 +34,7 @@ BAD_WOEID = [None, 1111111111111111111111111111111, 0, 12345678, 'blahblah']
 
 @pytest.mark.parametrize("bad_woeid", BAD_WOEID)
 def test_invalid_woeid(bad_woeid):
+    """Raise TweepError if Twitter location ID is invalid."""
     import twitter_tunes.scripts.twitter_api as tapi
     from tweepy import TweepError
     old_WOEID = tapi.WOEID_US
@@ -43,14 +44,26 @@ def test_invalid_woeid(bad_woeid):
     tapi.WOEID_US = old_WOEID
 
 
-def test_bad_request():
-    """Raise ValueError if any tokens are missing."""
+def test_missing_key():
+    """Raise ValueError if any keys or tokens are missing."""
     import twitter_tunes.scripts.twitter_api as tapi
     old_key = tapi.consumerKey
     tapi.consumerKey = None
     with pytest.raises(ValueError):
         call_twitter_api()
     tapi.consumerKey = old_key
+
+
+def test_no_response(mocker):
+    """Raise TweepError if Twitter is down."""
+    from tweepy import TweepError
+    mocked_api = mocker.patch('tweepy.API')
+    mocked_method = mocked_api().trends_place
+    mocked_method.side_effect = TweepError("Failed to send request: %s' % e")
+    with pytest.raises(TweepError):
+        call_twitter_api()
+
+
 
 
 def test_final_output(mocker):
