@@ -173,6 +173,7 @@ nav {
     position: fixed;
     border-bottom: 1px solid #E1E8ED;
     border-right: 1px solid #E1E8ED;
+    border-radius: 10px;
   }
 
   aside > iframe {
