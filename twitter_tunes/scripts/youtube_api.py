@@ -27,7 +27,7 @@ def youtube_search(keyword, max_results=20):
                 maxResults=max_results).execute()
         return search_response
     except HttpError as err:
-        print('An HTTP error has occurred.  Please check your authorization.')
+        print('An HTTP error has occurred.  Please check YT authorization.')
         return err
     except ServerNotFoundError:
         print('Server not found.  Please connect and try again.')

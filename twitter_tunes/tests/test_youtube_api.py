@@ -59,6 +59,18 @@ def test_youtube_search_bad_token(yt_search):
 
 
 @patch('twitter_tunes.scripts.youtube_api.build')
+def test_youtube_search_bad_max_results(yt_search):
+    """Test that we get an HttpError is raised with bad max results."""
+    mock_method = yt_search().search().list().execute
+    mock_method.side_effect = HttpError(API_DATA.HTTPERROR_RESP_MAX,
+                                        API_DATA.HTTPERROR_CONT_MAX)
+    keyword = 'test search'
+    err = youtube_api.youtube_search(keyword, max_results=-1)
+    assert err.resp == API_DATA.HTTPERROR_RESP_MAX
+    assert err.content == API_DATA.HTTPERROR_CONT_MAX
+
+
+@patch('twitter_tunes.scripts.youtube_api.build')
 def test_youtube_search_no_internet_connection(yt_search):
     """Test if server not found error raised if not connected to internet."""
     mock_method = yt_search().search().list().execute
@@ -70,7 +82,7 @@ def test_youtube_search_no_internet_connection(yt_search):
 
 @patch('twitter_tunes.scripts.youtube_api.build')
 def test_youtube_search_bad_keyword(yt_search):
-    """Test if server not found error raised if not connected to internet."""
+    """Test if invalid keyword used."""
     mock_method = yt_search().search().list().execute
     mock_method.side_effect = TypeError
     keyword = 10

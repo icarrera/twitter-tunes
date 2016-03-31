@@ -59,3 +59,26 @@ HTTPERROR_RESP = {
 HTTPERROR_CONT = b'{\n "error": {\n  "errors": [\n   {\n    "domain":'
 ' "usageLimits",\n    "reason": "keyInvalid",\n    "message": "Bad'
 ' Request"\n   }\n  ],\n  "code": 400,\n  "message": "Bad Request"\n }\n}\n'
+
+HTTPERROR_RESP_MAX = {'-content-encoding': 'gzip',
+                      'alt-svc':
+                      'quic=":443"; ma=2592000; v="32,31,30,29,28,27,26,25"',
+                      'alternate-protocol': '443:quic,p=1',
+                      'cache-control': 'private, max-age=0',
+                      'content-length': '292',
+                      'content-type': 'application/json; charset=UTF-8',
+                      'date': 'Thu, 31 Mar 2016 19:01:22 GMT',
+                      'expires': 'Thu, 31 Mar 2016 19:01:22 GMT',
+                      'server': 'GSE',
+                      'status': '400',
+                      'transfer-encoding': 'chunked',
+                      'vary': 'Origin, X-Origin',
+                      'x-content-type-options': 'nosniff',
+                      'x-frame-options': 'SAMEORIGIN',
+                      'x-xss-protection': '1; mode=block'}
+
+HTTPERROR_CONT_MAX = b'{\n "error": {\n  "errors": [\n   {\n    "domain":'
+' "global",\n    "reason": "invalidParameter",\n    "message":'
+' "Invalid unsigned integer value: \'-1\'.",\n    "locationType":'
+' "parameter",\n    "location": "maxResults"\n   }\n  ],\n  "code":'
+' 400,\n  "message": "Invalid unsigned integer value: \'-1\'."\n }\n}\n'
