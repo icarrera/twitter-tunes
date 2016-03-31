@@ -20,7 +20,7 @@ requires = [
     'logging'
     ]
 
-tests_requires = ['pytest', 'pytest-watch', 'tox', 'webtest']
+tests_requires = ['pytest', 'pytest-watch', 'tox', 'webtest', 'pytest-mock']
 dev_requires = ['ipython', 'pyramid-ipython']
 
 setup(name='Twitter_Tunes',
