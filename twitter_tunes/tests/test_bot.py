@@ -44,7 +44,6 @@ def test_main_good(api, twitter_api, youtube_api, redis_data):
 
     redis_trends = mock_redis.get_redis_data(u'trends')
     trends = redis_trends[u'trends']
-    import pdb; pdb.set_trace()
     da_trend, url = twitter_bot.choose_trend(trends)
     message = twitter_bot.create_message(da_trend, url)
     twitter_bot.make_tweet(message)
@@ -87,6 +86,14 @@ def test_main_bad_youtube(youtube_search):
     Make sure it can keep going."""
     from apiclient.errors import HttpError
     youtube_search.side_effect = HttpError('Uhh', b'youtube broke.')
+    assert twitter_bot.main() == u'Something went horribly wrong.'
+
+
+@mock.patch('twitter_tunes.scripts.twitter_bot.redis_data.get_redis_data')
+def test_main_bad_redis(get_redis_data):
+    """Test if main does stuff if redis goes horribly wrong."""
+    from requests.exceptions import ConnectionError
+    get_redis_data.side_effect = ConnectionError
     assert twitter_bot.main() == u'Something went horribly wrong.'
 
 
