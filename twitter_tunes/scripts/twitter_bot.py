@@ -56,7 +56,7 @@ def main():
         make_tweet(message)
         print(u'@trending__tunes Made a Tweet:\n{}'.format(message))
     except (youtube_api.HttpError, ValueError, tweepy.TweepError):
-        print(u'Something went horribly wrong.')
+        return u'Something went horribly wrong.'
 
 if __name__ == '__main__':
     main()

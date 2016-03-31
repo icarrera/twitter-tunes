@@ -46,8 +46,17 @@ def test_main_bad_twitter(call_twitter_api):
 
     Make sure it can keep going."""
     call_twitter_api.side_effect = ValueError('Missing OAuth key or token.')
-    with pytest.raises(ValueError):
-        twitter_bot.main()
+    assert twitter_bot.main() == u'Something went horribly wrong.'
+
+
+@mock.patch('twitter_tunes.scripts.twitter_bot.tweepy.update_status')
+def test_main_bad_update(update_status):
+    """Test if main does stuff if tweepy goes horribly wrong.
+
+    Make sure it can keep going."""
+    from twitter_tunes.scripts.twitter_bot.tweepy import TweepError
+    update_status.side_effect = TweepError
+    assert twitter_bot.main() == u'Something went horribly wrong.'
 
 
 def test_bot_create_message_known_params():
