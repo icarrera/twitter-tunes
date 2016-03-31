@@ -1,13 +1,11 @@
 # coding=utf-8
 
-
 BAD_YOUTUBE_RESPONSE = {
     'etag': '"T50iqLU0cleWH2-8bQxaAS2DFh8/ZBV2w65lgyrdAoPQHuFS1_5SrKo"',
     'items': [],
     'kind': 'youtube#searchListResponse',
     'pageInfo': {'resultsPerPage': 10, 'totalResults': 0},
     'regionCode': 'US'}
-
 
 GOOD_YOUTUBE_RESPONSE = {
     'etag': '"T50iqLU0cleWH2-8bQxaAS2DFh8/rMPhXgkWK6D1tkOLoK27as-vPT0"',
@@ -42,7 +40,6 @@ GOOD_YOUTUBE_RESPONSE = {
     'pageInfo': {
         'resultsPerPage': 10, 'totalResults': 1000000},
     'regionCode': 'US'}
-
 
 HTTPERROR_RESP = {
     'content-type': 'application/json; charset=UTF-8',
