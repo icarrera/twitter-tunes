@@ -1,6 +1,7 @@
 # coding=utf-8
 from mock import patch
 from apiclient.errors import HttpError
+from httplib2 import ServerNotFoundError
 from twitter_tunes.scripts import youtube_api
 import pytest
 
@@ -117,6 +118,16 @@ def test_youtube_search_bad_token(yt_search):
     assert err.content == HTTPERROR_CONT
 
 
+@patch('twitter_tunes.scripts.youtube_api.build')
+def test_youtube_search_no_internet_connection(yt_search):
+    """Test if server not found error raised if not connected to internet."""
+    mock_method = yt_search().search().list().execute
+    mock_method.side_effect = ServerNotFoundError
+    keyword = 'test search'
+    with pytest.raises(ServerNotFoundError):
+        youtube_api.youtube_search(keyword)
+
+
 def test_youtube_parse_no_data():
     """Test that youtube search parser returns empty list w/ no data input."""
     parsed = youtube_api.youtube_parse([])
@@ -212,7 +223,8 @@ def test_term_checker_0(title, result):
 
 
 def test_url_gen():
-    assert youtube_api.url_gen('12345') == 'https://www.youtube.com/watch?v=12345'
+    assert youtube_api.url_gen(
+        '12345') == 'https://www.youtube.com/watch?v=12345'
 
 
 def test_generate_youtube_link_keyword():
