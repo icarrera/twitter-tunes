@@ -1,13 +1,15 @@
 # coding=utf-8
 from apiclient.discovery import build
-from apiclient.errors import HttpError
+from apiclient.errors import HttpError, UnknownApiNameOrVersion
 import os
+from httplib2 import ServerNotFoundError
 
 
 YOUTUBE_DEVELOPER_KEY = os.environ.get('YT_AUTH')
 YOUTUBE_API_SERVICE_NAME = 'youtube'
 YOUTUBE_API_VERSION = 'v3'
 TERMS = ['remix', 'music', 'song', 'parody', 'jam', 'dance']
+
 
 def youtube_search(keyword, max_results=20):
     """Query YouTube API for search results based off keyword search."""
@@ -25,8 +27,17 @@ def youtube_search(keyword, max_results=20):
                 maxResults=max_results).execute()
         return search_response
     except HttpError as err:
-        print('An HTTP error has occurred.')
+        print('An HTTP error has occurred.  Please check YT Developer Key.')
         return err
+    except UnknownApiNameOrVersion:
+        print('Please check your API name or version.')
+        raise UnknownApiNameOrVersion
+    except ServerNotFoundError:
+        print('Server not found.  Please connect and try again.')
+        raise ServerNotFoundError
+    except TypeError:
+        print('Keyword must be a string.')
+        raise TypeError
 
 
 def youtube_parse(search_result):

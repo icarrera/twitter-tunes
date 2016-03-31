@@ -12,6 +12,7 @@ def parse_redis_data(data):
     try:
         dat_decoded = data.decode('utf-8')
         json_string = dat_decoded.replace("'", "\"")
+        json_string = json_string.replace("u\"", "\"")
         data_dict = json.loads(json_string)
         return data_dict
     except ValueError:

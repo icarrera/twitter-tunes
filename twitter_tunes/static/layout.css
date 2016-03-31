@@ -37,6 +37,13 @@ nav:hover > ul {
   margin: 10px auto;
 }
 
+.validated {
+    display: none;
+    max-width: 30px;
+    position: absolute;
+    left: 75px
+
+}
 #blurbabout > p {
   text-align: justify;
 }
@@ -56,7 +63,9 @@ aside {
   border-right: 1px solid #E1E8ED;
   border-radius: 10px;
 }
-
+ #trends > article {
+     position: relative;
+ }
 #trends > ul > li:first-child {
   margin-top: 0;
 }
