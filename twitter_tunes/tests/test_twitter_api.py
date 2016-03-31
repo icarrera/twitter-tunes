@@ -4,11 +4,9 @@ try:
 except:
     import mock
 from six import string_types
-import unittest
 import pytest
 from ..scripts.twitter_api import call_twitter_api, extract_twitter_trends
 from ..scripts.twitter_api import WOEID_US
-import os.path
 
 RESP_DATA = [{'words': 'words_value',
               'trends': [
@@ -31,6 +29,7 @@ FINAL_OUTPUT = [u'trend1', u'trend2', u'trend3', u'trend4', u'trend5', u'trend6'
                 ]
 
 BAD_WOEID = [None, 1111111111111111111111111111111, 0, 12345678, 'blahblah']
+
 
 @pytest.mark.parametrize("bad_woeid", BAD_WOEID)
 def test_invalid_woeid(bad_woeid):
@@ -64,8 +63,6 @@ def test_no_response(mocker):
         call_twitter_api()
 
 
-
-
 def test_final_output(mocker):
     """Test if length of our call_twitter_api list is as expected."""
     mocked_api = mocker.patch('tweepy.API')
@@ -92,13 +89,3 @@ def test_extract_trends(mocker):
     mocked_method = mocked_api().trends_place
     mocked_method.return_value = RESP_DATA
     assert extract_twitter_trends(RESP_DATA) == FINAL_OUTPUT
-
-# additional testing:
-# how application responds
-# what if twitter api is not there?
-# what does tweepy api do when netowrk is not present?
-# make api call with stuff doesn't fit?
-# bad string etc
-# if user designates own location etc
-# extract_twitter_trends
-# if call_twitter_api fails in a particular way
