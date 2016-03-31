@@ -17,7 +17,6 @@ requires = [
     'tweepy',
     'google-api-python-client',
     'apscheduler',
-    'logging',
     'redis',
     ]
 
