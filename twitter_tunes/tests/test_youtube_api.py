@@ -1,5 +1,6 @@
 # coding=utf-8
 from mock import patch
+from twitter_tunes.tests import mock_youtube_api_response as API_DATA
 from apiclient.errors import HttpError
 from httplib2 import ServerNotFoundError
 from twitter_tunes.scripts import youtube_api
@@ -34,74 +35,12 @@ VERIFIED = [
       ('WV5sOc0Gj0w', 'Clevver News', 'other title')], False)
 ]
 
-BAD_YOUTUBE_RESPONSE = {
-    'etag': '"T50iqLU0cleWH2-8bQxaAS2DFh8/ZBV2w65lgyrdAoPQHuFS1_5SrKo"',
-    'items': [],
-    'kind': 'youtube#searchListResponse',
-    'pageInfo': {'resultsPerPage': 10, 'totalResults': 0},
-    'regionCode': 'US'}
-
-
-GOOD_YOUTUBE_RESPONSE = {
-    'etag': '"T50iqLU0cleWH2-8bQxaAS2DFh8/rMPhXgkWK6D1tkOLoK27as-vPT0"',
-    'items': [{
-        'etag': '"T50iqLU0cleWH2-8bQxaAS2DFh8/t65EExZHRMS3i9EoE2pFIrSUw7M"',
-        'id': {'kind': 'youtube#video', 'videoId': 'oyEuk8j8imI'},
-        'kind': 'youtube#searchResult',
-        'snippet': {'channelId': 'UCHkj014U2CQ2Nv0UZeYpE_A',
-                    'channelTitle': 'JustinBieberVEVO',
-                    'description': "'Purpose' Available Everywhere Now!",
-                    'liveBroadcastContent': 'none',
-                    'publishedAt': '2015-11-14T15:00:01.000Z',
-                    'thumbnails': {
-                        'default': {
-                            'height': 90,
-                            'url': 'https://i.ytimg.com/vi/'
-                                   'oyEuk8j8imI/default.jpg',
-                            'width': 120},
-                        'high': {
-                            'height': 360,
-                            'url': 'https://i.ytimg.com/vi/'
-                                   'oyEuk8j8imI/hqdefault.jpg',
-                            'width': 480},
-                        'medium': {
-                            'height': 180,
-                            'url': 'https://i.ytimg.com/vi/'
-                                   'oyEuk8j8imI/mqdefault.jpg',
-                            'width': 320}},
-                    'title': 'dummy title'}}],
-    'kind': 'youtube#searchListResponse',
-    'nextPageToken': 'CAoQAA',
-    'pageInfo': {
-        'resultsPerPage': 10, 'totalResults': 1000000},
-    'regionCode': 'US'}
-
-
-HTTPERROR_RESP = {
-    'content-type': 'application/json; charset=UTF-8',
-    'x-frame-options': 'SAMEORIGIN',
-    'status': '400',
-    'x-xss-protection': '1; mode=block',
-    'x-content-type-options': 'nosniff',
-    'cache-control': 'private, max-age=0',
-    'alt-svc': 'quic=":443"; ma=2592000; v="31,30,29,28,27,26,25"',
-    'transfer-encoding': 'chunked',
-    'expires': 'Tue, 29 Mar 2016 20:03:06 GMT',
-    'server': 'GSE', 'vary': 'Origin, X-Origin',
-    '-content-encoding': 'gzip', 'alternate-protocol': '443:quic,p=1',
-    'date': 'Tue, 29 Mar 2016 20:03:06 GMT',
-    'content-length': '176'}
-
-HTTPERROR_CONT = b'{\n "error": {\n  "errors": [\n   {\n    "domain":'
-' "usageLimits",\n    "reason": "keyInvalid",\n    "message": "Bad'
-' Request"\n   }\n  ],\n  "code": 400,\n  "message": "Bad Request"\n }\n}\n'
-
 
 @patch('twitter_tunes.scripts.youtube_api.build')
 def test_youtube_search_get_data(yt_search):
     """Test to see if we are getting result from search."""
     mock_method = yt_search().search().list().execute
-    mock_method.return_value = GOOD_YOUTUBE_RESPONSE
+    mock_method.return_value = API_DATA.GOOD_YOUTUBE_RESPONSE
     keyword = 'test search'
     result = youtube_api.youtube_search(keyword)
     assert 'items' in result
@@ -111,11 +50,12 @@ def test_youtube_search_get_data(yt_search):
 def test_youtube_search_bad_token(yt_search):
     """Test that we get an HttpError is raised with bad youtube search."""
     mock_method = yt_search().search().list().execute
-    mock_method.side_effect = HttpError(HTTPERROR_RESP, HTTPERROR_CONT)
+    mock_method.side_effect = HttpError(API_DATA.HTTPERROR_RESP,
+                                        API_DATA.HTTPERROR_CONT)
     keyword = 'test search'
     err = youtube_api.youtube_search(keyword)
-    assert err.resp == HTTPERROR_RESP
-    assert err.content == HTTPERROR_CONT
+    assert err.resp == API_DATA.HTTPERROR_RESP
+    assert err.content == API_DATA.HTTPERROR_CONT
 
 
 @patch('twitter_tunes.scripts.youtube_api.build')
@@ -136,13 +76,13 @@ def test_youtube_parse_no_data():
 
 def test_youtube_parse_no_search_result():
     """Test that youtube search parser returns empty list w/ no data input."""
-    parsed = youtube_api.youtube_parse(BAD_YOUTUBE_RESPONSE)
+    parsed = youtube_api.youtube_parse(API_DATA.BAD_YOUTUBE_RESPONSE)
     assert parsed == []
 
 
 def test_youtube_parse_good_result():
     """Test that search parser returns list of touples with good api search."""
-    parsed = youtube_api.youtube_parse(GOOD_YOUTUBE_RESPONSE)
+    parsed = youtube_api.youtube_parse(API_DATA.GOOD_YOUTUBE_RESPONSE)
     assert parsed == [('oyEuk8j8imI', 'JustinBieberVEVO', 'dummy title')]
 
 
@@ -202,7 +142,7 @@ def test_generate_youtube_link_empty_list():
 @patch('twitter_tunes.scripts.youtube_api.build')
 def test_get_link_good_data(yt_search):
     mock_method = yt_search().search().list().execute
-    mock_method.return_value = GOOD_YOUTUBE_RESPONSE
+    mock_method.return_value = API_DATA.GOOD_YOUTUBE_RESPONSE
     keyword = 'Justin Bieber'
     url = youtube_api.get_link(keyword)
     assert url[0] == 'https://www.youtube.com/watch?v=oyEuk8j8imI'
@@ -211,7 +151,7 @@ def test_get_link_good_data(yt_search):
 @patch('twitter_tunes.scripts.youtube_api.build')
 def test_get_link_bad_data(yt_search):
     mock_method = yt_search().search().list().execute
-    mock_method.return_value = BAD_YOUTUBE_RESPONSE
+    mock_method.return_value = API_DATA.BAD_YOUTUBE_RESPONSE
     keyword = 'asdf lawe;lfj'
     url = youtube_api.get_link(keyword)
     assert url[0] == 'https://www.youtube.com/watch?v=b_ILDFp5DGA'
