@@ -95,6 +95,14 @@ def test_set_redis_data_empty(from_url):
     assert mock_method.call_count == 1
 
 
+@patch('redis.from_url')
+def test_set_redis_data_empty(from_url):
+    """Test to see if set redis data is called with empty data."""
+    mock_method = from_url().set
+    redis_data.set_redis_data('trends', ['bobloblaw', 'boo'])
+    assert mock_method.call_count == 1
+
+
 def test_set_redis_no_val():
     """Test if set data fails with no arguments."""
     with pytest.raises(TypeError):
