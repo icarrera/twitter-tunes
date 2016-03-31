@@ -75,7 +75,7 @@ def test_main_bad_youtube(youtube_search):
 
     Make sure it can keep going."""
     from apiclient.errors import HttpError
-    youtube_search.side_effect = HttpError('Uhh', 'youtube broke.')
+    youtube_search.side_effect = HttpError('Uhh', b'youtube broke.')
     assert twitter_bot.main() == u'Something went horribly wrong.'
 
 
