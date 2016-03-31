@@ -22,7 +22,7 @@ def choose_trend(trends):
     """
     for trend in trends:
         url, is_music = youtube_api.get_link(parser.parse_trend(trend))
-        last_tweets = redis_data.get_redis_data('last_tweets')
+        last_tweets = redis_data.get_redis_data(u'last_tweets')
         if last_tweets == {}:
             last_tweets = []
         if is_music:

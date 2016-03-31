@@ -131,7 +131,7 @@ def test_bot_choose_trend(get_link, get_redis_data, set_redis_data):
     def redis_side_effect(arg):
         if arg == u'trends':
             return bot_test_vars.REDIS_TRENDS
-        elif arg == u'last_posts':
+        elif arg == u'last_tweets':
             return bot_test_vars.REDIS_LAST_POSTS
 
     get_link.side_effect = yt_side_effect
