@@ -19,6 +19,7 @@ TEST_TRENDS = [
 
 @pytest.mark.parametrize('trend, query', TEST_TRENDS)
 def test_parse_trend(trend, query):
+    """Test trend is parsed as expected."""
     from twitter_tunes.scripts import parser
     assert parser.parse_trend(trend) == query
 

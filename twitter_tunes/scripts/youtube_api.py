@@ -56,6 +56,7 @@ def youtube_parse(search_result):
 
 
 def term_checker(title):
+    """Check to see if keywords are in the title of the video."""
     for term in TERMS:
         if term in title.lower():
             return True
@@ -63,6 +64,7 @@ def term_checker(title):
 
 
 def url_gen(video_id):
+    """Create and return the url for the given video."""
     yt_path = 'https://www.youtube.com/'
     yt_uri = 'watch?v=' + video_id
     yt_url = yt_path + yt_uri
