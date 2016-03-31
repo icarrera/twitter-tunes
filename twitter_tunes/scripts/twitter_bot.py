@@ -31,7 +31,7 @@ def choose_trend(trends):
             if trend not in last_tweets:
                 if len(last_tweets) >= 5:
                     last_tweets = last_tweets[1:]
-                last_tweets[:].append(trend)
+                last_tweets.append(trend)
                 redis_data.set_redis_data(u'last_tweets', last_tweets)
                 return trend, url
 
@@ -44,7 +44,6 @@ def make_tweet(message):
         api = tweepy.API(auth)
         return api.update_status(message)
     else:
-        print('Missing OAuth key or token')
         raise ValueError('Missing OAuth key or token.')
 
 

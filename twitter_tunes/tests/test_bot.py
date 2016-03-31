@@ -213,3 +213,7 @@ def test_bot_choose_trend_trend_long(get_link, get_redis_data, set_redis_data):
     redis_trends = get_redis_data(u'trends')
     trends = redis_trends[u'trends']
     assert twitter_bot.choose_trend(trends)[0] == bot_test_vars.TRENDS[0]
+
+
+'''@mock.patch('twitter_tunes.scripts.twitter_bot.tweepy.API.update_status')
+def test_make_tweet_bad()'''
