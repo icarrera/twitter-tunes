@@ -2,6 +2,7 @@
 from twitter_tunes.scripts import twitter_api, youtube_api, parser, redis_data
 import tweepy
 import os
+import requests
 
 BASE_MESSAGE = u"""{trend} is trending right now. Here's its tune! {url}"""
 consumerKey = os.environ.get('TWITTER_CONSUMERKEY', None)
@@ -55,7 +56,8 @@ def main():
         message = create_message(trend, youtube_url)
         make_tweet(message)
         print(u'@trending__tunes Made a Tweet:\n{}'.format(message))
-    except (youtube_api.HttpError, ValueError, tweepy.TweepError):
+    except (youtube_api.HttpError, ValueError, tweepy.TweepError,
+            requests.exceptions.ConnectionError):
         return u'Something went horribly wrong.'
 
 if __name__ == '__main__':
