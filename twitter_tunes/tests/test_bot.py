@@ -175,3 +175,23 @@ def test_bot_choose_trend(get_link, get_redis_data, set_redis_data):
     good_url = u'https://www.youtube.com/watch?v=ms2klX-puUU'
     bad_url = u'https://www.youtube.com/watch?v=cU8HrO7XuiE'
     assert twitter_bot.choose_trend(trends)[0] == bot_test_vars.TRENDS[2]  # trend you expect.
+
+
+@mock.patch('twitter_tunes.scripts.twitter_bot.redis_data.set_redis_data')
+@mock.patch('twitter_tunes.scripts.twitter_bot.redis_data.get_redis_data')
+@mock.patch('twitter_tunes.scripts.twitter_bot.youtube_api.get_link')
+def test_bot_choose_trend_bad_redis(get_link, get_redis_data, set_redis_data):
+    """test if the choosing trend handles a bad redis call."""
+    get_link.return_value = (u'url', True)
+
+    def redis_side_effect_bad(arg):
+        if arg == u'trends':
+            return bot_test_vars.REDIS_TRENDS
+        elif arg == u'last_tweets':
+            return {}
+
+    get_redis_data.side_effect = redis_side_effect_bad
+    redis_trends = get_redis_data(u'trends')
+    trends = redis_trends[u'trends']
+    import pdb; pdb.set_trace()
+    assert twitter_bot.choose_trend(trends)[0] == bot_test_vars.TRENDS[0]
