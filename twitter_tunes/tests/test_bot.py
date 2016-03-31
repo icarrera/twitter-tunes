@@ -15,25 +15,36 @@ def test_make_tweet_static_message(api):
     mock_method.assert_called_with(u"more tests")
 
 
+@mock.patch('twitter_tunes.scripts.redis_data')
 @mock.patch('twitter_tunes.scripts.twitter_api')
 @mock.patch('twitter_tunes.scripts.youtube_api')
 @mock.patch('tweepy.API')
-def test_main_good(api, twitter_api, youtube_api):
+def test_main_good(api, twitter_api, youtube_api, redis_data):
     """Test if bot makes tweet with api data.
 
     This is what the main function would do.
     """
-    from twitter_tunes.scripts import parser, youtube_api, twitter_api
-    from twitter_tunes.tests import test_twitter_api
+    from twitter_tunes.scripts import youtube_api, twitter_api, redis_data
+    from twitter_tunes.tests import test_twitter_api, bot_test_vars
+
+    def redis_side_effect(arg):
+        if arg == u'trends':
+            return bot_test_vars.REDIS_TRENDS
+        elif arg == u'last_tweets':
+            return bot_test_vars.REDIS_LAST_POSTS
 
     test_url = u"https://www.youtube.com/watch?v=oyEuk8j8imI"
     mock_update_status = api().update_status
     mock_trends = twitter_api()
     mock_yt_search = youtube_api()
+    mock_redis = redis_data()
     mock_trends.call_twitter_api.return_value = test_twitter_api.FINAL_OUTPUT
     mock_yt_search.get_link.return_value = (test_url, True)
+    mock_redis.get_redis_data.side_effect = redis_side_effect
 
-    trends = mock_trends.call_twitter_api()
+    redis_trends = mock_redis.get_redis_data(u'trends')
+    trends = redis_trends[u'trends']
+    import pdb; pdb.set_trace()
     da_trend, url = twitter_bot.choose_trend(trends)
     message = twitter_bot.create_message(da_trend, url)
     twitter_bot.make_tweet(message)
