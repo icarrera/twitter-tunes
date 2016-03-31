@@ -13,6 +13,7 @@ REDIS_PARSE = [
         {'trends': ['trend1', 'trend2', 'trend3']}),
     (b"{'bob': []}",
         {'bob': []}),
+    (b"{'hello': [u'its me']}", {'hello': ['its me']}),
 ]
 
 
