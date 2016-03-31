@@ -2,7 +2,7 @@
 from twitter_tunes.scripts import twitter_api, youtube_api, parser, redis_data
 import tweepy
 import os
-import requests
+from requests.exceptions import ConnectionError
 
 BASE_MESSAGE = u"""{trend} is trending right now. Here's its tune! {url}"""
 consumerKey = os.environ.get('TWITTER_CONSUMERKEY', None)
@@ -30,7 +30,7 @@ def choose_trend(trends):
             if trend not in last_tweets:
                 if len(last_tweets) >= 5:
                     last_tweets = last_tweets[1:]
-                last_tweets.append(trend)
+                last_tweets[:].append(trend)
                 redis_data.set_redis_data(u'last_tweets', last_tweets)
                 return trend, url
 
@@ -52,13 +52,19 @@ def main():
 
     """
     try:
-        trend, youtube_url = choose_trend(twitter_api.call_twitter_api())
+        # Get a list of trends from the redis DB
+        try:
+            current_trends = redis_data.get_redis_data(u'trends')[u'trends']
+        except KeyError:  # There's some key issue on redis
+            # Just use real twitter
+            trend, youtube_url = choose_trend(twitter_api.call_twitter_api())
+        else:
+            trend, youtube_url = choose_trend(current_trends)
         message = create_message(trend, youtube_url)
         make_tweet(message)
         print(u'@trending__tunes Made a Tweet:\n{}'.format(message))
-    except (youtube_api.HttpError, ValueError, tweepy.TweepError,
-            requests.exceptions.ConnectionError):
-        return u'Something went horribly wrong.'
+    except (youtube_api.HttpError, ValueError, tweepy.TweepError, ConnectionError):
+            return u'Something went horribly wrong.'
 
 if __name__ == '__main__':
     main()
