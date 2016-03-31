@@ -2,6 +2,10 @@
 
 The soundtrack to your social media life.
 
+http://twitter-tunes.herokuapp.com/
+
+https://twitter.com/trending__tunes
+
 ### About
 A Python application that takes a US Twitter trending topic and finds a YouTube music video related to that topic name.
 For example, the trending topic #USMNT will be returned with this music-related clip: https://www.youtube.com/watch?v=u0kn_t7hwC4
