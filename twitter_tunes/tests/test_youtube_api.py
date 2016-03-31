@@ -68,6 +68,16 @@ def test_youtube_search_no_internet_connection(yt_search):
         youtube_api.youtube_search(keyword)
 
 
+@patch('twitter_tunes.scripts.youtube_api.build')
+def test_youtube_search_bad_keyword(yt_search):
+    """Test if server not found error raised if not connected to internet."""
+    mock_method = yt_search().search().list().execute
+    mock_method.side_effect = TypeError
+    keyword = 10
+    with pytest.raises(TypeError):
+        youtube_api.youtube_search(keyword)
+
+
 def test_youtube_parse_no_data():
     """Test that youtube search parser returns empty list w/ no data input."""
     parsed = youtube_api.youtube_parse([])

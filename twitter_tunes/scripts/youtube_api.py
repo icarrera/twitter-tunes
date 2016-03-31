@@ -32,6 +32,9 @@ def youtube_search(keyword, max_results=20):
     except ServerNotFoundError:
         print('Server not found.  Please connect and try again.')
         raise ServerNotFoundError
+    except TypeError:
+        print('Keyword must be a string.')
+        raise TypeError
 
 
 def youtube_parse(search_result):
