@@ -174,5 +174,4 @@ def test_bot_choose_trend(get_link, get_redis_data, set_redis_data):
     trends = redis_trends[u'trends']
     good_url = u'https://www.youtube.com/watch?v=ms2klX-puUU'
     bad_url = u'https://www.youtube.com/watch?v=cU8HrO7XuiE'
-    import pdb; pdb.set_trace()
     assert twitter_bot.choose_trend(trends)[0] == bot_test_vars.TRENDS[2]  # trend you expect.
