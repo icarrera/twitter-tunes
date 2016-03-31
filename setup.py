@@ -21,7 +21,8 @@ requires = [
     'redis',
     ]
 
-tests_requires = ['pytest', 'pytest-watch', 'tox', 'webtest', 'mock']
+
+tests_requires = ['pytest', 'pytest-watch', 'tox', 'webtest', 'mock', 'pytest-mock']
 dev_requires = ['ipython', 'pyramid-ipython']
 
 setup(name='Twitter_Tunes',
