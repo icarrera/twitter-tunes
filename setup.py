@@ -10,7 +10,6 @@ with open(os.path.join(here, 'CHANGES.txt')) as f:
 
 requires = [
     'pyramid',
-    'pyramid_chameleon',
     'pyramid_debugtoolbar',
     'waitress',
     'pyramid_jinja2',
@@ -24,7 +23,7 @@ requires = [
 tests_requires = ['pytest', 'pytest-watch', 'tox', 'webtest', 'mock', 'pytest-mock']
 dev_requires = ['ipython', 'pyramid-ipython']
 
-setup(name='Twitter_Tunes',
+setup(name='twitter-tunes',
       version='0.0',
       description='Twitter_Tunes',
       long_description=README + '\n\n' + CHANGES,
