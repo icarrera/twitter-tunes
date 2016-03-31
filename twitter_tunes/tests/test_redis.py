@@ -96,7 +96,7 @@ def test_set_redis_data_empty(from_url):
 
 
 @patch('redis.from_url')
-def test_set_redis_data_empty(from_url):
+def test_set_redis_data_list(from_url):
     """Test to see if set redis data is called with empty data."""
     mock_method = from_url().set
     redis_data.set_redis_data('trends', ['bobloblaw', 'boo'])
