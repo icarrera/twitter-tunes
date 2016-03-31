@@ -49,13 +49,13 @@ def test_main_bad_twitter(call_twitter_api):
     assert twitter_bot.main() == u'Something went horribly wrong.'
 
 
-@mock.patch('twitter_tunes.scripts.twitter_bot.tweepy.update_status')
+@mock.patch('twitter_tunes.scripts.twitter_bot.tweepy.API.update_status')
 def test_main_bad_update(update_status):
     """Test if main does stuff if tweepy goes horribly wrong.
 
     Make sure it can keep going."""
-    from twitter_tunes.scripts.twitter_bot.tweepy import TweepError
-    update_status.side_effect = TweepError
+    from tweepy import TweepError
+    update_status.side_effect = TweepError("Couldn't Post")
     assert twitter_bot.main() == u'Something went horribly wrong.'
 
 
