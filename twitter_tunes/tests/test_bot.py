@@ -59,6 +59,16 @@ def test_main_bad_update(update_status):
     assert twitter_bot.main() == u'Something went horribly wrong.'
 
 
+@mock.patch('twitter_tunes.scripts.twitter_bot.tweepy.API.trends_place')
+def test_main_bad_get_trends(trends_place):
+    """Test if main does stuff if tweepy goes horribly wrong.
+
+    Make sure it can keep going."""
+    from tweepy import RateLimitError
+    trends_place.side_effect = RateLimitError("Slow Down!")
+    assert twitter_bot.main() == u'Something went horribly wrong.'
+
+
 def test_bot_create_message_known_params():
     """Test to see bot can return a message.
 
