@@ -1,20 +1,11 @@
 from pyramid.view import view_config
 from twitter_tunes.scripts import parser, youtube_api
+from twitter_tunes.scripts.redis_data import get_redis_data
 
 
 @view_config(route_name='home', renderer='templates/index.jinja2')
 def home(request):
-    # trends = twitter_api.call_twitter_api()
-    trends = ['one two step', '#two', 'kyrie', '#DogsInTheRoom', 'Patty Duke',
-              '#Trends', '#GOPTownHall', '#Hashtag', '#Lunch Time', '#TGIF']
-    return {'trends': trends}
-
-
-def get_topics(request):
-    """return dict of twitter trends."""
-    # Make API request to twitter for top trends.
-    # return that.
-    pass
+    return get_redis_data('trends')
 
 
 @view_config(route_name='video', renderer='json')
