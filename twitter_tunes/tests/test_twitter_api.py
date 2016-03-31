@@ -43,7 +43,7 @@ def test_bad_request():
 
 
 def test_no_woeid():
-    """Raise TweepError if WOEID number is invalid"""
+    """Raise TweepError if WOEID number is not present"""
     import twitter_tunes.scripts.twitter_api as tapi
     from tweepy import TweepError
     old_WOEID = tapi.WOEID_US
@@ -51,6 +51,18 @@ def test_no_woeid():
     with pytest.raises(TweepError):
         call_twitter_api()
     tapi.WOEID_US = old_WOEID
+
+
+def test_bad_woeid():
+    """Raise TweepError if WOEID number is invalid"""
+    import twitter_tunes.scripts.twitter_api as tapi
+    from tweepy import TweepError
+    old_WOEID = tapi.WOEID_US
+    tapi.WOEID_US = 1111111111111111111111111111111111111
+    with pytest.raises(TweepError):
+        call_twitter_api()
+    tapi.WOEID_US = old_WOEID
+
 
 def test_final_output(mocker):
     """Test if length of our call_twitter_api list is as expected."""
