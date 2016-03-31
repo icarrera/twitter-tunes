@@ -1,7 +1,7 @@
 # coding=utf-8
 from mock import patch
 from twitter_tunes.tests import mock_youtube_api_response as API_DATA
-from apiclient.errors import HttpError
+from apiclient.errors import HttpError, UnknownApiNameOrVersion
 from httplib2 import ServerNotFoundError
 from twitter_tunes.scripts import youtube_api
 import pytest
@@ -77,6 +77,16 @@ def test_youtube_search_no_internet_connection(yt_search):
     mock_method.side_effect = ServerNotFoundError
     keyword = 'test search'
     with pytest.raises(ServerNotFoundError):
+        youtube_api.youtube_search(keyword)
+
+
+@patch('twitter_tunes.scripts.youtube_api.build')
+def test_youtube_search_bad_api_name_version(yt_search):
+    """Test if server not found error raised if bad API name or version."""
+    mock_method = yt_search().search().list().execute
+    mock_method.side_effect = UnknownApiNameOrVersion
+    keyword = 'test search'
+    with pytest.raises(UnknownApiNameOrVersion):
         youtube_api.youtube_search(keyword)
 
 

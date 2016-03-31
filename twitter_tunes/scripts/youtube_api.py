@@ -1,6 +1,6 @@
 # coding=utf-8
 from apiclient.discovery import build
-from apiclient.errors import HttpError
+from apiclient.errors import HttpError, UnknownApiNameOrVersion
 import os
 from httplib2 import ServerNotFoundError
 
@@ -29,6 +29,9 @@ def youtube_search(keyword, max_results=20):
     except HttpError as err:
         print('An HTTP error has occurred.  Please check YT authorization.')
         return err
+    except UnknownApiNameOrVersion:
+        print('Please check your API name or version.')
+        raise UnknownApiNameOrVersion
     except ServerNotFoundError:
         print('Server not found.  Please connect and try again.')
         raise ServerNotFoundError
