@@ -1,6 +1,6 @@
 from apscheduler.schedulers.blocking import BlockingScheduler
 from twitter_tunes.scripts import twitter_bot
-from twitter_tunes.redis import redis_data
+from twitter_tunes.redis_data import redis_data
 from twitter_tunes.scripts import twitter_api
 import logging
 
