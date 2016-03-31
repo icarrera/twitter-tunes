@@ -13,7 +13,7 @@ REDIS_PARSE = [
         {'trends': ['trend1', 'trend2', 'trend3']}),
     (b'{"bob": []}',
         {'bob': []}),
-    (b'{"hello": [u"its me"]}', {'hello': [u'its me']}),
+    (b'{"hello": [u"its me"]}', {'hello': ['its me']}),
     (b'["#Empire", "#SignsYoureABernieSupporter"]',
         ['#Empire', '#SignsYoureABernieSupporter']),
     (b'[1, 2, 3, 4, 5]', [1, 2, 3, 4, 5]),
