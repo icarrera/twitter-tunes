@@ -69,6 +69,16 @@ def test_main_bad_get_trends(trends_place):
     assert twitter_bot.main() == u'Something went horribly wrong.'
 
 
+@mock.patch('twitter_tunes.scripts.twitter_bot.youtube_api.youtube_search')
+def test_main_bad_youtube(youtube_search):
+    """Test if main does stuff if twitter goes horribly wrong.
+
+    Make sure it can keep going."""
+    from apiclient.errors import HttpError
+    youtube_search.side_effect = HttpError('Uhh', 'youtube broke.')
+    assert twitter_bot.main() == u'Something went horribly wrong.'
+
+
 def test_bot_create_message_known_params():
     """Test to see bot can return a message.
 
