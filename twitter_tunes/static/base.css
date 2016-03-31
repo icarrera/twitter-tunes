@@ -1,0 +1,116 @@
+/*
+COLOR PALETTE:
+
+  BACKGROUND:  #F5F8FA
+  BORDER:  #E1E8ED
+  IFRMAE BACKGROUND:  #777
+  NICE COLOR (BLUE):  #95C7FE
+  PRIMARY (twitter):  #409AFF
+  NICE COLOR (PURP):  #7B46FF
+*/
+
+
+.clearfix {
+  clear: both;
+}
+
+body {
+  background: #F5F8FA;
+}
+
+header, hgroup, section, #blurbabout, #trends, #aboutus {
+  border-bottom: 1px solid #E1E8ED;
+  border-right: 1px solid #E1E8ED;
+}
+
+header {
+  position: relative;
+  background: #FFF;
+  z-index: 9999;
+}
+
+hgroup {
+  width: 100%;
+}
+
+hgroup > h1 {
+  width: 70%;
+  display: inline-block;
+  text-align: center;
+}
+
+section {
+  margin: 30px;
+  text-align: center;
+  background: #FFF;
+  border-radius: 10px;
+}
+
+section > h1 {
+  padding-top: 20px;
+}
+
+ul {
+  padding: 0;
+  margin: 0 auto;
+}
+
+li {
+  list-style: none;
+  padding: 10px;
+}
+
+h4 {
+  margin: 5px;
+}
+
+p {
+  text-align: justify;
+  padding: 30px;
+}
+
+a, a:visited {
+  color: #409AFF;
+}
+
+
+.video-container {
+	position:relative;
+	padding-bottom:56.25%;
+	padding-top:30px;
+	height:0;
+	overflow:hidden;
+  z-index: 2;
+}
+
+.video-container iframe, .video-container object, .video-container embed {
+	position:absolute;
+	top:0;
+	left:0;
+	width:100%;
+	height:100%;
+  z-index: 2;
+}
+
+
+
+/* ==================== MEDIA QUERY: 640px ==================== */
+
+@media only screen and (min-width: 640px) {
+
+  header {
+    width: 100%;
+    position: fixed;
+    top: 0;
+    background: #fff;
+    z-index: 9999;
+  }
+
+  hgroup {
+    border-bottom: none;
+  }
+
+  hgroup > h1 {
+    width: 60%;
+  }
+}
