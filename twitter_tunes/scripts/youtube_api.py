@@ -27,7 +27,7 @@ def youtube_search(keyword, max_results=20):
                 maxResults=max_results).execute()
         return search_response
     except HttpError as err:
-        print('An HTTP error has occurred.  Please check YT authorization.')
+        print('An HTTP error has occurred.  Please check YT Developer Key.')
         return err
     except UnknownApiNameOrVersion:
         print('Please check your API name or version.')
