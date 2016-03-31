@@ -5,19 +5,27 @@ from mock import patch
 
 
 REDIS_PARSE = [
-    (b"{'trend3': 'url3', 'trend2': 'url2', 'trend1': 'url1'}",
+    (b'{"trend3": "url3", "trend2": "url2", "trend1": "url1"}',
         {'trend1': 'url1', 'trend2': 'url2', 'trend3': 'url3'}),
-    (b"{}", {}),
-    (b"{'hello':'its me'}", {'hello': 'its me'}),
-    (b"{'trends': ['trend1', 'trend2', 'trend3']}",
+    (b'{}', {}),
+    (b'{"hello": "its me"}', {'hello': 'its me'}),
+    (b'{"trends": ["trend1", "trend2", "trend3"]}',
         {'trends': ['trend1', 'trend2', 'trend3']}),
-    (b"{'bob': []}",
+    (b'{"bob": []}',
         {'bob': []}),
-    (b"{'hello': [u'its me']}", {'hello': ['its me']}),
+    (b'{"hello": [u"its me"]}', {'hello': ['its me']}),
+    (b'["#Empire", "#SignsYoureABernieSupporter"]',
+        ['#Empire', '#SignsYoureABernieSupporter']),
+    (b'[1, 2, 3, 4, 5]', [1, 2, 3, 4, 5]),
+    (b'"Hello I am Joe"', 'Hello I am Joe'),
+    (b'""', ''),
+    (b'[]', []),
+    (b'["#Empire", "#SignsYoure\'ABernieSupporter"]',
+        ['#Empire', '#SignsYoure\'ABernieSupporter']),
 ]
 
 
-GOOD_REDIS_RETURN = b"{'trend3': 'url3', 'trend2': 'url2', 'trend1': 'url1'}"
+GOOD_REDIS_RETURN = b'["trend1", "trend2", "trend3"]'
 
 
 TWITTER_TRENDS = ["D'Angelo Russell",
@@ -58,9 +66,9 @@ def test_get_redis_data_good_redis_key(from_url):
     """Test to see if get redis data returns data dictionary."""
     mock_method = from_url().get
     mock_method.return_value = GOOD_REDIS_RETURN
-    assert redis_data.get_redis_data('trends') == {'trend1': 'url1',
-                                                   'trend2': 'url2',
-                                                   'trend3': 'url3'}
+    assert redis_data.get_redis_data('trends') == ['trend1',
+                                                   'trend2',
+                                                   'trend3']
 
 
 @patch('redis.from_url')
@@ -68,7 +76,7 @@ def test_get_redis_data_bad_redis_key(from_url):
     """Test to see if get redis data returns data dictionary."""
     mock_method = from_url().get
     mock_method.return_value = None
-    assert redis_data.get_redis_data('bad') == {}
+    assert redis_data.get_redis_data('bad') == []
 
 
 @patch('redis.from_url')
@@ -87,21 +95,15 @@ def test_set_redis_data_empty(from_url):
     assert mock_method.call_count == 1
 
 
+@patch('redis.from_url')
+def test_set_redis_data_list(from_url):
+    """Test to see if set redis data is called with empty data."""
+    mock_method = from_url().set
+    redis_data.set_redis_data('trends', ['bobloblaw', 'boo'])
+    assert mock_method.call_count == 1
+
+
 def test_set_redis_no_val():
     """Test if set data fails with no arguments."""
     with pytest.raises(TypeError):
         redis_data.set_redis_data('key')
-
-
-@pytest.mark.parametrize('data, result', PARSE_LIST)
-def test_parse_redis_twiter_trends(data, result):
-    """Test trend parser to remove apostrophes from trends."""
-    assert redis_data.redis_parse_twitter_trends(data) == result
-
-
-@patch('redis.from_url')
-def test_redis_set_trends(from_url):
-    """Test the redis main function."""
-    mock_method = from_url().set
-    redis_data.set_redis_trend_list(TWITTER_TRENDS)
-    assert mock_method.call_count == 1
