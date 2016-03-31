@@ -38,5 +38,8 @@ function update_one(trend){
     iframe = trend.find('article > .video-container > iframe');
     $.get('/youtube/' + trend.attr('id'), function(data){
         iframe.attr('src', data.url);
+        if(data.validated == 'true'){
+            console.log(trend.attr('id') + ' has been validated.')
+        }
     })
 }
