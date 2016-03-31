@@ -25,6 +25,12 @@ def choose_trend(trends):
     for trend in trends:
         url, is_music = youtube_api.get_link(parser.parse_trend(trend))
         if is_music:
+            # if trend not in redis.recent_tweets
+                # if len(redis.recent_tweets) > 5
+                    # pop redis.recent[0]
+                    # append trend on redis.recent
+                    # You need to remake the redis object for this
+                    # return trend, url
             return trend, url
 
 
@@ -44,10 +50,13 @@ def main():
     """Post a tweet about number one trend and a youtube video related to it.
 
     """
-    trend, youtube_url = choose_trend(twitter_api.call_twitter_api())
-    message = create_message(trend, youtube_url)
-    make_tweet(message)
-    print('@trending__tunes Made a Tweet:\n{}'.format(message))
+    try:
+        trend, youtube_url = choose_trend(twitter_api.call_twitter_api())
+        message = create_message(trend, youtube_url)
+        make_tweet(message)
+        print(u'@trending__tunes Made a Tweet:\n{}'.format(message))
+    except (youtube_api.HttpError, ValueError, tweepy.TweepError):
+        return u'Something went horribly wrong.'
 
 if __name__ == '__main__':
     main()

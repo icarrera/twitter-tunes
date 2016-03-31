@@ -12,10 +12,10 @@
   <body>
     <header>
       <hgroup class="header_mobile">
-        <img src="../static/drawing.png" alt="Twitter Tunes Logo" />
+        <img src="../static/logo.png" alt="Twitter Tunes Logo" />
         <h1>Trending Twitter Tunes</h1>
       </hgroup>
-      <img class="header_desktop" src="../static/drawing.png" alt="Twitter Tunes Logo" />
+      <img class="header_desktop" src="../static/logo.png" alt="Twitter Tunes Logo" />
       <h1 class="header_desktop">Trending Twitter Tunes</h1>
       <nav>
         <div class="icon-menu"></div>
@@ -49,6 +49,7 @@
         <li id="{{ trend|replace('#', '')}}">
           <article class="">
             <div class="icon-circle-down"></div>
+            <img class='validated'></img>
             <h2>{{ trend }}</h2>
             <div class="video-container">
               <iframe src="../static/loading.gif" width="" height=""></iframe>
