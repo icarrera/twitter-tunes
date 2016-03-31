@@ -23,7 +23,6 @@ function update(trend){
             if(data.validated == 'true'){
                 val_img = trend.find('article > img');
                 val_img.attr('src', '../static/Twitter_tunes_logo_1.png');
-                console.log(trend.attr('id') + ' has been validated.');
             }
             update_next(trend);
         })
@@ -46,7 +45,6 @@ function update_one(trend){
         if(data.validated == 'true'){
             val_img = trend.find('article > img');
             val_img.attr('src', '../static/Twitter_tunes_logo_1.png');
-            console.log(trend.attr('id') + ' has been validated.');
         }
     })
 }
