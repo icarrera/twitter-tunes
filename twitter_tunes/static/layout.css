@@ -37,6 +37,11 @@ nav:hover > ul {
   margin: 10px auto;
 }
 
+.validated {
+    display: none;
+    max-width: 30px;
+    float: left;
+}
 #blurbabout > p {
   text-align: justify;
 }

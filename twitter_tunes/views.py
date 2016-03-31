@@ -6,7 +6,7 @@ from twitter_tunes.scripts import parser, youtube_api
 def home(request):
     # trends = twitter_api.call_twitter_api()
     trends = ['one two step', '#two', 'kyrie', '#DogsInTheRoom', 'Patty Duke',
-              '#Trends', '#TwitterTunes', '#Hashtag', '#Lunch Time', '#TGIF']
+              '#Trends', '#GOPTownHall', '#Hashtag', '#Lunch Time', '#TGIF']
     return {'trends': trends}
 
 
