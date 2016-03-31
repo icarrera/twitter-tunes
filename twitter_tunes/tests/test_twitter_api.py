@@ -9,7 +9,6 @@ import pytest
 from ..scripts.twitter_api import call_twitter_api, extract_twitter_trends
 from ..scripts.twitter_api import WOEID_US
 import os.path
-import tweepy
 
 RESP_DATA = [{'words': 'words_value',
               'trends': [
