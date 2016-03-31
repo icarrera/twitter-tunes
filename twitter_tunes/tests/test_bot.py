@@ -107,28 +107,37 @@ def test_bot_message_function_params(get_link):
     assert (u'#StoryFromNorthAmerica' in message and
             u'https://www.youtube.com/watch?v=ms2klX-puUU' in message)
 
-#params for different trends and posteds, and the trend it should choose.
-#mocks for redis.get and push probably the whole module.
+
+@mock.patch('twitter_tunes.scripts.twitter_bot.redis_data.set_redis_data')
+@mock.patch('twitter_tunes.scripts.twitter_bot.redis_data.get_redis_data')
 @mock.patch('twitter_tunes.scripts.twitter_bot.youtube_api.get_link')
-def test_bot_choose_trend(get_link):
+def test_bot_choose_trend(get_link, get_redis_data, set_redis_data):
     """Test choose trend function.
 
     Should return the 'best' trend from the trends searched by twitter_api.
     Best trend should be the first music related trend it can find.
     """
     from twitter_tunes.tests import bot_test_vars
-    from twitter_tunes.scripts import parser
+    from twitter_tunes.scripts import parser, redis_data
 
     def yt_side_effect(arg):
         if arg == parser.parse_trend(bot_test_vars.TRENDS[1]):
             return (good_url, True)
+        elif arg == parser.parse_trend(bot_test_vars.TRENDS[2]):
+            return (good_url, True)
         else:
             return (bad_url, False)
 
+    def redis_side_effect(arg):
+        if arg == u'trends':
+            return bot_test_vars.REDIS_TRENDS
+        elif arg == u'last_posts':
+            return bot_test_vars.REDIS_LAST_POSTS
+
     get_link.side_effect = yt_side_effect
-    # mock_redis.trends.result = set trends
-    # mock_redis.last.result = set thing.
-    trends = bot_test_vars.TRENDS  # mock_redis.trends()
+    get_redis_data.side_effect = redis_side_effect
+    redis_trends = redis_data.get_redis_data(u'trends')
+    trends = redis_trends[u'trends']
     good_url = u'https://www.youtube.com/watch?v=ms2klX-puUU'
     bad_url = u'https://www.youtube.com/watch?v=cU8HrO7XuiE'
-    assert twitter_bot.choose_trend(trends)[0] == bot_test_vars.TRENDS[1]  # trend you expect.
+    assert twitter_bot.choose_trend(trends)[0] == bot_test_vars.TRENDS[2]  # trend you expect.

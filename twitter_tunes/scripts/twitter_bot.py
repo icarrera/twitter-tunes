@@ -1,8 +1,6 @@
 # -*- coding: utf-8 -*-
-from twitter_tunes.scripts import twitter_api
+from twitter_tunes.scripts import twitter_api, youtube_api, parser, redis_data
 import tweepy
-from twitter_tunes.scripts import youtube_api
-from twitter_tunes.scripts import parser
 import os
 
 BASE_MESSAGE = u"""{trend} is trending right now. Here's its tune! {url}"""
@@ -24,14 +22,16 @@ def choose_trend(trends):
     """
     for trend in trends:
         url, is_music = youtube_api.get_link(parser.parse_trend(trend))
+        last_tweets = redis_data.get_redis_data('last_tweets')
+        if last_tweets == {}:
+            last_tweets = []
         if is_music:
-            # if trend not in redis.recent_tweets
-                # if len(redis.recent_tweets) > 5
-                    # pop redis.recent[0]
-                    # append trend on redis.recent
-                    # You need to remake the redis object for this
-                    # return trend, url
-            return trend, url
+            if trend not in last_tweets:
+                if len(last_tweets) >= 5:
+                    last_tweets = last_tweets[1:]
+                last_tweets.append(trend)
+                redis_data.set_redis_data(u'last_tweets', last_tweets)
+                return trend, url
 
 
 def make_tweet(message):
