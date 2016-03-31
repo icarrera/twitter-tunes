@@ -19,7 +19,8 @@ def create_message(parsed_trend, youtube_url):
 def choose_trend(trends):
     """Return a single trend and its yt url from a list of trends.
 
-    Will select a trend which has music relevence.
+    Will select a trend which has music relevence and
+    has not been posted recently.
     """
     for trend in trends:
         url, is_music = youtube_api.get_link(parser.parse_trend(trend))
@@ -30,7 +31,7 @@ def choose_trend(trends):
             if trend not in last_tweets:
                 if len(last_tweets) >= 5:
                     last_tweets = last_tweets[1:]
-                last_tweets[:].append(trend)
+                last_tweets.append(trend)
                 redis_data.set_redis_data(u'last_tweets', last_tweets)
                 return trend, url
 
@@ -43,14 +44,11 @@ def make_tweet(message):
         api = tweepy.API(auth)
         return api.update_status(message)
     else:
-        print('Missing OAuth key or token')
         raise ValueError('Missing OAuth key or token.')
 
 
 def main():
-    """Post a tweet about number one trend and a youtube video related to it.
-
-    """
+    """Post a relevant video with music for a trend."""
     try:
         # Get a list of trends from the redis DB
         try:
@@ -63,7 +61,8 @@ def main():
         message = create_message(trend, youtube_url)
         make_tweet(message)
         print(u'@trending__tunes Made a Tweet:\n{}'.format(message))
-    except (youtube_api.HttpError, ValueError, tweepy.TweepError, ConnectionError, TypeError):
+    except (youtube_api.HttpError, ValueError,
+            tweepy.TweepError, ConnectionError, TypeError):
             return u'Something went horribly wrong.'
 
 if __name__ == '__main__':

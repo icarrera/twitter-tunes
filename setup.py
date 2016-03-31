@@ -20,11 +20,12 @@ requires = [
     ]
 
 
-tests_requires = ['pytest', 'pytest-watch', 'tox', 'webtest', 'mock', 'pytest-mock']
+tests_requires = ['pytest', 'pytest-watch', 'tox',
+                  'webtest', 'mock', 'pytest-mock']
 dev_requires = ['ipython', 'pyramid-ipython']
 
 setup(name='twitter-tunes',
-      version='0.0',
+      version='1.0',
       description='Twitter_Tunes',
       long_description=README + '\n\n' + CHANGES,
       classifiers=[
@@ -33,9 +34,11 @@ setup(name='twitter-tunes',
         "Topic :: Internet :: WWW/HTTP",
         "Topic :: Internet :: WWW/HTTP :: WSGI :: Application",
         ],
-      author='',
+      author='''Iris Carrera, Joe McClenahan, Ben Garnaat,
+
+                Kyle Richardson, A.J. Wohlfert''',
       author_email='',
-      url='',
+      url='twitter-tunes.herokuapp.com',
       keywords='web pyramid pylons',
       packages=find_packages(),
       include_package_data=True,

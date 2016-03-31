@@ -5,6 +5,7 @@ except:
     import mock
 from twitter_tunes.scripts import twitter_bot
 from twitter_tunes.tests import bot_test_vars
+import pytest
 
 
 def redis_side_effect(arg):
@@ -175,3 +176,52 @@ def test_bot_choose_trend(get_link, get_redis_data, set_redis_data):
     good_url = u'https://www.youtube.com/watch?v=ms2klX-puUU'
     bad_url = u'https://www.youtube.com/watch?v=cU8HrO7XuiE'
     assert twitter_bot.choose_trend(trends)[0] == bot_test_vars.TRENDS[2]  # trend you expect.
+
+
+@mock.patch('twitter_tunes.scripts.twitter_bot.redis_data.set_redis_data')
+@mock.patch('twitter_tunes.scripts.twitter_bot.redis_data.get_redis_data')
+@mock.patch('twitter_tunes.scripts.twitter_bot.youtube_api.get_link')
+def test_bot_choose_trend_bad_redis(get_link, get_redis_data, set_redis_data):
+    """test if the choosing trend handles a bad redis call."""
+    get_link.return_value = (u'url', True)
+
+    def redis_side_effect_bad(arg):
+        if arg == u'trends':
+            return bot_test_vars.REDIS_TRENDS
+        elif arg == u'last_tweets':
+            return {}
+
+    get_redis_data.side_effect = redis_side_effect_bad
+    redis_trends = get_redis_data(u'trends')
+    trends = redis_trends[u'trends']
+    assert twitter_bot.choose_trend(trends)[0] == bot_test_vars.TRENDS[0]
+
+
+@mock.patch('twitter_tunes.scripts.twitter_bot.redis_data.set_redis_data')
+@mock.patch('twitter_tunes.scripts.twitter_bot.redis_data.get_redis_data')
+@mock.patch('twitter_tunes.scripts.twitter_bot.youtube_api.get_link')
+def test_bot_choose_trend_trend_long(get_link, get_redis_data, set_redis_data):
+    """test if the choosing trend handles a long last_tweets"""
+    get_link.return_value = (u'url', True)
+
+    def redis_side_effect_bad(arg):
+        if arg == u'trends':
+            return bot_test_vars.REDIS_TRENDS
+        elif arg == u'last_tweets':
+            return [u'trend', u'trend', u'trend', u'trend', u'trend']
+
+    get_redis_data.side_effect = redis_side_effect_bad
+    redis_trends = get_redis_data(u'trends')
+    trends = redis_trends[u'trends']
+    assert twitter_bot.choose_trend(trends)[0] == bot_test_vars.TRENDS[0]
+
+
+@mock.patch('twitter_tunes.scripts.twitter_bot.tweepy.API.update_status')
+def test_make_tweet_bad(update_status):
+    """Test if make_tweet breaks."""
+    import twitter_tunes.scripts.twitter_bot as bot
+    old_key = bot.consumerKey
+    bot.consumerKey = None
+    with pytest.raises(ValueError):
+        twitter_bot.make_tweet('Please dont post')
+    bot.consumerKey = old_key

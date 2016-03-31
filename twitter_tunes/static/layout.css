@@ -70,12 +70,6 @@ aside {
   margin-top: 0;
 }
 
-/*  WHEN ON CLICK ADDED TO JS FILE REMOVE THIS*/
-/*article:hover iframe {
-  display: block;
-}*/
-
-/*iframe {*/
 .video-container {
   margin: 10px auto;
   display: none;
@@ -93,6 +87,10 @@ aside {
 
 #aboutus article {
   padding: 10px;
+  background: #F5F8FA;
+  border-bottom: 1px solid #E1E8ED;
+  border-right: 1px solid #E1E8ED;
+  border-radius: 10px;
 }
 
 #aboutus article li {
@@ -111,7 +109,7 @@ aside {
 
 /* ==================== MEDIA QUERY: 640px ==================== */
 
-@media only screen and (min-width: 640px) {
+@media all and (min-width: 640px) {
 
   .header_mobile {
     display: none;
@@ -175,6 +173,7 @@ nav {
     position: fixed;
     border-bottom: 1px solid #E1E8ED;
     border-right: 1px solid #E1E8ED;
+    border-radius: 10px;
   }
 
   aside > iframe {
