@@ -8,7 +8,7 @@ logging.basicConfig()
 sched = BlockingScheduler()
 
 
-@sched.scheduled_job('interval', minutes=5)
+@sched.scheduled_job('interval', minutes=60)
 def timed_job():
     """Trigger tweet every hour."""
     print('Time to make a Tweet!...')
