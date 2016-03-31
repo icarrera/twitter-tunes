@@ -17,10 +17,12 @@ requires = [
     'tweepy',
     'google-api-python-client',
     'apscheduler',
-    'logging'
+    'logging',
+    'redis',
     ]
 
-tests_requires = ['pytest', 'pytest-watch', 'tox', 'webtest', 'pytest-mock']
+
+tests_requires = ['pytest', 'pytest-watch', 'tox', 'webtest', 'mock', 'pytest-mock']
 dev_requires = ['ipython', 'pyramid-ipython']
 
 setup(name='Twitter_Tunes',

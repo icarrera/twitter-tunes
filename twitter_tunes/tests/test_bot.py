@@ -4,6 +4,7 @@ try:
 except:
     import mock
 from twitter_tunes.scripts import twitter_bot
+import pytest
 
 
 @mock.patch('tweepy.API')
@@ -39,6 +40,45 @@ def test_main_good(api, twitter_api, youtube_api):
     mock_update_status.assert_called_with(message)
 
 
+@mock.patch('twitter_tunes.scripts.twitter_bot.twitter_api.call_twitter_api')
+def test_main_bad_twitter(call_twitter_api):
+    """Test if main does stuff if twitter goes horribly wrong.
+
+    Make sure it can keep going."""
+    call_twitter_api.side_effect = ValueError('Missing OAuth key or token.')
+    assert twitter_bot.main() == u'Something went horribly wrong.'
+
+
+@mock.patch('twitter_tunes.scripts.twitter_bot.tweepy.API.update_status')
+def test_main_bad_update(update_status):
+    """Test if main does stuff if tweepy goes horribly wrong.
+
+    Make sure it can keep going."""
+    from tweepy import TweepError
+    update_status.side_effect = TweepError("Couldn't Post")
+    assert twitter_bot.main() == u'Something went horribly wrong.'
+
+
+@mock.patch('twitter_tunes.scripts.twitter_bot.tweepy.API.trends_place')
+def test_main_bad_get_trends(trends_place):
+    """Test if main does stuff if tweepy goes horribly wrong.
+
+    Make sure it can keep going."""
+    from tweepy import RateLimitError
+    trends_place.side_effect = RateLimitError("Slow Down!")
+    assert twitter_bot.main() == u'Something went horribly wrong.'
+
+
+@mock.patch('twitter_tunes.scripts.twitter_bot.youtube_api.youtube_search')
+def test_main_bad_youtube(youtube_search):
+    """Test if main does stuff if twitter goes horribly wrong.
+
+    Make sure it can keep going."""
+    from apiclient.errors import HttpError
+    youtube_search.side_effect = HttpError('Uhh', b'youtube broke.')
+    assert twitter_bot.main() == u'Something went horribly wrong.'
+
+
 def test_bot_create_message_known_params():
     """Test to see bot can return a message.
 
@@ -67,6 +107,8 @@ def test_bot_message_function_params(get_link):
     assert (u'#StoryFromNorthAmerica' in message and
             u'https://www.youtube.com/watch?v=ms2klX-puUU' in message)
 
+#params for different trends and posteds, and the trend it should choose.
+#mocks for redis.get and push probably the whole module.
 @mock.patch('twitter_tunes.scripts.twitter_bot.youtube_api.get_link')
 def test_bot_choose_trend(get_link):
     """Test choose trend function.
@@ -84,7 +126,9 @@ def test_bot_choose_trend(get_link):
             return (bad_url, False)
 
     get_link.side_effect = yt_side_effect
-    trends = bot_test_vars.TRENDS
+    # mock_redis.trends.result = set trends
+    # mock_redis.last.result = set thing.
+    trends = bot_test_vars.TRENDS  # mock_redis.trends()
     good_url = u'https://www.youtube.com/watch?v=ms2klX-puUU'
     bad_url = u'https://www.youtube.com/watch?v=cU8HrO7XuiE'
-    assert twitter_bot.choose_trend(trends)[0] == bot_test_vars.TRENDS[1]
+    assert twitter_bot.choose_trend(trends)[0] == bot_test_vars.TRENDS[1]  # trend you expect.
