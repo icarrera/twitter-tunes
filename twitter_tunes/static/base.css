@@ -93,10 +93,22 @@ a, a:visited {
 }
 
 
+#aboutus a {
+  text-decoration: none;
+}
+
+.icon-github:visited {
+  color: #000;
+}
+
+.icon-twitter {
+  color: #409AFF;
+}
+
 
 /* ==================== MEDIA QUERY: 640px ==================== */
 
-@media only screen and (min-width: 640px) {
+@media all and (min-width: 640px) {
 
   header {
     width: 100%;
