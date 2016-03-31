@@ -9,6 +9,7 @@ import pytest
 from ..scripts.twitter_api import call_twitter_api, extract_twitter_trends
 from ..scripts.twitter_api import WOEID_US
 import os.path
+import tweepy
 
 RESP_DATA = [{'words': 'words_value',
               'trends': [
@@ -32,7 +33,7 @@ FINAL_OUTPUT = [u'trend1', u'trend2', u'trend3', u'trend4', u'trend5', u'trend6'
 
 
 def test_bad_request():
-    """Raise ValueError if if any tokens are missing."""
+    """Raise ValueError if any tokens are missing."""
     import twitter_tunes.scripts.twitter_api as tapi
     old_key = tapi.consumerKey
     tapi.consumerKey = None
@@ -40,6 +41,16 @@ def test_bad_request():
         call_twitter_api()
     tapi.consumerKey = old_key
 
+
+def test_no_woeid():
+    """Raise TweepError if WOEID number is invalid"""
+    import twitter_tunes.scripts.twitter_api as tapi
+    from tweepy import TweepError
+    old_WOEID = tapi.WOEID_US
+    tapi.WOEID_US = None
+    with pytest.raises(TweepError):
+        call_twitter_api()
+    tapi.WOEID_US = old_WOEID
 
 def test_final_output(mocker):
     """Test if length of our call_twitter_api list is as expected."""
