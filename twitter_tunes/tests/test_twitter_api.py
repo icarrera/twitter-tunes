@@ -30,6 +30,18 @@ FINAL_OUTPUT = [u'trend1', u'trend2', u'trend3', u'trend4', u'trend5', u'trend6'
                 u'trend7', u'trend8', u'trend9', u'trend10'
                 ]
 
+BAD_WOEID = [None, 1111111111111111111111111111111, 0, 12345678, 'blahblah']
+
+@pytest.mark.parametrize("bad_woeid", BAD_WOEID)
+def test_invalid_woeid(bad_woeid):
+    import twitter_tunes.scripts.twitter_api as tapi
+    from tweepy import TweepError
+    old_WOEID = tapi.WOEID_US
+    tapi.WOEID_US = bad_woeid
+    with pytest.raises(TweepError):
+        call_twitter_api()
+    tapi.WOEID_US = old_WOEID
+
 
 def test_bad_request():
     """Raise ValueError if any tokens are missing."""
@@ -39,28 +51,6 @@ def test_bad_request():
     with pytest.raises(ValueError):
         call_twitter_api()
     tapi.consumerKey = old_key
-
-
-def test_no_woeid():
-    """Raise TweepError if WOEID number is not present"""
-    import twitter_tunes.scripts.twitter_api as tapi
-    from tweepy import TweepError
-    old_WOEID = tapi.WOEID_US
-    tapi.WOEID_US = None
-    with pytest.raises(TweepError):
-        call_twitter_api()
-    tapi.WOEID_US = old_WOEID
-
-
-def test_bad_woeid():
-    """Raise TweepError if WOEID number is invalid"""
-    import twitter_tunes.scripts.twitter_api as tapi
-    from tweepy import TweepError
-    old_WOEID = tapi.WOEID_US
-    tapi.WOEID_US = 1111111111111111111111111111111111111
-    with pytest.raises(TweepError):
-        call_twitter_api()
-    tapi.WOEID_US = old_WOEID
 
 
 def test_final_output(mocker):
