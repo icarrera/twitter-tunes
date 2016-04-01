@@ -55,6 +55,7 @@ def main():
             current_trends = redis_data.get_redis_data(u'trends')[u'trends']
         except KeyError:  # There's some key issue on redis
             # Just use real twitter
+            print('Key Error present. Using real twitter.')
             trend, youtube_url = choose_trend(twitter_api.call_twitter_api())
         else:
             trend, youtube_url = choose_trend(current_trends)
@@ -63,6 +64,7 @@ def main():
         print(u'@trending__tunes Made a Tweet:\n{}'.format(message))
     except (youtube_api.HttpError, ValueError,
             tweepy.TweepError, ConnectionError, TypeError):
+            print(u'Something went horribly wrong.')
             return u'Something went horribly wrong.'
 
 if __name__ == '__main__':
