@@ -1,6 +1,6 @@
 # Trending Twitter Tunes
 
-The soundtrack to your social media life.
+Your social media soundtrack. Experience trending topics as you've never experienced them before. Groove to America's favorite hashtags. Feel the rhythm of our collective consciousness.
 
 http://twitter-tunes.herokuapp.com/
 
