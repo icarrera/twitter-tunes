@@ -163,7 +163,7 @@ nav {
   }
 
   .header_offset {
-    margin-top: 155px;
+    padding-top: 135px;
   }
 
   aside {
@@ -174,6 +174,7 @@ nav {
     border-bottom: 1px solid #E1E8ED;
     border-right: 1px solid #E1E8ED;
     border-radius: 10px;
+    margin-top: 30px;
   }
 
   aside > iframe {
