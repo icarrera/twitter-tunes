@@ -28,8 +28,6 @@ nav:hover > ul {
   width: 85%;
   text-align: center;
   font-size: 1.3em;
-  /*background: #95C7FE;*/
-  /*background: #E1E8ED;*/
   background: #F5F8FA;
   border-bottom: 1px solid #E1E8ED;
   border-right: 1px solid #E1E8ED;
@@ -155,11 +153,10 @@ nav {
     width: auto;
     text-align: center;
     font-size: 1.3em;
-    background: none;
-    border: none;
     padding: 10px;
     min-width: 100px;
     margin: 0 2%;
+    border-radius: 10px;
   }
 
   .header_offset {
@@ -169,7 +166,7 @@ nav {
   aside {
     display: block;
     width: 30%;
-    right: 10px;
+    right: 30px;
     position: fixed;
     border-bottom: 1px solid #E1E8ED;
     border-right: 1px solid #E1E8ED;
@@ -182,7 +179,7 @@ nav {
   }
 
   #blurbabout, #trends, #aboutus {
-    width: 60%;
+    width: calc(70% - 90px);
   }
 
 }
