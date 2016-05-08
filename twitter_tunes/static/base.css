@@ -71,6 +71,7 @@ p {
 
 a, a:visited {
   color: #409AFF;
+  text-decoration: none;
 }
 
 
@@ -97,11 +98,11 @@ a, a:visited {
   text-decoration: none;
 }
 
-.icon-github:visited {
+.icon-github, .icon-github:visited {
   color: #000;
 }
 
-.icon-twitter {
+.icon-twitter, .icon-twitter:visited {
   color: #409AFF;
 }
 
