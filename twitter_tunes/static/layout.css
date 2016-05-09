@@ -1,0 +1,185 @@
+.header_mobile {
+  display: block;
+}
+
+.header_desktop {
+  display: none;
+}
+
+hgroup > img {
+  display: inline;
+  width: 20%;
+  min-width: 50px;
+  max-width: 100px;
+  float: left;
+  margin-left: 10px;
+  padding: 5px;
+}
+
+nav > ul {
+  display: none;
+}
+
+nav:hover > ul {
+  display: block;
+}
+
+.nav_li {
+  width: 85%;
+  text-align: center;
+  font-size: 1.3em;
+  background: #F5F8FA;
+  border-bottom: 1px solid #E1E8ED;
+  border-right: 1px solid #E1E8ED;
+  padding: 10px;
+  margin: 10px auto;
+}
+
+.validated {
+    display: none;
+    max-width: 30px;
+    position: absolute;
+    left: 75px
+
+}
+#blurbabout > p {
+  text-align: justify;
+}
+
+aside {
+  display: none;
+}
+
+#trends > ul {
+  padding: 15px;
+}
+
+#trends > ul > li {
+  margin-top: 15px;
+  background: #F5F8FA;
+  border-bottom: 1px solid #E1E8ED;
+  border-right: 1px solid #E1E8ED;
+  border-radius: 10px;
+}
+ #trends > article {
+     position: relative;
+ }
+#trends > ul > li:first-child {
+  margin-top: 0;
+}
+
+.video-container {
+  margin: 10px auto;
+  display: none;
+  max-width: 95%;
+  width: 95%;
+  background: #777;
+}
+
+#aboutus > ul > li {
+  min-width: 150px;
+  width: 30%;
+  padding: 1%;
+  display: inline-block;
+}
+
+#aboutus article {
+  padding: 10px;
+  background: #F5F8FA;
+  border-bottom: 1px solid #E1E8ED;
+  border-right: 1px solid #E1E8ED;
+  border-radius: 10px;
+}
+
+#aboutus article li {
+  padding: 10px;
+}
+
+#contribute {
+  margin: 30px;
+}
+
+#contribute > p {
+  text-align: center;
+  padding: 5px;
+}
+
+
+/* ==================== MEDIA QUERY: 640px ==================== */
+
+@media all and (min-width: 640px) {
+
+  .header_mobile {
+    display: none;
+  }
+
+  .header_desktop {
+    display: block;
+  }
+
+  header > img {
+    display: inline;
+    width: 20%;
+    max-width: 200px;
+    min-width: 100px;
+    float: left;
+    padding: 5px;
+  }
+
+  header > h1 {
+    text-align: center;
+    display: block;
+    font-size: 2.5em;
+    margin-bottom: 10px;
+    margin-right: 20%;
+  }
+
+nav {
+  margin-right: 20%;
+}
+
+  .icon-menu {
+    display: none;
+  }
+
+  nav > ul {
+    display: block;
+    text-align: center;
+  }
+
+
+  .nav_li {
+    display: inline-block;
+    width: auto;
+    text-align: center;
+    font-size: 1.3em;
+    padding: 10px;
+    min-width: 100px;
+    margin: 0 2%;
+    border-radius: 10px;
+  }
+
+  .header_offset {
+    padding-top: 135px;
+  }
+
+  aside {
+    display: block;
+    width: 30%;
+    right: 30px;
+    position: fixed;
+    border-bottom: 1px solid #E1E8ED;
+    border-right: 1px solid #E1E8ED;
+    border-radius: 10px;
+    margin-top: 30px;
+  }
+
+  aside > iframe {
+    border-radius: 10px;
+  }
+
+  #blurbabout, #trends, #aboutus {
+    width: calc(70% - 90px);
+  }
+
+}
