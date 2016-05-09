@@ -166,6 +166,7 @@ nav {
   aside {
     display: block;
     width: 30%;
+    height: calc(100% - 215px);
     right: 30px;
     position: fixed;
     border-bottom: 1px solid #E1E8ED;
