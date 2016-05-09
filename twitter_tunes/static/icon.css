@@ -137,6 +137,7 @@
 .icon-circle-down {
   float: right;
   font-size: 2.5em;
+  transition: all .5s;
 }
 
 .icon-github {
